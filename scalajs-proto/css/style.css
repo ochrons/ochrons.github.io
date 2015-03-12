@@ -19,8 +19,16 @@ main {
     height: auto;
 }
 
+.navbar-fixed .topborder {
+    position: fixed;
+}
+
 nav ul a, nav .brand-logo, nav a.button-collapse {
     color: #444;
+}
+
+nav {
+    border-top: 5px solid #0277bd;
 }
 
 h5 {
