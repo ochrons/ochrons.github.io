@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.promo-container {
+    min-height: 350px;
+    height: auto;
+    position: relative;
+}
+
+.topborder {
+    min-height: 5px;
+    height: auto;
+}
+
+nav ul a, nav .brand-logo, nav a.button-collapse {
+    color: #444;
+}
+
+h5 {
+    font-weight: 300;
+}
+
+.social-icons {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 1;
+}
+
+.social-icons i {
+    padding-left: 5px;
+    font-size: 1.5em;
+}
