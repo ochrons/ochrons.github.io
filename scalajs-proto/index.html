@@ -141,11 +141,11 @@
     this.firstName = firstName;
 };
 
-Person.prototype.walk = function(){
+Person.prototype.walk = function() {
     console.log("I am walking!");
 };
 
-Person.prototype.sayHello = function(target){
+Person.prototype.sayHello = function(target) {
     console.log("Hello " + target +
                 ", I'm " + this.firstName);
 };</code></pre>
@@ -176,12 +176,12 @@ val names = persons.map(_.firstName) // shorthand</code></pre>
             <div id="code_collection">
                 <div class="col s12 m6">
                     <h6 class="center-align">JavaScript</h6>
-                    <pre><code class="javascript">var personMap = {"id1": new Person("Roger Moore"),
-    "id2": new Person("James Bond")};
+                    <pre><code class="javascript">var personMap = {"10": new Person("Roger Moore"),
+    "20": new Person("James Bond")};
 var names = [];
 for(var key in personMap) {
     if(names.hasOwnProperty(key)) {
-        if(personMap[key].firstName.indexOf("James") == 0) {
+        if(parseInt(key) > 15) {
             names.push(key +
                 " = " + personMap[key].firstName;
         }
@@ -190,10 +190,10 @@ for(var key in personMap) {
                 </div>
                 <div class="col s12 m6">
                     <h6 class="center-align">Scala</h6>
-                    <pre><code class="scala">val personMap = Map("id1" -> new Person("Roger Moore"),
-  "id2" -> new Person("James Bond"));
+                    <pre><code class="scala">val personMap = Map(10 -> new Person("Roger Moore"),
+  20 -> new Person("James Bond"));
 val names = personMap
-  .filter(_._2.firstName.startsWith("James"))
+  .filterKeys(_ > 15)
   .map { case (key, person) => s"$key = ${person.firstName}" }.toSeq</code></pre>
                 </div>
             </div>
