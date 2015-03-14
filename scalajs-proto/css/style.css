@@ -35,6 +35,10 @@ h5 {
     font-weight: 300;
 }
 
+code {
+    font-size: 0.8em;
+}
+
 .social-icons {
     position: absolute;
     top: 24px;

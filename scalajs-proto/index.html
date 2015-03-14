@@ -4,6 +4,7 @@
     <meta charset="UTF-8"/>
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/highlight.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection"/>
     <link rel="stylesheet" href="css/font-awesome.css">
 
@@ -107,7 +108,8 @@
 
                 <p>
                     Imagine a world where your IDE can deliver 100% accurate code completion 100% of the time for 100% of the libraries. All typos and type
-                    errors are automatically caught as you write your code. Refactor any field or method name with ease and confidence. All this and more is available to
+                    errors are automatically caught as you write your code. Refactor any field or method name with ease and confidence. All this and more is
+                    available to
                     you in the Scala.js development environment.
                 </p>
             </div>
@@ -115,8 +117,85 @@
                 <img class="responsive-img" src="images/ide-screenshot.png">
             </div>
         </div>
+        <div class="row">
+            <div class="col s12">
+                <h5>Almost like ES6, except better</h5>
+
+                <p>
+                    Scala language already has all the new features coming in ES6 and much more.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#code_classes">Classes</a></li>
+                    <li class="tab col s3"><a href="#code_arrow">Fat arrow</a></li>
+                    <li class="tab col s3"><a href="#code_collection">Collections</a></li>
+                </ul>
+            </div>
+            <div id="code_classes">
+                <div class="col s12 m6">
+                    <h6 class="center-align">JavaScript</h6>
+                    <pre><code class="javascript">var Person = function(firstName) {
+    this.firstName = firstName;
+};
+
+Person.prototype.walk = function(){
+    console.log("I am walking!");
+};
+
+Person.prototype.sayHello = function(target){
+    console.log("Hello " + target +
+                ", I'm " + this.firstName);
+};</code></pre>
+                </div>
+                <div class="col s12 m6">
+                    <h6 class="center-align">Scala</h6>
+                    <pre><code class="scala">class Person(firstName:String) {
+  def walk = println("I am walking!")
+
+  def sayHello(target:String) =
+    println(s"Hello $target, I'm $firstName")
+}</code></pre>
+                </div>
+            </div>
+            <div id="code_arrow">
+                <div class="col s12 m6">
+                    <h6 class="center-align">JavaScript</h6>
+                    <pre><code class="javascript">var names = persons.map(function(p) {
+    return p.firstName
+});</code></pre>
+                </div>
+                <div class="col s12 m6">
+                    <h6 class="center-align">Scala</h6>
+                    <pre><code class="scala">val names = persons.map(p => p.firstName)
+val names = persons.map(_.firstName) // shorthand</code></pre>
+                </div>
+            </div>
+            <div id="code_collection">
+                <div class="col s12 m6">
+                    <h6 class="center-align">JavaScript</h6>
+                    <pre><code class="javascript">var personMap = {"id1": new Person("Roger Moore"),
+    "id2": new Person("James Bond")};
+var names = [];
+for(var key in personMap) {
+    if(names.hasOwnProperty(key) {
+        names.push(personMap[key].firstName;
+    }
+}</code></pre>
+                </div>
+                <div class="col s12 m6">
+                    <h6 class="center-align">Scala</h6>
+                    <pre><code class="scala">val personMap = Map("id1" -> new Person("Roger Moore"),
+  "id2" -> new Person("James Bond"));
+val names = personMap.map(_.firstName)</code></pre>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
+
 <footer class="page-footer grey darken-3">
     <div class="container">
         <div class="row">
@@ -151,11 +230,13 @@
 
 <!--Import jQuery before materialize.js-->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/highlight.pack.js"></script>
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script>
 $(document).ready(function () {
     $(".button-collapse").sideNav();
 });
+hljs.initHighlightingOnLoad();
 </script>
 </body>
 </html>
