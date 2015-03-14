@@ -180,8 +180,11 @@ val names = persons.map(_.firstName) // shorthand</code></pre>
     "id2": new Person("James Bond")};
 var names = [];
 for(var key in personMap) {
-    if(names.hasOwnProperty(key) {
-        names.push(personMap[key].firstName;
+    if(names.hasOwnProperty(key)) {
+        if(personMap[key].firstName.indexOf("James") == 0) {
+            names.push(key +
+                " = " + personMap[key].firstName;
+        }
     }
 }</code></pre>
                 </div>
@@ -189,7 +192,9 @@ for(var key in personMap) {
                     <h6 class="center-align">Scala</h6>
                     <pre><code class="scala">val personMap = Map("id1" -> new Person("Roger Moore"),
   "id2" -> new Person("James Bond"));
-val names = personMap.map(_.firstName)</code></pre>
+val names = personMap
+  .filter(_._2.firstName.startsWith("James"))
+  .map { case (key, person) => s"$key = ${person.firstName}" }.toSeq</code></pre>
                 </div>
             </div>
         </div>
