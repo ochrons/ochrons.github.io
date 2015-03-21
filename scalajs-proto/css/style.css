@@ -36,7 +36,7 @@ h5 {
 }
 
 code {
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 
 .social-icons {
@@ -49,4 +49,20 @@ code {
 .social-icons i {
     padding-left: 5px;
     font-size: 1.5em;
+}
+
+table.feature-table th:first-of-type, table.feature-table td:first-of-type {
+    text-align: left;
+}
+
+table.feature-table tr td {
+    padding: 5px 5px;
+}
+
+tr.subtitle {
+    border-bottom: 1px solid dimgray;
+}
+
+tr.subtitle td {
+    font-weight: bold;
 }

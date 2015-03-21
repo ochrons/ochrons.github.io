@@ -66,7 +66,7 @@
                     <i class="medium mdi-action-done red-text text-darken-4"></i>
                     <h5>Correctness</h5>
                 </div>
-                Strong typing guarantees your code will run when it compiles. No more silly JavaScript mistakes due to mistyped function or field names. No
+                Strong typing guarantees your code will run when it compiles. No more simple JavaScript mistakes due to mistyped function or field names. No
                 accidental mixing of strings and numbers. Use Scala's powerful typing to create clean, maintainable code.
             </div>
             <div class="col s12 m4">
@@ -119,7 +119,7 @@
         </div>
         <div class="row">
             <div class="col s12">
-                <h5>Almost like ES6, except better</h5>
+                <h5>Go beyond ES6, today</h5>
 
                 <p>
                     Scala language already has all the new features coming in ES6 and much more.
@@ -129,9 +129,9 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="#code_classes">Classes</a></li>
-                    <li class="tab col s3"><a href="#code_arrow">Fat arrow</a></li>
-                    <li class="tab col s3"><a href="#code_collection">Collections</a></li>
+                    <li class="tab col s3"><a href="#code_classes" class="grey-text text-darken-3">Classes</a></li>
+                    <li class="tab col s3"><a href="#code_arrow" class="grey-text text-darken-3">Fat arrow</a></li>
+                    <li class="tab col s3"><a href="#code_collection" class="grey-text text-darken-3">Collections</a></li>
                 </ul>
             </div>
             <div id="code_classes">
@@ -152,7 +152,7 @@ Person.prototype.sayHello = function(target) {
                 </div>
                 <div class="col s12 m6">
                     <h6 class="center-align">Scala</h6>
-                    <pre><code class="scala">class Person(firstName:String) {
+                    <pre><code class="scala">class Person(val firstName:String) {
   def walk = println("I am walking!")
 
   def sayHello(target:String) =
@@ -170,7 +170,8 @@ Person.prototype.sayHello = function(target) {
                 <div class="col s12 m6">
                     <h6 class="center-align">Scala</h6>
                     <pre><code class="scala">val names = persons.map(p => p.firstName)
-val names = persons.map(_.firstName) // shorthand</code></pre>
+// or a shorthand version
+val names = persons.map(_.firstName)</code></pre>
                 </div>
             </div>
             <div id="code_collection">
@@ -180,7 +181,7 @@ val names = persons.map(_.firstName) // shorthand</code></pre>
     "20": new Person("James Bond")};
 var names = [];
 for(var key in personMap) {
-    if(names.hasOwnProperty(key)) {
+    if(Object.prototype.hasOwnProperty.call(names, key)) {
         if(parseInt(key) > 15) {
             names.push(key +
                 " = " + personMap[key].firstName;
@@ -192,13 +193,140 @@ for(var key in personMap) {
                     <h6 class="center-align">Scala</h6>
                     <pre><code class="scala">val personMap = Map(10 -> new Person("Roger Moore"),
   20 -> new Person("James Bond"));
-val names = personMap
-  .filterKeys(_ > 15)
-  .map { case (key, person) => s"$key = ${person.firstName}" }.toSeq</code></pre>
+val names = for {
+  (key, person) <- personMap
+  if key > 15
+} yield s"$key = ${person.firstName}"</code></pre>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container grey-text text-darken-3">
+        <div class="row">
+            <div class="col s12">
+                <h5>Best replacement for JavaScript</h5>
+                <p>Several alternatives to plain JavaScript exist today, most notably CoffeeScript and TypeScript.
+                Both of these add features to the JavaScript language but in the end they are only syntactic sugar on top.</p>
+                <p>Scala.js takes a different approach by utilizing a higher-order programming language with strong support for
+                both object oriented and functional programming. In the table below you can see how Scala.js stacks up to other
+                JavaScript alternatives.</p>
+                <table class="striped centered feature-table">
+                    <thead>
+                      <tr>
+                          <th width="54%">Feature</th>
+                          <th width="12%">JavaScript</th>
+                          <th width="12%">CoffeeScript</th>
+                          <th width="12%">TypeScript</th>
+                          <th width="12%">Scala.js</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="subtitle">
+                        <td colspan="5">Interoperability</td>
+                    </tr>
+                    <tr>
+                        <td>Fully EcmaScript5 compatible</td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>No compilation required</td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Use existing JS libraries</td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr class="subtitle">
+                        <td colspan="5">Language features</td>
+                    </tr>
+                    <tr>
+                        <td>Classes with inheritance</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Modules</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Support for types</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Strong type system</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Extensive system libraries</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Optimizing compiler</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Macros, to extend the language</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr class="subtitle">
+                        <td colspan="5">IDE support</td>
+                    </tr>
+                    <tr>
+                        <td>Catch most errors in IDE</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Easy and reliable refactoring</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Reliable code completion</td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle-o"></i></td>
+                        <td><i class="fa fa-circle"></i></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </main>
 
 <footer class="page-footer grey darken-3">
