@@ -1,0 +1,9 @@
+- text: Introduction
+  url: /doc/
+- text: Project structure
+  url: /doc/project/
+  subitems:
+    - text: Building the application
+      url: /doc/project/building.html
+    - text: Dependencies
+      url: /doc/project/dependencies.html
