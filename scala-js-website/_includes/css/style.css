@@ -102,6 +102,23 @@ a:focus {
 /*	################################################################
 	BOOTSTRAP MODIFICATIONS & TWEAKS
 ################################################################# */
+@media (max-width: 767px) /* @grid-float-breakpoint -1 */
+{
+	.navbar-fixed-top
+	{
+		position: relative;
+		top: auto;
+	}
+}
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 640px) and (orientation: landscape) {
+	.navbar-fixed-top
+	{
+		position: relative;
+		top: auto;
+	}
+}
+
 #wrap
 {
 	min-height: 100%;
@@ -110,7 +127,7 @@ a:focus {
 #main
 {
 	overflow:auto;
-	padding-bottom:150px; /* this needs to be bigger than footer height*/
+	padding-bottom:210px; /* this needs to be bigger than footer height*/
 }
 
 .footer
@@ -420,6 +437,18 @@ a:focus {
 	margin-bottom: 30px;
 	padding-top: 15px;
 	padding-bottom: 15px;
+}
+
+@media only screen and (max-width: 767px) {
+	#blue {
+		margin-top: 0px;
+	}
+}
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 640px) and (orientation: landscape) {
+	#blue {
+		margin-top: 0px;
+	}
 }
 
 #blue h3 {
