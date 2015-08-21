@@ -37,6 +37,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 700;
 }
 
+h4 {
+	font-size: 22px;
+}
+
 p { 
 	padding: 0; 
 	margin-bottom: 12px; 
@@ -122,6 +126,7 @@ a:focus {
 .navbar-brand {
 	font-family: 'Raleway', sans-serif;
 	font-weight: 900;
+	font-size: 21px;
 }
 
 .navbar-header .navbar-brand {
@@ -131,7 +136,7 @@ a:focus {
 .navbar-default .navbar-nav > li > a {
 	color: white;
 	font-weight: 700;
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
@@ -373,10 +378,10 @@ a:focus {
 /* Footer */
 #footerwrap {
 	padding-top: 30px;
-	padding-bottom: 30px;
+	padding-bottom: 20px;
 	position: relative;
-	margin-top: -180px; /* negative value of footer height */
-	height: 180px;
+	margin-top: -210px; /* negative value of footer height */
+	min-height: 210px;
 	clear:both;
 	color:#fff;
 	background: #384452;
