@@ -3,7 +3,8 @@ layout: tutorial
 title: Baby steps tutorial
 ---
 
-Lorem ipsum
+These tutorials will all use SJS fiddle for interactive coding.
+
 
 
 
