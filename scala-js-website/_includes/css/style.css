@@ -568,3 +568,7 @@ a.anchor{
 .row {
 	margin-bottom: 12px;
 }
+
+.toc ul {
+	list-style-type: none;
+}
