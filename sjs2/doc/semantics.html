@@ -63,12 +63,12 @@
 the JVM.
 However, a few differences exist, which we mention here.</p>
 
-<h2>Primitive data types</h2>
+<h2 id="primitive-data-types">Primitive data types</h2>
 
 <p>All primitive data types work exactly as on the JVM, with the following three
 exceptions.</p>
 
-<h3>Floats can behave as Doubles by default</h3>
+<h3 id="floats-can-behave-as-doubles-by-default">Floats can behave as Doubles by default</h3>
 
 <p>Scala.js underspecifies the behavior of <code>Float</code>s by default.
 Any <code>Float</code> value can be stored as a <code>Double</code> instead, and any operation on
@@ -81,12 +81,11 @@ enable strict-floats semantics in Scala.js, with the following sbt setting:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withStrictFloats</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
 
-
 <p>Note that this can have a major impact on performance of your application on
 JS interpreters that do not support
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/fround">the <code>Math.fround</code> function</a>.</p>
 
-<h3><code>toString</code> of <code>Float</code>, <code>Double</code> and <code>Unit</code></h3>
+<h3 id="tostring-of-float-double-and-unit"><code>toString</code> of <code>Float</code>, <code>Double</code> and <code>Unit</code></h3>
 
 <p><code>x.toString()</code> returns slightly different results for floating point numbers
 and <code>()</code> (<code>Unit</code>).</p>
@@ -95,7 +94,6 @@ and <code>()</code> (<code>Unit</code>).</p>
 <span class="mf">1.0</span><span class="o">.</span><span class="n">toString</span>  <span class="c1">// &quot;1&quot;, instead of &quot;1.0&quot;</span>
 <span class="mf">1.4f</span><span class="o">.</span><span class="n">toString</span> <span class="c1">// &quot;1.399999976158142&quot; instead of &quot;1.4&quot;</span></code></pre></div>
 
-
 <p>In general, a trailing <code>.0</code> is omitted.
 Floats print in a weird way because they are printed as if they were Doubles,
 which means their lack of precision shows up.</p>
@@ -103,27 +101,26 @@ which means their lack of precision shows up.</p>
 <p>To get sensible and portable string representation of floating point numbers,
 use <code>String.format()</code> or related methods.</p>
 
-<h3>Runtime type tests are based on values</h3>
+<h3 id="runtime-type-tests-are-based-on-values">Runtime type tests are based on values</h3>
 
 <p>Instance tests (and consequently pattern matching) on any of <code>Byte</code>,
 <code>Short</code>, <code>Int</code>, <code>Float</code>, <code>Double</code> are based on the value and not the
 type they were created with. The following are examples:</p>
 
 <ul>
-<li>1 matches <code>Byte</code>, <code>Short</code>, <code>Int</code>, <code>Float</code>, <code>Double</code></li>
-<li>128 (<code>&gt; Byte.MaxValue</code>) matches <code>Short</code>, <code>Int</code>, <code>Float</code>, <code>Double</code></li>
-<li>32768 (<code>&gt; Short.MaxValue</code>) matches <code>Int</code>, <code>Float</code>, <code>Double</code></li>
-<li>2147483647 matches <code>Int</code>, <code>Double</code> if strict-floats are enabled
+  <li>1 matches <code>Byte</code>, <code>Short</code>, <code>Int</code>, <code>Float</code>, <code>Double</code></li>
+  <li>128 (<code>&gt; Byte.MaxValue</code>) matches <code>Short</code>, <code>Int</code>, <code>Float</code>, <code>Double</code></li>
+  <li>32768 (<code>&gt; Short.MaxValue</code>) matches <code>Int</code>, <code>Float</code>, <code>Double</code></li>
+  <li>2147483647 matches <code>Int</code>, <code>Double</code> if strict-floats are enabled
 (because that number cannot be represented in a strict 32-bit <code>Float</code>),
 otherwise <code>Int</code>, <code>Float</code> and <code>Double</code></li>
-<li>2147483648 (<code>&gt; Int.MaxValue</code>) matches <code>Float</code>, <code>Double</code></li>
-<li>1.5 matches <code>Float</code>, <code>Double</code></li>
-<li>1.4 matches <code>Double</code> only if strict-floats are enabled,
+  <li>2147483648 (<code>&gt; Int.MaxValue</code>) matches <code>Float</code>, <code>Double</code></li>
+  <li>1.5 matches <code>Float</code>, <code>Double</code></li>
+  <li>1.4 matches <code>Double</code> only if strict-floats are enabled,
 otherwise <code>Float</code> and <code>Double</code>
 (unlike 1.5, the value 1.4 cannot be represented in a strict 32-bit <code>Float</code>)</li>
-<li><code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code> and <code>-0.0</code> match <code>Float</code>, <code>Double</code></li>
+  <li><code>NaN</code>, <code>Infinity</code>, <code>-Infinity</code> and <code>-0.0</code> match <code>Float</code>, <code>Double</code></li>
 </ul>
-
 
 <p>As a consequence, the following apparent subtyping relationships hold:</p>
 
@@ -138,20 +135,19 @@ otherwise <code>Float</code> and <code>Double</code>
 
 <p>otherwise.</p>
 
-<h2>Undefined behaviors</h2>
+<h2 id="undefined-behaviors">Undefined behaviors</h2>
 
 <p>The JVM is a very well specified environment, which even specifies how some
 bugs are reported as exceptions.
 Some examples are:</p>
 
 <ul>
-<li><code>NullPointerException</code></li>
-<li><code>ArrayIndexOutOfBoundsException</code> and <code>StringIndexOutOfBoundsException</code></li>
-<li><code>ClassCastException</code></li>
-<li><code>ArithmeticException</code> (such as integer division by 0)</li>
-<li><code>StackOverflowError</code> and other <code>VirtualMachineError</code>s</li>
+  <li><code>NullPointerException</code></li>
+  <li><code>ArrayIndexOutOfBoundsException</code> and <code>StringIndexOutOfBoundsException</code></li>
+  <li><code>ClassCastException</code></li>
+  <li><code>ArithmeticException</code> (such as integer division by 0)</li>
+  <li><code>StackOverflowError</code> and other <code>VirtualMachineError</code>s</li>
 </ul>
-
 
 <p>Because Scala.js does not receive VM support to detect such erroneous
 conditions, checking them is typically too expensive.</p>
@@ -167,13 +163,12 @@ are configurable, but the list will probably expand in future versions.</p>
 <p>Every configurable undefined behavior has 3 possible modes:</p>
 
 <ul>
-<li><code>Compliant</code>: behaves as specified on a JVM</li>
-<li><code>Unchecked</code>: completely unchecked and undefined</li>
-<li><code>Fatal</code>: checked, but throws
+  <li><code>Compliant</code>: behaves as specified on a JVM</li>
+  <li><code>Unchecked</code>: completely unchecked and undefined</li>
+  <li><code>Fatal</code>: checked, but throws
 <a href="http://www.scala-js.org/api/scalajs-library//#scala.scalajs.runtime.UndefinedBehaviorError"><code>UndefinedBehaviorError</code>s</a>
 instead of the specified exception.</li>
 </ul>
-
 
 <p>By default, undefined behaviors are in <code>Fatal</code> mode for <code>fastOptJS</code> and in
 <code>Unchecked</code> mode for <code>fullOptJS</code>.
@@ -197,22 +192,21 @@ For example, this setting enables compliant <code>asInstanceOf</code>s:</p>
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withAsInstanceOfs</span><span class="o">(</span>
   <span class="n">org</span><span class="o">.</span><span class="n">scalajs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">sem</span><span class="o">.</span><span class="nc">CheckedBehavior</span><span class="o">.</span><span class="nc">Compliant</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
 
-
 <p>Note that this will have (potentially major) performance impacts.</p>
 
-<h2>JavaScript interoperability</h2>
+<h2 id="javascript-interoperability">JavaScript interoperability</h2>
 
 <p>The JavaScript interoperability feature is, in itself, a big semantic
 difference. However, its details are discussed in a
 <a href="./js-interoperability.html">dedicated page</a>.</p>
 
-<h2>Reflection</h2>
+<h2 id="reflection">Reflection</h2>
 
 <p>Java reflection and, a fortiori, Scala reflection, are not supported. There is
 limited support for <code>java.lang.Class</code>, e.g., <code>obj.getClass.getName</code> will work
 for any Scala.js object (not for objects that come from JavaScript interop).</p>
 
-<h2>Regular expressions</h2>
+<h2 id="regular-expressions">Regular expressions</h2>
 
 <p><a href="http://developer.mozilla.org/en/docs/Core_JavaScript_1.5_Guide:Regular_Expressions">JavaScript regular expressions</a>
 are slightly different from
@@ -225,22 +219,21 @@ use regular expressions themselves. A list of known functions that are
 affected is given here:</p>
 
 <ul>
-<li><code>StringLike.split(x: Array[Char])</code> (see issue <a href="https://github.com/scala-js/scala-js/issues/105">#105</a>)</li>
+  <li><code>StringLike.split(x: Array[Char])</code> (see issue <a href="https://github.com/scala-js/scala-js/issues/105">#105</a>)</li>
 </ul>
 
-
-<h2>Symbols</h2>
+<h2 id="symbols">Symbols</h2>
 
 <p><code>scala.Symbol</code> is supported, but is a potential source of memory leaks
 in applications that make heavy use of symbols. The main reason is that
 JavaScript does not support weak references, causing all symbols created
 by Scala.js to remain in memory throughout the lifetime of the application.</p>
 
-<h2>Enumerations</h2>
+<h2 id="enumerations">Enumerations</h2>
 
 <p>The methods <code>Value()</code> and <code>Value(i: Int)</code> on <code>scala.Enumeration</code> use
 reflection to retrieve a string representation of the member name and
-are therefore -- in principle -- unsupported. However, since
+are therefore – in principle – unsupported. However, since
 Enumerations are an integral part of the Scala library, Scala.js adds
 limited support for these two methods:</p>
 
@@ -270,7 +263,6 @@ or calls to constructors of the protected <code>Val</code> class without an
 explicit name as parameter, will issue a warning.</li>
 </ol>
 
-
 <p>Note that the name rewriting honors the <code>nextName</code>
 iterator. Therefore, the full rewrite is:</p>
 
@@ -280,7 +272,6 @@ iterator. Therefore, the full rewrite is:</p>
   <span class="k">else</span>
     <span class="s">&quot;&lt;ident&gt;&quot;</span>
 <span class="o">)</span></code></pre></div>
-
 
 <p>We believe that this covers most use cases of
 <code>scala.Enumeration</code>. Please let us know if another (generalized)

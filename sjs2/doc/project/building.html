@@ -77,10 +77,10 @@
 <a href="http://www.scala-js.org/api/scalajs-library/0.6.4/#scala.scalajs.js.JSApp"><code>js.JSApp</code></a>, while optionally prompting the user to choose a class if multiple such classes exist (fails with multiple classes if <code>persistLauncher := true</code>, see section below for details).</p>
 
 <p>To run the <code>.sjsir</code> files, we invoke the Rhino JavaScript interpreter with a special scope that lazily reads and loads required <code>.sjsir</code> files on the fly (much like Java class loading).
-Note that by default, this environment doesn't have a DOM.
+Note that by default, this environment doesn’t have a DOM.
 If you need it set <code>jsDependencies += RuntimeDOM</code> in your settings.</p>
 
-<h2>Fast-Optimize</h2>
+<h2 id="fast-optimize">Fast-Optimize</h2>
 
 <p>To produce a proper JavaScript file from your code, you need to call the linker:</p>
 
@@ -101,34 +101,29 @@ Depending on your <code>requiresDOM</code> setting (which is derived from the pr
 
 <p>Note that running in the <code>fastOptStage</code> is often faster than running just after compilation because:</p>
 
-<ol type="a">
-<li>As their name implies, fast optimizations are <em>really</em> fast (starting from the second run in an sbt session),</li>
-<li>External virtual machines are much faster than Rhino, and</li>
-<li>The code is, well, optimized, so faster itself.</li>
-</ol>
-
+<p>a. As their name implies, fast optimizations are <em>really</em> fast (starting from the second run in an sbt session),
+b. External virtual machines are much faster than Rhino, and
+c. The code is, well, optimized, so faster itself.</p>
 
 <p>We recommend you to operate in the <code>fastOpt</code> stage in your development cycle.
 You can enable it by default with the following sbt setting:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSStage</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="nc">FastOptStage</span></code></pre></div>
 
-
 <p>which you can put in your <code>build.sbt</code>, or in a separate <code>.sbt</code> file, e.g.,
 <code>local.sbt</code>, which is not checked in your version control.</p>
 
-<h3>Disabling the optimizations</h3>
+<h3 id="disabling-the-optimizations">Disabling the optimizations</h3>
 
 <p>If, for some reason (for example, to make stepping through the code with a debugger more predictable), you want to disable the optimizations, you can do so with the following sbt setting:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSOptimizerOptions</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withDisableOptimizer</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
 
-
 <p><code>scalaJSOptimizerOptions</code> contains various other options controlling the optimizer.
 See <a href="http://www.scala-js.org/api/sbt-scalajs/0.6.4/#org.scalajs.sbtplugin.OptimizerOptions">the ScalaDoc</a>
 for details.</p>
 
-<h2>Full-Optimize</h2>
+<h2 id="full-optimize">Full-Optimize</h2>
 
 <p>To make the resulting JavaScript even smaller (and usually faster as well), the sbt plugin integrates the Google Closure Compiler under the so-called full-optimizations. You can use them by issuing:</p>
 
@@ -144,7 +139,7 @@ The resulting file in the target folder will have the suffix <code>-opt.js</code
 <pre><code>sbt&gt; set scalaJSStage in Global := FullOptStage
 </code></pre>
 
-<h2>Writing Launcher Code</h2>
+<h2 id="writing-launcher-code">Writing Launcher Code</h2>
 
 <p>If you want the code which is used to run the main class to be written to a file, you can set <code>persistLauncher := true</code>.
 Note that this will require your main class to be either unique or explicitly set (<code>mainClass := Some(&lt;name&gt;)</code>).

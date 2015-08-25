@@ -64,7 +64,7 @@ to JavaScript. Entities that have to be accessed from JavaScript must be
 annotated explicitly as <em>exported</em>. The <code>@JSExport</code> annotation is the main way
 to do this.</p>
 
-<h2>A simple example</h2>
+<h2 id="a-simple-example">A simple example</h2>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">example</span>
 
@@ -79,11 +79,9 @@ to do this.</p>
   <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>This allows to call the <code>main()</code> method of <code>HelloWorld</code> like this in JavaScript:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">HelloWorld</span><span class="p">().</span><span class="nx">main</span><span class="p">();</span></code></pre></div>
-
 
 <p>Note the <code>()</code> when accessing the object, <code>HelloWorld</code> is a function.</p>
 
@@ -107,24 +105,21 @@ trait:</p>
   <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>And call like this (see documentation about
 <code>@JSExportDescendentObjects</code> below for internal workings):</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">example</span><span class="p">.</span><span class="nx">HelloWorld</span><span class="p">().</span><span class="nx">main</span><span class="p">();</span></code></pre></div>
 
-
-<h2>Exporting top-level objects</h2>
+<h2 id="exporting-top-level-objects">Exporting top-level objects</h2>
 
 <p>Put on a top-level object, the <code>@JSExport</code> annotation exports a zero-argument
-function returning that object in JavaScript's global scope. By default, the
+function returning that object in JavaScript’s global scope. By default, the
 function has the same name as the object in Scala (unqualified).</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSExport</span>
 <span class="k">object</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
   <span class="o">...</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p>exports the <code>HelloWorld()</code> function in JavaScript.</p>
 
@@ -136,7 +131,6 @@ for JavaScript. For example,</p>
   <span class="o">...</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>exports the <code>HelloWorld</code> object under the function <code>MainObject()</code> in JavaScript.</p>
 
 <p>The name can contain dots, in which case the exported function is namespaced
@@ -147,10 +141,9 @@ in JavaScript.</p>
   <span class="o">...</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>will be accessible in JavaScript using <code>myapp.foo.MainObject()</code>.</p>
 
-<h2>Exporting classes</h2>
+<h2 id="exporting-classes">Exporting classes</h2>
 
 <p>The <code>@JSExport</code> annotation can also be used to export Scala.js classes to
 JavaScript (but not traits), or, to be more precise, their constructors. This
@@ -161,12 +154,10 @@ allows JavaScript code to create instances of the class.</p>
   <span class="k">override</span> <span class="k">def</span> <span class="n">toString</span><span class="o">()</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">s</span><span class="s">&quot;Foo($x)&quot;</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>exposes <code>Foo</code> as a constructor function to JavaScript:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Foo</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span></code></pre></div>
-
 
 <p>will log the string <code>"Foo(3)"</code> to the console. This particular example works
 because it calls <code>toString()</code>, which is always exported to JavaScript. Other
@@ -175,7 +166,7 @@ methods must be exported explicitly as shown in the next section.</p>
 <p>As is the case for top-level objects, classes can be exported under custom
 names, including namespaced ones, by giving an explicit name to <code>@JSExport</code>.</p>
 
-<h2>Exporting methods</h2>
+<h2 id="exporting-methods">Exporting methods</h2>
 
 <p>Similarly to objects, methods of Scala classes, traits and objects can be
 exported with <code>@JSExport</code>, with or without an explicit name.</p>
@@ -187,7 +178,6 @@ exported with <code>@JSExport</code>, with or without an explicit name.</p>
   <span class="k">def</span> <span class="n">add</span><span class="o">(</span><span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span><span class="o">+</span><span class="n">y</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>Given this definition, and some variable <code>foo</code> holding an instance of <code>Foo</code>,
 you can call:</p>
 
@@ -195,8 +185,7 @@ you can call:</p>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">foobar</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
 <span class="c1">// console.log(foo.add(3)); // TypeError, add is not a member of foo</span></code></pre></div>
 
-
-<h3>Overloading</h3>
+<h3 id="overloading">Overloading</h3>
 
 <p>Several methods can be exported with the same JavaScript name (either because
 they have the same name in Scala, or because they have the same explicit
@@ -215,13 +204,11 @@ types of arguments passed to the the method.</p>
   <span class="k">def</span> <span class="n">bar</span><span class="o">(</span><span class="n">b</span><span class="k">:</span> <span class="kt">Boolean</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">b</span><span class="o">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>the following calls will dispatch to each of the three methods:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">foobar</span><span class="p">());</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">foobar</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">foobar</span><span class="p">(</span><span class="kc">false</span><span class="p">));</span></code></pre></div>
-
 
 <p>If the Scala.js compiler cannot produce a dispatching code capable of reliably
 disambiguating overloads, it will issue a compile error (with a somewhat cryptic
@@ -235,7 +222,6 @@ message):</p>
   <span class="nd">@JSExport</span><span class="o">(</span><span class="s">&quot;foobar&quot;</span><span class="o">)</span>
   <span class="k">def</span> <span class="n">bar</span><span class="o">(</span><span class="n">i</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">x</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p>gives:</p>
 
@@ -251,14 +237,12 @@ message):</p>
 <p>Hint to recognize this error: the methods are named <code>$js$exported$meth$</code>
 followed by the JavaScript export name.</p>
 
-<h3><a name="JSExportNamed"></a> Exporting for call with named parameters</h3>
-
+<h3 id="a-namejsexportnameda-exporting-for-call-with-named-parameters"><a name="JSExportNamed"></a> Exporting for call with named parameters</h3>
 <p>It is customary in Scala to call methods with named parameters if this eases understanding of the code or if many arguments with default values are present:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">3</span><span class="o">)</span> <span class="k">=</span> <span class="o">???</span>
 
 <span class="n">foo</span><span class="o">(</span><span class="n">y</span> <span class="k">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">2</span><span class="o">)</span></code></pre></div>
-
 
 <p>A rough equivalent in JavaScript is to pass an object with the respective properties:</p>
 
@@ -267,14 +251,12 @@ followed by the JavaScript export name.</p>
   <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span>
 <span class="p">});</span></code></pre></div>
 
-
 <p>The <code>@JSExportNamed</code> annotation allows to export Scala methods for use in JavaScript with named parameters:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">A</span> <span class="o">{</span>
   <span class="nd">@JSExportNamed</span>
   <span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">3</span><span class="o">)</span> <span class="k">=</span> <span class="o">???</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p>Note that default parameters are not required. <code>foo</code> can then be called like this:</p>
 
@@ -284,12 +266,11 @@ followed by the JavaScript export name.</p>
   <span class="nx">x</span><span class="o">:</span> <span class="mi">2</span>
 <span class="p">});</span></code></pre></div>
 
-
 <p>Not specifying <code>x</code> in this case will fail at runtime (since it does not have a default value).</p>
 
 <p>Just like <code>@JSExport</code>, <code>@JSExportNamed</code> takes the name of the exported method as an optional argument.</p>
 
-<h2>Exporting properties</h2>
+<h2 id="exporting-properties">Exporting properties</h2>
 
 <p><code>val</code>s, <code>var</code>s and <code>def</code>s without parentheses, as well as <code>def</code>s whose name
 ends with <code>_=</code>, have a single argument and <code>Unit</code> result type, are
@@ -312,7 +293,6 @@ using, again, the <code>@JSExport</code> annotation.</p>
   <span class="k">def</span> <span class="n">sum_=</span><span class="o">(</span><span class="n">v</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">y</span> <span class="k">=</span> <span class="n">v</span> <span class="o">-</span> <span class="n">x</span>
 <span class="o">}</span></code></pre></div>
 
-
 <p>JavaScript code can use the properties as follows:</p>
 
 <div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">point</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Point</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
@@ -328,7 +308,6 @@ using, again, the <code>@JSExport</code> annotation.</p>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">point</span><span class="p">.</span><span class="nx">sum</span><span class="p">);</span> <span class="c1">// 30</span>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">point</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>   <span class="c1">// 26</span></code></pre></div>
 
-
 <p>As usual, explicit names can be given to <code>@JSExport</code>. For <code>def</code> setters, the
 JS name must be specified <em>without</em> the trailing <code>_=</code>.</p>
 
@@ -340,9 +319,8 @@ exported under a single, overloaded JavaScript name.</p>
 disambiguate, the methods in the error messages will be prefixed by
 <code>$js$exported$prop$</code>.</p>
 
-<h3><a name="constructor-params"></a> Export fields directly declared in constructors</h3>
-
-<p>If you want to export fields that are directly declared in a class constructor, you'll have to use the <code>@field</code> meta annotation to avoid annotating the constructor arguments (exporting an argument is nonsensical and will fail):</p>
+<h3 id="a-nameconstructor-paramsa-export-fields-directly-declared-in-constructors"><a name="constructor-params"></a> Export fields directly declared in constructors</h3>
+<p>If you want to export fields that are directly declared in a class constructor, you’ll have to use the <code>@field</code> meta annotation to avoid annotating the constructor arguments (exporting an argument is nonsensical and will fail):</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.annotation.meta.field</span>
 
@@ -355,9 +333,7 @@ disambiguate, the methods in the error messages will be prefixed by
     <span class="o">@(</span><span class="nc">JSExport</span> <span class="nd">@field</span><span class="o">)</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span>
     <span class="o">@(</span><span class="nc">JSExport</span> <span class="nd">@field</span><span class="o">)</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span></code></pre></div>
 
-
-<h2>Automatically exporting descendent objects</h2>
-
+<h2 id="automatically-exporting-descendent-objects">Automatically exporting descendent objects</h2>
 <p>Sometimes it is desirable to automatically export all descendent
 objects of a given trait or class. You can use the
 <code>@JSExportDescendentObjects</code> annotation. It will cause all descendent
@@ -384,9 +360,7 @@ the feature can be used:</p>
   <span class="o">}</span>
 <span class="o">}</span></code></pre></div>
 
-
-<h2><a name="JSExportAll"></a> Automatically export all members</h2>
-
+<h2 id="a-namejsexportalla-automatically-export-all-members"><a name="JSExportAll"></a> Automatically export all members</h2>
 <p>Instead of writing <code>@JSExport</code> on every member of a class or object, you may use the <code>@JSExportAll</code> annotation. It is equivalent to adding <code>@JSExport</code> on every public (term) member directly declared in the class/object:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">A</span> <span class="o">{</span>
@@ -397,7 +371,6 @@ the feature can be used:</p>
 <span class="k">class</span> <span class="nc">B</span><span class="o">(</span><span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="n">A</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">sum</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="o">}</span></code></pre></div>
-
 
 <p>This is strictly equivalent to writing:</p>
 
@@ -410,8 +383,7 @@ the feature can be used:</p>
   <span class="k">def</span> <span class="n">sum</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="o">}</span></code></pre></div>
 
-
-<p>It is important to note that this does <strong>not</strong> export inherited members. If you wish to do so, you'll have to override them explicitly:</p>
+<p>It is important to note that this does <strong>not</strong> export inherited members. If you wish to do so, you’ll have to override them explicitly:</p>
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">A</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">mul</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
@@ -422,8 +394,6 @@ the feature can be used:</p>
   <span class="k">override</span> <span class="k">def</span> <span class="n">mul</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="k">super</span><span class="o">.</span><span class="n">mul</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span>
   <span class="k">def</span> <span class="n">sum</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
 <span class="o">}</span></code></pre></div>
-
-
 
 
             <div class="spacing"></div>

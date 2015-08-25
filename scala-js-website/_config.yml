@@ -11,7 +11,7 @@ exclude: ["*.iml"]
 production_url : http://www.scala-js.org
 
 # Build settings
-markdown: rdiscount
+markdown: kramdown
 permalink: /:categories/:title
 excerpt_separator: <!--more--> #use this in posts to define how long the excerpt of the post (that is shown on the Blog page) is
 

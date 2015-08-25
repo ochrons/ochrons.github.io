@@ -63,10 +63,9 @@
 which are described in this document.</p>
 
 <ul>
-<li><em>compiling</em>: compile .scala files to 1 .sjsir file per class using the scalac
+  <li><em>compiling</em>: compile .scala files to 1 .sjsir file per class using the scalac
 compiler with the Scala.js compiler plugin.</li>
 </ul>
-
 
 <p>For libraries, it stops here. The compiled .sjsir files are put together with .class files in the binary jars that
 can be published to an Ivy or Maven repository.</p>
@@ -76,22 +75,20 @@ consumable by browsers. Then an optional step can be used to optimize the
 result.</p>
 
 <ul>
-<li><em>linking</em> all the .sjsir files together, including those in transitive
+  <li><em>linking</em> all the .sjsir files together, including those in transitive
 dependencies. This is either one of:
-
-<ul>
-<li><em>fastoptimizing</em>: apply a type-aware inter-method global dead code
+    <ul>
+      <li><em>fastoptimizing</em>: apply a type-aware inter-method global dead code
 elimination that results in 1 preoptimized .js file.</li>
-<li><em>packaging</em>: concatenate blindly all compiled .sjsir files in 3 big .js files. This used to be the default in earlier versions of Scala.js. Packaging is discouraged and might fall away in future versions since the fast optimization is now faster.</li>
-</ul>
-</li>
-<li><em>optimizing</em> (optional, with the
+      <li><em>packaging</em>: concatenate blindly all compiled .sjsir files in 3 big .js files. This used to be the default in earlier versions of Scala.js. Packaging is discouraged and might fall away in future versions since the fast optimization is now faster.</li>
+    </ul>
+  </li>
+  <li><em>optimizing</em> (optional, with the
 <a href="https://developers.google.com/closure/compiler/">Closure Compiler</a>): apply
 the Closure Compiler to the linked .js file(s).</li>
 </ul>
 
-
-<h2>Compilation</h2>
+<h2 id="compilation">Compilation</h2>
 
 <p>Compilation is similar to using the Scala compiler daily. .scala source files
 are compiled with incremental compilation by the Scala compiler. They can
@@ -110,7 +107,7 @@ Maven repositories.</p>
 <p>This step completely supports separate compilation and incremental compilation,
 just like the regular Scala compiler.</p>
 
-<h2>Fast Optimzing</h2>
+<h2 id="fast-optimzing">Fast Optimzing</h2>
 
 <p>The size of the JavaScript files produced by blindly concatenating .sjsir files are huge.
 They are always bigger than 20 MB because they include the full Scala standard
@@ -136,7 +133,7 @@ fast optimization is typically between 1.5 MB and 2.5 MB.</p>
 <a href="https://github.com/scala-js/scala-js/blob/master/tools/src/main/scala/scala/scalajs/tools/optimizer/ScalaJSOptimizer.scala">ScalaJSOptimizer</a>
 in the Scala.js toolbox.</p>
 
-<h2>Packaging</h2>
+<h2 id="packaging">Packaging</h2>
 
 <p><strong>Packaging is discouraged, since fast optimizing has become faster. This section is for information only, as packaging can be useful for very specific use-cases.</strong></p>
 
@@ -148,7 +145,7 @@ and an ordering for correctness.</p>
 
 <p>In sbt, the packaging task is called <code>packageJS</code>.</p>
 
-<h3>Decomposition in 3 files</h3>
+<h3 id="decomposition-in-3-files">Decomposition in 3 files</h3>
 
 <p>Concatenating everything every time one changes one source file in the project
 takes time, because this is a heavily I/O-bound operation. However, typically
@@ -170,7 +167,7 @@ often.
 <code>app-pack-app.js</code> has to be repackaged on every single dev cycle, but contains
 relatively much fewer code, and so this is fast.</p>
 
-<h3>Ordering</h3>
+<h3 id="ordering">Ordering</h3>
 
 <p>The internal structure of the produced .js files imposes a constraint on the
 order in which they are packaged. A class must always be packaged after its
@@ -182,7 +179,7 @@ one more ancestor than <em>B</em> (namely, <em>B</em>), it is sufficient, to gua
 required ordering, that classes with more ancestors are ordered after classes
 with less ancestors.</p>
 
-<h2>Optimizing using Closure</h2>
+<h2 id="optimizing-using-closure">Optimizing using Closure</h2>
 
 <p>Scala.js emits code that is always guaranteed to follow the
 <a href="https://developers.google.com/closure/compiler/docs/limitations">restrictions</a>

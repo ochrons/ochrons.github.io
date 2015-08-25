@@ -69,7 +69,7 @@ for examples and documentation.</p>
 
 <p>We give a simple example of how such a project, we call it <code>foo</code>, could look. You can find this project on <a href="https://github.com/scala-js/scalajs-cross-compile-example">GitHub</a>.</p>
 
-<h2>Directory Structure</h2>
+<h2 id="directory-structure">Directory Structure</h2>
 
 <pre><code>&lt;project root&gt;
  +- jvm
@@ -83,7 +83,7 @@ for examples and documentation.</p>
 <p>In <code>shared/src/main/scala</code> are the shared source files.
 In <code>{js|jvm}/src/main/scala</code> are the source files specific to the respective platform (these folders are optional).</p>
 
-<h2>sbt Build File</h2>
+<h2 id="sbt-build-file">sbt Build File</h2>
 
 <p>This is an example how your <code>build.sbt</code> could look like:</p>
 
@@ -112,18 +112,16 @@ In <code>{js|jvm}/src/main/scala</code> are the source files specific to the res
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">fooJVM</span> <span class="k">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">jvm</span>
 <span class="k">lazy</span> <span class="k">val</span> <span class="n">fooJS</span> <span class="k">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">js</span></code></pre></div>
 
-
 <p>You now have separate projects to compile towards Scala.js and Scala JVM. Note the same name given to both projects, this allows them to be published with corresponding artifact names:</p>
 
 <ul>
-<li><code>foo_2.11-0.1-SNAPSHOT.jar</code></li>
-<li><code>foo_sjs_2.11-0.1-SNAPSHOT.jar</code></li>
+  <li><code>foo_2.11-0.1-SNAPSHOT.jar</code></li>
+  <li><code>foo_sjs_2.11-0.1-SNAPSHOT.jar</code></li>
 </ul>
-
 
 <p>If you do not publish the artifacts, you may choose different names for the projects.</p>
 
-<h2>Dependencies</h2>
+<h2 id="dependencies">Dependencies</h2>
 
 <p>If your cross compiled source depends on libraries, you may use <code>%%%</code> for both projects. It will automatically determine whether you are in a Scala/JVM or a Scala.js project. For example, if your code uses <a href="http://github.com/lihaoyi/scalatags">Scalatags</a>, your project definitions look like this:</p>
 
@@ -132,7 +130,6 @@ In <code>{js|jvm}/src/main/scala</code> are the source files specific to the res
     <span class="c1">// other settings</span>
     <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;com.lihaoyi&quot;</span> <span class="o">%%%</span> <span class="s">&quot;scalatags&quot;</span> <span class="o">%</span> <span class="s">&quot;0.4.3&quot;</span>
   <span class="o">)</span></code></pre></div>
-
 
 <p>instead of the more repetitive variant:</p>
 
@@ -146,8 +143,6 @@ In <code>{js|jvm}/src/main/scala</code> are the source files specific to the res
   <span class="n">jsSettings</span><span class="o">(</span>
     <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;com.lihaoyi&quot;</span> <span class="o">%%%</span> <span class="s">&quot;scalatags&quot;</span> <span class="o">%</span> <span class="s">&quot;0.4.3&quot;</span>
   <span class="o">)</span></code></pre></div>
-
-
 
 
             <div class="spacing"></div>

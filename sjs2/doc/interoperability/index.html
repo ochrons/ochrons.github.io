@@ -69,13 +69,11 @@ for languages that translate almost literally to JavaScript (e.g.,
 called from JavaScript code.</p>
 
 <ul>
-<li><a href="calling-js.html">Call JavaScript APIs from Scala.js</a></li>
-<li><a href="export-to-js.html">Export Scala.js APIs to JavaScript</a></li>
+  <li><a href="calling-js.html">Call JavaScript APIs from Scala.js</a></li>
+  <li><a href="export-to-js.html">Export Scala.js APIs to JavaScript</a></li>
 </ul>
 
-
-<h2><a name="type-correspondance"></a> Type Correspondance</h2>
-
+<h2 id="a-nametype-correspondancea-type-correspondance"><a name="type-correspondance"></a> Type Correspondance</h2>
 <p>Some Scala types are directly mapped to corresponding underlying
 JavaScript types. These correspondances can be used when calling
 Scala.js code from JavaScript and when defining typed interfaces for
@@ -86,7 +84,7 @@ JavaScript code.</p>
     <tr><th>Scala type</th><th>JavaScript type</th><th>Restrictions</th></tr>
   </thead>
   <tbody>
-    <tr><td>java.lang.String</td><td>string</td><td></tr></tr>
+    <tr><td>java.lang.String</td><td>string</td><td>
     <tr><td>scala.Boolean</td><td>boolean</td><td></td></tr>
     <tr><td>scala.Char</td><td><i>opaque</i></td><td></td></tr>
     <tr><td>scala.Byte</td><td>number</td><td>integer, range (-128, 127)</td></tr>
@@ -110,13 +108,13 @@ JavaScript code.</p>
       </td>
       <td>see <a href="export-to-javascript.html">exporting Scala.js APIs to JavaScript</a></td>
     </tr>
-  </tbody>
-</table>
+  
 
 
-<p>On the other hand, some JavaScript (collection) types have similar types in Scala. Instead of mapping them directly, Scala.js provides conversions between them. We show with a couple of snippets how you can convert from JavaScript to Scala types and back. Please refer to the <a href="/doc/index.html#api">Scaladocs</a> for details.</p>
+On the other hand, some JavaScript (collection) types have similar types in Scala. Instead of mapping them directly, Scala.js provides conversions between them. We show with a couple of snippets how you can convert from JavaScript to Scala types and back. Please refer to the [Scaladocs](/doc/index.html#api) for details.
 
-<p><strong><em> js.Array[T] <--> mutable.Seq[T] </em></strong></p>
+*** js.Array[T] &lt;--&gt; mutable.Seq[T] ***
+
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
 
@@ -139,7 +137,8 @@ JavaScript code.</p>
 <span class="k">val</span> <span class="n">jsArray</span><span class="k">:</span> <span class="kt">js.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">scSeq</span><span class="o">.</span><span class="n">toJSArray</span></code></pre></div>
 
 
-<p><strong><em> js.Dictionary[T] <--> mutable.Map[String, T] </em></strong></p>
+*** js.Dictionary[T] &lt;--&gt; mutable.Map[String, T] ***
+
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
 
@@ -159,7 +158,8 @@ JavaScript code.</p>
 <span class="k">val</span> <span class="n">jsDictionary</span><span class="k">:</span> <span class="kt">js.Dictionary</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">scMap</span><span class="o">.</span><span class="n">toJSDictionary</span></code></pre></div>
 
 
-<p><strong><em> js.UndefOr[T] <--> Option[T] </em></strong></p>
+*** js.UndefOr[T] &lt;--&gt; Option[T] ***
+
 
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
 
@@ -177,6 +177,7 @@ JavaScript code.</p>
 
 
 
+</td></tr></tbody></table>
 
             <div class="spacing"></div>
         </div>
