@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
 
-    <title>Scala.js - Scala.js sbt Setup</title>
+    <title>Scala.js - Building</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -51,7 +51,7 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>Scala.js sbt Setup</h3>
+            <h3>Building</h3>
         </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /blue -->
@@ -59,9 +59,96 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>Load the sbt plugin (<code>project/plugins.sbt</code>)</p>
+            <p>To compile, simply use the <code>compile</code> task:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-js&quot;</span> <span class="o">%</span> <span class="s">&quot;sbt-scalajs&quot;</span> <span class="o">%</span> <span class="s">&quot;&quot;</span><span class="o">)</span></code></pre></div>
+<pre><code>sbt&gt; compile
+</code></pre>
+
+<p>This will generate <code>.sjsir</code> and <code>.class</code> files for each class in your project (just like for Scala JVM). The <code>.class</code> files are used by the Scala.js compiler for symbol lookup during separate compilation. <strong>Do not use these <code>.class</code> files to run your project on a JVM.</strong> See the section below about cross-compilation.</p>
+
+<p>The <code>.sjsir</code> files are a binary representation of (extended) JavaScript code which can be linked to actual JavaScript code as will be explained shortly.</p>
+
+<p>You now can run your application already by using the <code>run</code> task:</p>
+
+<pre><code>sbt&gt; run
+</code></pre>
+
+<p>This will detect and run classes that extend
+<a href="http://www.scala-js.org/api/scalajs-library/0.6.4/#scala.scalajs.js.JSApp"><code>js.JSApp</code></a>, while optionally prompting the user to choose a class if multiple such classes exist (fails with multiple classes if <code>persistLauncher := true</code>, see section below for details).</p>
+
+<p>To run the <code>.sjsir</code> files, we invoke the Rhino JavaScript interpreter with a special scope that lazily reads and loads required <code>.sjsir</code> files on the fly (much like Java class loading).
+Note that by default, this environment doesn't have a DOM.
+If you need it set <code>jsDependencies += RuntimeDOM</code> in your settings.</p>
+
+<h2>Fast-Optimize</h2>
+
+<p>To produce a proper JavaScript file from your code, you need to call the linker:</p>
+
+<pre><code>sbt&gt; fastOptJS
+</code></pre>
+
+<p>This will perform fast Scala.js-specific optimizations and write the resulting code to a single JavaScript file. You can now use this JavaScript file in your HTML page or in whatever way you like. The resulting file in the target folder will have the suffix <code>-fastopt.js</code>.</p>
+
+<p>If you want to run this code, you can do so by enabling the fastOpt stage with</p>
+
+<pre><code>sbt&gt; set scalaJSStage in Global := FastOptStage
+sbt&gt; run
+</code></pre>
+
+<p>This will invoke an external JavaScript interpreter and pass the generated file to it.
+Depending on your <code>requiresDOM</code> setting (which is derived from the presence of <code>RuntimeDOM</code> in your <code>jsDependencies</code>), it will either invoke <a href="http://nodejs.org/">Node.js</a> or <a href="http://phantomjs.org/">PhantomJS</a>.
+<em>You need to install these separately</em> and make them available on the execution path (i.e. as shell commands <code>node</code> and <code>phantomjs</code>).</p>
+
+<p>Note that running in the <code>fastOptStage</code> is often faster than running just after compilation because:</p>
+
+<ol type="a">
+<li>As their name implies, fast optimizations are <em>really</em> fast (starting from the second run in an sbt session),</li>
+<li>External virtual machines are much faster than Rhino, and</li>
+<li>The code is, well, optimized, so faster itself.</li>
+</ol>
+
+
+<p>We recommend you to operate in the <code>fastOpt</code> stage in your development cycle.
+You can enable it by default with the following sbt setting:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSStage</span> <span class="n">in</span> <span class="nc">Global</span> <span class="o">:=</span> <span class="nc">FastOptStage</span></code></pre></div>
+
+
+<p>which you can put in your <code>build.sbt</code>, or in a separate <code>.sbt</code> file, e.g.,
+<code>local.sbt</code>, which is not checked in your version control.</p>
+
+<h3>Disabling the optimizations</h3>
+
+<p>If, for some reason (for example, to make stepping through the code with a debugger more predictable), you want to disable the optimizations, you can do so with the following sbt setting:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSOptimizerOptions</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withDisableOptimizer</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
+
+
+<p><code>scalaJSOptimizerOptions</code> contains various other options controlling the optimizer.
+See <a href="http://www.scala-js.org/api/sbt-scalajs/0.6.4/#org.scalajs.sbtplugin.OptimizerOptions">the ScalaDoc</a>
+for details.</p>
+
+<h2>Full-Optimize</h2>
+
+<p>To make the resulting JavaScript even smaller (and usually faster as well), the sbt plugin integrates the Google Closure Compiler under the so-called full-optimizations. You can use them by issuing:</p>
+
+<pre><code>sbt&gt; fullOptJS
+</code></pre>
+
+<p>This will produce another single JavaScript file that is fully optimized.
+Note that this can take a while and is therefore not recommended in the development cycle.
+The resulting file in the target folder will have the suffix <code>-opt.js</code>.</p>
+
+<p>You can run your code and tests in fullOpt stage with the following command:</p>
+
+<pre><code>sbt&gt; set scalaJSStage in Global := FullOptStage
+</code></pre>
+
+<h2>Writing Launcher Code</h2>
+
+<p>If you want the code which is used to run the main class to be written to a file, you can set <code>persistLauncher := true</code>.
+Note that this will require your main class to be either unique or explicitly set (<code>mainClass := Some(&lt;name&gt;)</code>).
+The resulting file in the target folder will have the suffix <code>-launcher.js</code>.</p>
 
             <div class="spacing"></div>
         </div>
@@ -82,7 +169,7 @@
     <li>
         <a href="/sjs2/doc/project/">
             
-            Project structure
+            Project setup
             
         </a>
     </li>
@@ -108,8 +195,62 @@
     </li>
     
     
+    <li>
+        <a href="/sjs2/doc/project/js_environments.html">
+            
+            JavaScript Environments
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/cross_build.html">
+            
+            Cross-building
+            
+        </a>
+    </li>
+    
+    
 </ul>
 
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/">
+            
+            JavaScript interoperability
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/semantics.html">
+            
+            Semantics of Scala.js
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/internals">
+            
+            Internals
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/faq.html">
+            
+            FAQ
+            
+        </a>
+    </li>
     
     
 </ul>
@@ -130,7 +271,7 @@
                 <div class="hline-w"></div>
                 <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
                 <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
-                <a class="grey-text text-lighten-3" href="/sjs2/faq.html">FAQ</a>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
             </div>
             <div class="col-md-4">
                 <h4>COMMUNITY</h4>

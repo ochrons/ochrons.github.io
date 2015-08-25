@@ -9,7 +9,7 @@ title: Dependencies
 To be able to use a Scala library in Scala.js, it has to be separately compiled for Scala.js. You then can add it to your library dependencies as follows:
 
 {% highlight scala %}
-libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.8.0"
+libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "{{ site.versions.scalaJSDOM }}"
 {% endhighlight %}
 
 Note the `%%%` (instead of the usual `%%`) which will add the current Scala.js version to the artifact name. This allows to

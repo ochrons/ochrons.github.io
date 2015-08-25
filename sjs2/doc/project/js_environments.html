@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
 
-    <title>Scala.js - Scala.js project structure</title>
+    <title>Scala.js - JavaScript Environments</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -51,7 +51,7 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>Scala.js project structure</h3>
+            <h3>JavaScript Environments</h3>
         </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /blue -->
@@ -59,33 +59,64 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>Scala.js comes with an sbt plugin that facilitates compiling, running and testing with Scala.js. For a quick start,
-have a look at our <a href="https://github.com/sjrd/scala-js-example-app">bootstrapping skeleton</a>.</p>
-
-<p>Load the sbt plugin (<code>project/plugins.sbt</code>)</p>
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-js&quot;</span> <span class="o">%</span> <span class="s">&quot;sbt-scalajs&quot;</span> <span class="o">%</span> <span class="s">&quot;0.6.4&quot;</span><span class="o">)</span></code></pre></div>
-
-
-<p>Enable the plugin on the sbt project (<code>build.sbt</code>):</p>
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span>
-  <span class="n">enablePlugins</span><span class="o">(</span><span class="nc">ScalaJSPlugin</span><span class="o">)</span></code></pre></div>
-
-
-<p>If you are using a <code>Build.scala</code> definition, import the following:</p>
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.sbtplugin.ScalaJSPlugin</span>
-<span class="k">import</span> <span class="nn">org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._</span></code></pre></div>
-
+            <p>In order to decide how to run JavaScript code, the Scala.js sbt plugin uses the following two setting keys:</p>
 
 <ul>
-<li><a href="building.html">Compiling, Running, Linking, Optimizing</a></li>
-<li><a href="dependencies.html">Depending on Libraries</a></li>
-<li><a href="js_environments.html">JavaScript Environments</a></li>
-<li><a href="cross_build.html">Cross-Building</a></li>
+<li><code>preLinkJSEnv</code>: the JavaScript Environment (i.e. virtual machine) used to run unlinked <code>.sjsir</code> files (defaults to Rhino)</li>
+<li><code>postLinkJSEnv</code>: the JavaScript Environment used to run linked JavaScript (defaults to Node.js if DOM is not required, otherwise PhantomJS)</li>
 </ul>
 
+
+<p>You may change these environments at your discretion. However, note that running Rhino on linked JavaScript and Node.js or PhantomJS on unlinked JavaScript is unlikely to work or at least slow.</p>
+
+<p>For example, to switch to PhantomJS, you can set:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">PhantomJSEnv</span><span class="o">().</span><span class="n">value</span></code></pre></div>
+
+
+<p>We'd like to stress here again, that you need to separately install Node.js and PhantomJS if you would like to use these environments.</p>
+
+<h2><a name="phantomjs-no-auto-terminate"></a> Disabling auto-termination of PhantomJS</h2>
+
+<p>By default, the PhantomJS interpreter terminates itself as soon as the <code>main()</code> method returns.
+This may not be what you want, if for example you register time-outs or use WebSockets.
+You can disable this behavior with the following setting:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">PhantomJSEnv</span><span class="o">(</span><span class="n">autoExit</span> <span class="k">=</span> <span class="kc">false</span><span class="o">).</span><span class="n">value</span></code></pre></div>
+
+
+<p>You can terminate the interpreter from your Scala code with</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">System</span><span class="o">.</span><span class="n">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span></code></pre></div>
+
+
+<h2><a name="phantomjs-arguments"></a> Passing arguments to PhantomJS</h2>
+
+<p>You can pass command-line arguments to the PhantomJS interpreter like this:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">PhantomJSEnv</span><span class="o">(</span><span class="n">args</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">&quot;arg1&quot;</span><span class="o">,</span> <span class="s">&quot;arg2&quot;</span><span class="o">)).</span><span class="n">value</span></code></pre></div>
+
+
+<p>For more options of the PhantomJS environment, see
+<a href="http://www.scala-js.org/api/sbt-scalajs/0.6.4/#org.scalajs.sbtplugin.ScalaJSPlugin$$AutoImport$">the ScalaDoc of <code>PhantomJSEnv</code></a>.</p>
+
+<h2><a name="node-on-ubuntu"></a> Node.js on Ubuntu</h2>
+
+<p>On Ubuntu, the Node.js command from the <a href="http://packages.ubuntu.com/utopic/nodejs">nodejs package</a> is called <code>nodejs</code> instead of <code>node</code> (when installed through the package manager). This will make the Node.js environment fail (since it simply calls <code>node</code>).</p>
+
+<p>You have two options to solve this:</p>
+
+<ol>
+<li>Install <a href="http://packages.ubuntu.com/utopic/nodejs-legacy">nodejs-legacy</a> which will add an alias called <code>node</code></li>
+<li>Explicitly tell the Node.js environment the name of the command:</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">NodeJSEnv</span><span class="o">(</span><span class="n">executable</span> <span class="k">=</span> <span class="s">&quot;nodejs&quot;</span><span class="o">).</span><span class="n">value</span></code></pre></div>
+
+
+<p>For more options of the Node.js environment, see
+<a href="http://www.scala-js.org/api/sbt-scalajs/0.6.4/#org.scalajs.sbtplugin.ScalaJSPlugin$$AutoImport$">the ScalaDoc of <code>NodeJSEnv</code></a>.</p>
 
             <div class="spacing"></div>
         </div>
@@ -106,7 +137,7 @@ have a look at our <a href="https://github.com/sjrd/scala-js-example-app">bootst
     <li>
         <a href="/sjs2/doc/project/">
             
-            <b>Project setup</b>
+            Project setup
             
         </a>
     </li>
@@ -135,7 +166,7 @@ have a look at our <a href="https://github.com/sjrd/scala-js-example-app">bootst
     <li>
         <a href="/sjs2/doc/project/js_environments.html">
             
-            JavaScript Environments
+            <b>JavaScript Environments</b>
             
         </a>
     </li>

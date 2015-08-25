@@ -38,7 +38,7 @@
     </div>
     <div class="navbar-collapse collapse navbar-right">
       <ul class="nav navbar-nav">
-        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li class="active"><a href="/sjs2/doc">DOCUMENTATION</a></li>
         <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
         <li ><a href="/sjs2/community">COMMUNITY</a></li>
         <li ><a href="/sjs2/news">NEWS</a></li>
@@ -58,11 +58,96 @@
 
 <div class="container mtb">
     <div class="row">
-        <div class="col-md-12">
-            <p>Lorem ipsum.</p>
+        <div class="col-md-9">
+            <h3>How to structure a .sbt build to cross-compile with Scala and Scala.js?</h3>
 
+<p>The best way to do this is to have two sbt projects, with two different base
+directories that share a common source directory. This is easily done with the
+<code>sourceDirectory</code> or the <code>unmanagedSourceDirectories</code> setting of sbt.</p>
+
+<p>Please follow our <a href="./doc/project/cross_build.html">cross-building guide</a> for details.</p>
+
+<h3>Can I use macros with Scala.js? What about compiler plugins?</h3>
+
+<p>Yes, you can. There is nothing specific to Scala.js here.</p>
+
+<h3>Where can I find an example of non trivial Scala.js project?</h3>
+
+<p>Have a look at these projects <a href="../#built_with_scalajs">built with Scala.js</a>.</p>
+
+<h3>Have you considered targeting <a href="http://asmjs.org/">asm.js</a>? Would it help?</h3>
+
+<p>asm.js would not help in implementing Scala.js.</p>
+
+<p>asm.js was designed as a target for C-like languages, that consider the memory
+as a huge array of bytes, and with manual memory management. By their own
+acknowledgment (see <a href="http://asmjs.org/faq.html">their FAQ</a>), it is not a good
+target for managed languages like Scala.</p>
 
             <div class="spacing"></div>
+        </div>
+        <div class="col-md-3">
+            <nav class="toc" role="navigation">
+                
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/">
+            
+            Introduction
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/">
+            
+            Project setup
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/">
+            
+            JavaScript interoperability
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/semantics.html">
+            
+            Semantics of Scala.js
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/internals">
+            
+            Internals
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/faq.html">
+            
+            <b>FAQ</b>
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -78,7 +163,7 @@
                 <div class="hline-w"></div>
                 <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
                 <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
-                <a class="grey-text text-lighten-3" href="/sjs2/faq.html">FAQ</a>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
             </div>
             <div class="col-md-4">
                 <h4>COMMUNITY</h4>

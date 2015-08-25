@@ -8,9 +8,10 @@ analytics: #Google analytics code in the format XX-nnnnnnnn-n
 baseurl: "/sjs2"
 url: "http://yourdomain.com"
 exclude: ["*.iml"]
+production_url : http://www.scala-js.org
 
 # Build settings
-markdown: kramdown
+markdown: rdiscount
 permalink: /:categories/:title
 excerpt_separator: <!--more--> #use this in posts to define how long the excerpt of the post (that is shown on the Blog page) is
 
@@ -24,5 +25,10 @@ colors:  #in hex code if not noted else
   footer_content: "#bfc9d3"
   
   
-### CONTACT SETTINGS ###
+### VERSIONS ###
+versions:
+  scalaJS: 0.6.4
+  scalaJSBinary: 0.6
+  scalaJSDOM: 0.8.1
+
 
