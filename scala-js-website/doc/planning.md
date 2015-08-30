@@ -21,6 +21,9 @@ title: Planning
     - Client-server project
         
         Using Play as an example server (makes the build.sbt simple)
+    - Eclipse and IntelliJ
+    
+        How to import projects into popular IDEs
     - Advanced features
         
         Documenting less often used SBT plugin features
