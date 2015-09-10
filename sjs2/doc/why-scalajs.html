@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
 
-    <title>Scala.js - Scala.js project structure</title>
+    <title>Scala.js - Why Scala.js?</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -51,7 +51,7 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>Scala.js project structure</h3>
+            <h3>Why Scala.js?</h3>
         </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /blue -->
@@ -59,29 +59,7 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>Scala.js comes with an sbt plugin that facilitates compiling, running and testing with Scala.js. For a quick start, 
-have a look at our <a href="https://github.com/sjrd/scala-js-example-app">bootstrapping skeleton</a>.</p>
-
-<p>Load the sbt plugin (<code>project/plugins.sbt</code>)</p>
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-js&quot;</span> <span class="o">%</span> <span class="s">&quot;sbt-scalajs&quot;</span> <span class="o">%</span> <span class="s">&quot;0.6.4&quot;</span><span class="o">)</span></code></pre></div>
-
-<p>Enable the plugin on the sbt project (<code>build.sbt</code>):</p>
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">lazy</span> <span class="k">val</span> <span class="n">root</span> <span class="k">=</span> <span class="n">project</span><span class="o">.</span>
-  <span class="n">enablePlugins</span><span class="o">(</span><span class="nc">ScalaJSPlugin</span><span class="o">)</span></code></pre></div>
-
-<p>If you are using a <code>Build.scala</code> definition, import the following:</p>
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.sbtplugin.ScalaJSPlugin</span>
-<span class="k">import</span> <span class="nn">org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._</span></code></pre></div>
-
-<ul>
-  <li><a href="building.html">Compiling, Running, Linking, Optimizing</a></li>
-  <li><a href="dependencies.html">Depending on Libraries</a></li>
-  <li><a href="js_environments.html">JavaScript Environments</a></li>
-  <li><a href="cross_build.html">Cross-Building</a></li>
-</ul>
+            
 
             <div class="spacing"></div>
         </div>
@@ -111,7 +89,7 @@ have a look at our <a href="https://github.com/sjrd/scala-js-example-app">bootst
     <li>
         <a href="/sjs2/doc/why-scalajs.html">
             
-            Why Scala.js?
+            <b>Why Scala.js?</b>
             
         </a>
     </li>
@@ -120,52 +98,10 @@ have a look at our <a href="https://github.com/sjrd/scala-js-example-app">bootst
     <li>
         <a href="/sjs2/doc/project/">
             
-            <b>Project setup</b>
+            Project setup
             
         </a>
     </li>
-    
-      
-<ul>
-    
-    <li>
-        <a href="/sjs2/doc/project/building.html">
-            
-            Building the application
-            
-        </a>
-    </li>
-    
-    
-    <li>
-        <a href="/sjs2/doc/project/dependencies.html">
-            
-            Dependencies
-            
-        </a>
-    </li>
-    
-    
-    <li>
-        <a href="/sjs2/doc/project/js_environments.html">
-            
-            JavaScript Environments
-            
-        </a>
-    </li>
-    
-    
-    <li>
-        <a href="/sjs2/doc/project/cross_build.html">
-            
-            Cross-building
-            
-        </a>
-    </li>
-    
-    
-</ul>
-
     
     
     <li>

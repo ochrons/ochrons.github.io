@@ -1,5 +1,9 @@
 - text: Introduction
   url: /doc/
+- text: Quick Start
+  url: /doc/quick-start.html
+- text: Why Scala.js?
+  url: /doc/why-scalajs.html
 - text: Project setup
   url: /doc/project/
   subitems:
