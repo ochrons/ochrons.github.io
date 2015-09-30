@@ -10,7 +10,7 @@ This Quick Start will help you set up your system for developing with Scala.js a
 
 All you need to get started is 
 
-* recent version of Java JDK and [(download)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html){:target="_blank"}
+* recent version of Java JDK [(download)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html){:target="_blank"}
 * Typesafe Activator(*) [(download)](https://www.typesafe.com/activator/download){:target="_blank"}
 
 Once you have extracted Activator into a suitable folder, add the folder to your `PATH` to access it from the command line.
@@ -41,7 +41,7 @@ activator run
 {% endhighlight %}
 
 Note that this will take a while on the first time as `activator` downloads all required packages including the Scala compiler.
-The next time you run the application will be *much* faster!
+The next time you run the application, it will start *much* faster!
 
 Once all packages have been download and the project compiled, you can navigate in your browser to <http://localhost:12345>
 to access the application. You should now see a welcome screen in your browser

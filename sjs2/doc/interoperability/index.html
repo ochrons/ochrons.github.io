@@ -73,111 +73,6 @@ called from JavaScript code.</p>
   <li><a href="export-to-js.html">Export Scala.js APIs to JavaScript</a></li>
 </ul>
 
-<h2 id="a-nametype-correspondancea-type-correspondance"><a name="type-correspondance"></a> Type Correspondance</h2>
-<p>Some Scala types are directly mapped to corresponding underlying
-JavaScript types. These correspondances can be used when calling
-Scala.js code from JavaScript and when defining typed interfaces for
-JavaScript code.</p>
-
-<table class="table table-bordered">
-  <thead>
-    <tr><th>Scala type</th><th>JavaScript type</th><th>Restrictions</th></tr>
-  </thead>
-  <tbody>
-    <tr><td>java.lang.String</td><td>string</td><td>
-    <tr><td>scala.Boolean</td><td>boolean</td><td></td></tr>
-    <tr><td>scala.Char</td><td><i>opaque</i></td><td></td></tr>
-    <tr><td>scala.Byte</td><td>number</td><td>integer, range (-128, 127)</td></tr>
-    <tr><td>scala.Short</td><td>number</td><td>integer, range (-32768, 32767)</td></tr>
-    <tr><td>scala.Int</td><td>number</td><td>integer, range (-2147483648, 2147483647)</td></tr>
-    <tr><td>scala.Long</td><td><i>opaque</i></td><td></td></tr>
-    <tr><td>scala.Float</td><td>number</td><td></td></tr>
-    <tr><td>scala.Double</td><td>number</td><td></td></tr>
-    <tr><td>scala.Unit</td><td>undefined</td><td></td></tr>
-    <tr><td>scala.Null</td><td>null</td><td></td></tr>
-    <tr><td>subtypes of js.Object</td><td><i>corresponding JavaScript
-  type</i></td><td>see <a href="calling-javascript.html">calling JavaScript guide</a></td></tr>
-    <tr>
-      <td>
-        other Scala classes<br />
-        <small>including value classes</small>
-      </td>
-      <td>
-        <i>opaque, except for exported methods</i><br />
-        <small>Note: <code>toString()</code> is always exported</small>
-      </td>
-      <td>see <a href="export-to-javascript.html">exporting Scala.js APIs to JavaScript</a></td>
-    </tr>
-  
-
-
-On the other hand, some JavaScript (collection) types have similar types in Scala. Instead of mapping them directly, Scala.js provides conversions between them. We show with a couple of snippets how you can convert from JavaScript to Scala types and back. Please refer to the [Scaladocs](/doc/index.html#api) for details.
-
-*** js.Array[T] &lt;--&gt; mutable.Seq[T] ***
-
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
-
-<span class="k">val</span> <span class="n">jsArr</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
-
-<span class="c1">// Scala style operations on js.Array (returns a js.Array)</span>
-<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">js.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsArr</span><span class="o">.</span><span class="n">takeWhile</span><span class="o">(</span><span class="k">_</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">)</span>
-
-<span class="c1">// Use a js.Array as a Scala mutable.Seq</span>
-<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">mutable.Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsArr</span>
-
-<span class="c1">// toArray (from js.ArrayOps) -- Copy into scala.Array</span>
-<span class="k">val</span> <span class="n">z</span><span class="k">:</span> <span class="kt">scala.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsArr</span><span class="o">.</span><span class="n">toArray</span>
-
-<span class="k">import</span> <span class="nn">js.JSConverters._</span>
-
-<span class="k">val</span> <span class="n">scSeq</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
-
-<span class="c1">// Seq to js.Array -- Copy to js.Array</span>
-<span class="k">val</span> <span class="n">jsArray</span><span class="k">:</span> <span class="kt">js.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">scSeq</span><span class="o">.</span><span class="n">toJSArray</span></code></pre></div>
-
-
-*** js.Dictionary[T] &lt;--&gt; mutable.Map[String, T] ***
-
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
-
-<span class="k">val</span> <span class="n">jsDict</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Dictionary</span><span class="o">(</span><span class="s">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">)</span>
-
-<span class="c1">// Scala style operations on js.Dictionary (returns mutable.Map)</span>
-<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">mutable.Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsDict</span><span class="o">.</span><span class="n">mapValues</span><span class="o">(</span><span class="k">_</span> <span class="o">*</span> <span class="mi">2</span><span class="o">)</span>
-
-<span class="c1">// Use a js.Dictionary as Scala mutable.Map</span>
-<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">mutable.Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsDict</span>
-
-<span class="k">import</span> <span class="nn">js.JSConverters._</span>
-
-<span class="k">val</span> <span class="n">scMap</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">)</span>
-
-<span class="c1">// Map to js.Dictionary -- Copy to js.Dictionary</span>
-<span class="k">val</span> <span class="n">jsDictionary</span><span class="k">:</span> <span class="kt">js.Dictionary</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">scMap</span><span class="o">.</span><span class="n">toJSDictionary</span></code></pre></div>
-
-
-*** js.UndefOr[T] &lt;--&gt; Option[T] ***
-
-
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
-
-<span class="k">val</span> <span class="n">jsUndefOr</span><span class="k">:</span> <span class="kt">js.UndefOr</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="mi">1</span>
-
-<span class="c1">// Convert to scala.Option</span>
-<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsUndefOr</span><span class="o">.</span><span class="n">toOption</span>
-
-<span class="k">import</span> <span class="nn">js.JSConverters._</span>
-
-<span class="k">val</span> <span class="n">opt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-
-<span class="c1">// Convert to js.Undefined</span>
-<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">js.UndefOr</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">orUndefined</span></code></pre></div>
-
-
-
-</td></tr></tbody></table>
 
             <div class="spacing"></div>
         </div>
@@ -214,6 +109,24 @@ On the other hand, some JavaScript (collection) types have similar types in Scal
     
     
     <li>
+        <a href="/sjs2/doc/scalajs_for_jsdevs.html">
+            
+            Scala.js for JavaScript developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/scalajs_for_scaladevs.html">
+            
+            Scala.js for Scala developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
         <a href="/sjs2/doc/project/">
             
             Project setup
@@ -234,9 +147,18 @@ On the other hand, some JavaScript (collection) types have similar types in Scal
 <ul>
     
     <li>
+        <a href="/sjs2/doc/interoperability/types.html">
+            
+            JavaScript types
+            
+        </a>
+    </li>
+    
+    
+    <li>
         <a href="/sjs2/doc/interoperability/calling_js.html">
             
-            Call JavaScript APIs from Scala.js
+            Call JavaScript APIs
             
         </a>
     </li>
@@ -245,7 +167,16 @@ On the other hand, some JavaScript (collection) types have similar types in Scal
     <li>
         <a href="/sjs2/doc/interoperability/export_to_js.html">
             
-            Export Scala.js APIs to JavaScript
+            Export Scala.js APIs
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/sjs_defined_js_classes.html">
+            
+            Write JavaScript classes in Scala.js
             
         </a>
     </li>
@@ -253,6 +184,15 @@ On the other hand, some JavaScript (collection) types have similar types in Scal
     
 </ul>
 
+    
+    
+    <li>
+        <a href="/sjs2/doc/api.html">
+            
+            Scala.js API
+            
+        </a>
+    </li>
     
     
     <li>

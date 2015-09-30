@@ -27,7 +27,4 @@ import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 {% endhighlight %}
 
-* [Compiling, Running, Linking, Optimizing](building.html)
-* [Depending on Libraries](dependencies.html)
-* [JavaScript Environments](js_environments.html)
-* [Cross-Building](cross_build.html)
+Next we'll look into the [building process](building.html) in more detail.

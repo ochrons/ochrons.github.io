@@ -141,7 +141,7 @@ Note that this will have (potentially major) performance impacts.
 
 The JavaScript interoperability feature is, in itself, a big semantic
 difference. However, its details are discussed in a
-[dedicated page](./js-interoperability.html).
+[dedicated page](./interoperability).
 
 ## Reflection
 

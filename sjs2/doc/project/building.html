@@ -74,7 +74,7 @@
 </code></pre>
 
 <p>This will detect and run classes that extend
-<a href="http://www.scala-js.org/api/scalajs-library/0.6.4/#scala.scalajs.js.JSApp"><code>js.JSApp</code></a>, while optionally prompting the user to choose a class if multiple such classes exist (fails with multiple classes if <code>persistLauncher := true</code>, see section below for details).</p>
+<a href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.js.JSApp"><code>js.JSApp</code></a>, while optionally prompting the user to choose a class if multiple such classes exist (fails with multiple classes if <code>persistLauncher := true</code>, see section below for details).</p>
 
 <p>To run the <code>.sjsir</code> files, we invoke the Rhino JavaScript interpreter with a special scope that lazily reads and loads required <code>.sjsir</code> files on the fly (much like Java class loading).
 Note that by default, this environment doesn’t have a DOM.
@@ -120,7 +120,7 @@ You can enable it by default with the following sbt setting:</p>
 <div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSOptimizerOptions</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withDisableOptimizer</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
 
 <p><code>scalaJSOptimizerOptions</code> contains various other options controlling the optimizer.
-See <a href="http://www.scala-js.org/api/sbt-scalajs/0.6.4/#org.scalajs.sbtplugin.OptimizerOptions">the ScalaDoc</a>
+See <a href="http://www.scala-js.org/api/sbt-scalajs/0.6.5/#org.scalajs.sbtplugin.OptimizerOptions">the ScalaDoc</a>
 for details.</p>
 
 <h2 id="full-optimize">Full-Optimize</h2>
@@ -174,6 +174,24 @@ The resulting file in the target folder will have the suffix <code>-launcher.js<
         <a href="/sjs2/doc/why-scalajs.html">
             
             Why Scala.js?
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/scalajs_for_jsdevs.html">
+            
+            Scala.js for JavaScript developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/scalajs_for_scaladevs.html">
+            
+            Scala.js for Scala developers
             
         </a>
     </li>
@@ -234,6 +252,15 @@ The resulting file in the target folder will have the suffix <code>-launcher.js<
         <a href="/sjs2/doc/interoperability/">
             
             JavaScript interoperability
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/api.html">
+            
+            Scala.js API
             
         </a>
     </li>

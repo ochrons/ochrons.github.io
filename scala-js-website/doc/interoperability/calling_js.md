@@ -12,148 +12,6 @@ Because JavaScript is dynamically typed, it is possible to call JS libraries in
 a dynamically typed way. However, it is also possible to interop with static
 types, for better leveraging of Scala.
 
-## Pre-defined JavaScript types
-
-Primitive JavaScript types (`number`, `boolean`, `string`, `null` and
-`undefined`) are represented by their natural equivalent in Scala, as shown
-in the [type equivalence table](./js-interoperability.html#type-correspondance).
-
-For other pre-defined JavaScript types, such as arrays and functions, the
-package `scala.scalajs.js`
-([ScalaDoc]({{ site.production_url }}/api/scalajs-library/{{ site.versions.scalaJS }}/#scala.scalajs.js.package))
-provides dedicated definitions.
-
-The class hierarchy for these standard types is as follows:
-
-    js.Any
-     +- js.Object
-     |   +- js.Date
-     |   +- js.RegExp
-     |   +- js.Array[A]
-     |   +- js.Function
-     |       +- js.Function0[+R]
-     |       +- js.Function1[-T1, +R]
-     |       +- ...
-     |       +- js.Function22[-T1, ..., -T22, +R]
-     |       +- js.ThisFunction
-     |           +- js.ThisFunction0[-T0, +R]
-     |           +- js.ThisFunction1[-T0, -T1, +R]
-     |           +- ...
-     |           +- js.ThisFunction21[-T0, ..., -T21, +R]
-     +- js.Dictionary[A]
-
-Note that most of these types are similar to standard Scala types. For example,
-`js.Array[A]` is similar to `scala.Array[A]`, and `js.FunctionN` is similar to
-`scala.FunctionN`.
-However, they are not completely equivalent, and must not be confused.
-
-With the exception of `js.Array[A]` and `js.Dictionary[A]`, these types have
-all the fields and methods available in the JavaScript API.
-The collection types feature the standard Scala collection API instead, so that
-they can be used idiomatically in Scala code.
-
-**0.5.x note**: In Scala.js 0.5.x, `js.Array[A]` and `js.Dictionary[A]` did not
-really have the collection API. The methods defined in JavaScript took
-precedence. This was changed in 0.6.x to avoid pitfalls when confusing the
-APIs, avoiding common JavaScript warts, and improving performance.
-
-## Function types
-
-### `js.Function` and its subtypes
-
-`js.FunctionN[T1, ..., TN, R]` is, as expected, the type of a JavaScript
-function taking N parameters of types `T1` to `TN`, and returning a value of
-type `R`.
-
-There are implicit conversions from `scala.FunctionN` to `js.FunctionN` and
-back, with the obvious meaning.
-These conversions are the only way to create a `js.FunctionN` in Scala.js.
-For example:
-
-{% highlight scala %}
-val f: js.Function1[Double, Double] = { (x: Double) => x*x }
-{% endhighlight %}
-
-defines a JavaScript `function` object which squares its argument.
-This corresponds to the following JavaScript code:
-
-{% highlight javascript %}
-var f = function(x) {
-  return x*x;
-};
-{% endhighlight %}
-
-You can call a `js.FunctionN` in Scala.js with the usual syntax:
-
-{% highlight scala %}
-val y = f(5)
-{% endhighlight %}
-
-### `js.ThisFunction` and its subtypes
-
-The series of `js.ThisFunctionN` solve the problem of modeling the `this`
-value of JavaScript in Scala. Consider the following call to the `each` method
-of a jQuery object:
-
-{% highlight javascript %}
-var lis = jQuery("ol > li");
-lis.each(function() {
-  jQuery(this).text(jQuery(this).text() + " - transformed")
-});
-{% endhighlight %}
-
-Inside the closure, the value of `this` is the DOM element currently being
-enumerated. This usage of `this`, which is nonsense from a Scala point of view,
-is standard in JavaScript. `this` can actually be thought of as an additional
-parameter to the closure.
-
-In Scala.js, the `this` keyword always follows the same rules as in Scala,
-i.e., it binds to the enclosing class, trait or object. It will never bind to
-the equivalent of the JavaScript `this` in an anonymous function.
-
-To access the JavaScript `this` in Scala.js, it can be made explicit using
-`js.ThisFunctionN`. A `js.ThisFunctionN[T0, T1, ..., TN, R]` is the type of a
-JavaScript function taking a `this` parameter of type `T0`, as well as N
-normal parameters of types `T1` to `TN`, and returning a value of type `R`.
-From Scala.js, the `this` parameter appears as any other parameter: it has a
-non-keyword name, a type, and is listed first in the parameter list. Hence,
-a `scala.FunctionN` is convertible to/from a `js.ThisFunction{N-1}`.
-
-The previous example would be written as follows in Scala.js:
-
-{% highlight scala %}
-val lis = jQuery("ol > li")
-lis.each({ (li: dom.HTMLElement) =>
-  jQuery(li).text(jQuery(li).text() + " - transformed")
-}: js.ThisFunction)
-{% endhighlight %}
-
-Skipping over the irrelevant details, note that the parameter `li` completely
-corresponds to the JavaScript `this`. Note also that we have ascribed the
-lambda with `: js.ThisFunction` explicitly to make sure that the right implicit
-conversion is being used (by default it would convert it to a `js.Function1`).
-If you call a statically typed API which expects a `js.ThisFunction0`, this is
-not needed.
-
-The mapping between JS `this` and first parameter of a `js.ThisFunction` also
-works in the other direction, i.e., if calling the `apply` method of a
-`js.ThisFunction`, the first actual argument is transferred to the called
-function as its `this`. For example, the following snippet:
-
-{% highlight scala %}
-val f: js.ThisFunction1[js.Object, js.Number, js.Number] = ???
-val o = new js.Object
-val x = f(o, 4)
-{% endhighlight %}
-
-will map to
-
-{% highlight javascript %}
-var f = ...;
-var o = new Object();
-var x = f.call(o, 4);
-{% endhighlight %}
-
 ## Literal object construction
 
 Scala.js provides two syntaxes for creating JavaScript objects in a literal
@@ -175,6 +33,8 @@ or as
 js.Dynamic.literal("foo" -> 42, "bar" -> "foobar")
 {% endhighlight %}
 
+Alternatively, you can use anonymous classes extending `js.Object` or a [Scala.js-defined JS trait](./sjs-defined-js-classes.html).
+
 ## Defining JavaScript interfaces with traits
 
 Most JavaScript APIs work with interfaces that are defined structurally. In
@@ -185,12 +45,17 @@ from `js.Any` (usually from `js.Object`).
 JS traits can contain `val`, `var` and `def` definitions, and the latter can
 be overloaded.
 
-All definitions must have `js.native` as body.
-Any other body (including omitting the `=` altogether) will be handled as if
-it were `js.native`, and a warning will be emitted.
+By default, types extending `js.Any` are native JS types.
+There also exist [Scala.js-defined JS types](./sjs-defined-js-classes.html).
+Native JS types should be annotated with `@js.native` for forward source compatibility with Scala.js 1.0.0.
+
+**Pre 0.6.5 note**: Before Scala.js 0.6.5, the `@js.native` annotation did not exist, so you will find old code that does not yet use it to annotate native JS types.
+
+In native JS types, all concrete definitions must have `= js.native` as body.
+Any other body will be handled as if it were `= js.native`, and a warning will be emitted.
 (In Scala.js 1.0.0, this will become an error.)
 
-**0.5.x note**: In Scala.js 0.5.x, `js.native` did not exist. The recommended
+**0.5.x note**: In Scala.js 0.5.x, `= js.native` did not exist either. The recommended
 best practice was to put `???` as body, but this was not enforced by the
 compiler. This has been changed to improve intuition and remove warts.
 
@@ -198,6 +63,7 @@ Here is an example giving types to a small portion of the API of `Window`
 objects in browsers.
 
 {% highlight scala %}
+@js.native
 trait Window extends js.Object {
   val document: HTMLDocument = js.native
   var location: String = js.native
@@ -232,6 +98,9 @@ Methods can have parameters with default values, to mark them as optional.
 However, the actual value is irrelevant and never used. Instead, the parameter
 is omitted entirely (or set to `undefined`). The value is only indicative, as
 implicit documentation.
+
+Fields, parameters, or result types that can have different, unrelated types, can be accurately typed with the 
+[pseudo-union type `A | B`]({{ site.production_url }}/api/scalajs-library/{{ site.versions.scalaJS }}/#scala.scalajs.js.$bar).
 
 Methods can be overloaded. This is useful to type accurately some APIs that
 behave differently depending on the number or types of arguments.
@@ -302,9 +171,9 @@ The Scala method names are irrelevant for the translation to JavaScript. The
 duo `apply`/`update` is often a sensible choice, because it gives array-like
 access on Scala's side as well, but it is not required to use these names.
 
-## JavaScript classes
+## Native JavaScript classes
 
-It is also possible to define JavaScript *classes* as Scala classes inheriting,
+It is also possible to define native JavaScript *classes* as Scala classes inheriting,
 directly or indirectly, from `js.Any` (like traits, usually from `js.Object`).
 The main difference compared to traits is that classes have constructors, hence
 they also provide instantiation of objects with the `new` keyword.
@@ -320,6 +189,7 @@ to specify the JavaScript name:
 
 {% highlight scala %}
 @JSName("THREE.Scene")
+@js.native
 class Scene extends js.Object
 {% endhighlight %}
 
@@ -347,6 +217,7 @@ These can be declared in Scala.js with `object`'s inheriting directly or
 indirectly from `js.Any` (again, often `js.Object`).
 
 {% highlight scala %}
+@js.native
 object JSON extends js.Object {
   def parse(text: String): js.Any = js.native
 
@@ -362,10 +233,14 @@ Similarly to classes, the JavaScript name can be specified with `@JSName`, e.g.,
 
 {% highlight scala %}
 @JSName("jQuery")
+@js.native
 object JQuery extends js.Object {
   def apply(x: String): JQuery = js.native
 }
 {% endhighlight %}
+
+Unlike classes and traits, native JS objects can have inner native JS classes, traits and objects.
+Inner classes and objects will be looked up as fields of the enclosing JS object.
 
 ## Variables and functions in the global scope
 
@@ -376,6 +251,7 @@ indirectly from `js.GlobalScope` (which itself extends `js.Object`) are
 considered to represent the global scope.
 
 {% highlight scala %}
+@js.native
 object DOMGlobalScope extends js.GlobalScope {
   val document: HTMLDocument = js.native
 
@@ -410,6 +286,7 @@ The implicit conversion is implemented with a hard cast, since in effect we
 just want to extend the API, not actually change the value.
 
 {% highlight scala %}
+@js.native
 trait JQueryGreenify extends JQuery {
   def greenify(): this.type = ???
 }
@@ -541,5 +418,5 @@ When using `js.Dynamic`, you are very close to writing raw JavaScript within
 Scala.js, with all the warts of the language coming to haunt you.
 However, to get the full extent of JavaScriptish code, you can import the
 implicit conversions in
-[js.DynamicImplicts]({{ site.production_url }}/api/scalajs-library/{{ site.versions.scalaJS }}/#scala.scalajs.js.DynamicImplicits$).
+[js.DynamicImplicts]({{ site.production_url }}/api/scalajs-library/{{ site.scalaJSVersion }}/#scala.scalajs.js.DynamicImplicits$).
 Use at your own risk!

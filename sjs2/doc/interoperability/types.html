@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - JavaScript types</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li ><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>JavaScript types</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <div class="col-md-9">
+            <p>Understanding how different types are mapped between Scala.js and JavaScript is crucial for correct interoperability.
+Some types map quite directly (like <code>String</code>) where others require some conversions.</p>
+
+<h2 id="a-nametype-correspondencea-type-correspondence"><a name="type-correspondence"></a> Type Correspondence</h2>
+<p>Some Scala types are directly mapped to corresponding underlying JavaScript types. These correspondences can be used
+when calling Scala.js code from JavaScript and when defining typed interfaces for JavaScript code.</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr><th>Scala type</th><th>JavaScript type</th><th>Restrictions</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>java.lang.String</td><td>string</td><td></td></tr>
+    <tr><td>scala.Boolean</td><td>boolean</td><td></td></tr>
+    <tr><td>scala.Char</td><td><i>opaque</i></td><td></td></tr>
+    <tr><td>scala.Byte</td><td>number</td><td>integer, range (-128, 127)</td></tr>
+    <tr><td>scala.Short</td><td>number</td><td>integer, range (-32768, 32767)</td></tr>
+    <tr><td>scala.Int</td><td>number</td><td>integer, range (-2147483648, 2147483647)</td></tr>
+    <tr><td>scala.Long</td><td><i>opaque</i></td><td></td></tr>
+    <tr><td>scala.Float</td><td>number</td><td></td></tr>
+    <tr><td>scala.Double</td><td>number</td><td></td></tr>
+    <tr><td>scala.Unit</td><td>undefined</td><td></td></tr>
+    <tr><td>scala.Null</td><td>null</td><td></td></tr>
+    <tr><td>subtypes of js.Object</td><td><i>corresponding JavaScript
+  type</i></td><td>see <a href="calling_js.html">calling JavaScript guide</a></td></tr>
+    <tr>
+      <td>
+        other Scala classes<br />
+        <small>including value classes</small>
+      </td>
+      <td>
+        <i>opaque, except for exported methods</i><br />
+        <small>Note: <code>toString()</code> is always exported</small>
+      </td>
+      <td>see <a href="export_to_js.html">exporting Scala.js APIs to JavaScript</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>On the other hand, some JavaScript (collection) types have similar types in Scala. Instead of mapping them directly,
+Scala.js provides conversions between them. We show with a couple of snippets how you can convert from JavaScript to
+Scala types and back. Please refer to the <a href="/doc/index.html#api">Scaladocs</a> for details.</p>
+
+<h5 id="jsarrayt----mutableseqt">js.Array[T] &lt;–&gt; mutable.Seq[T]</h5>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="k">val</span> <span class="n">jsArr</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+
+<span class="c1">// Scala style operations on js.Array (returns a js.Array)</span>
+<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">js.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsArr</span><span class="o">.</span><span class="n">takeWhile</span><span class="o">(</span><span class="k">_</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">)</span>
+
+<span class="c1">// Use a js.Array as a Scala mutable.Seq</span>
+<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">mutable.Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsArr</span>
+
+<span class="c1">// toArray (from js.ArrayOps) -- Copy into scala.Array</span>
+<span class="k">val</span> <span class="n">z</span><span class="k">:</span> <span class="kt">scala.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsArr</span><span class="o">.</span><span class="n">toArray</span>
+
+<span class="k">import</span> <span class="nn">js.JSConverters._</span>
+
+<span class="k">val</span> <span class="n">scSeq</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+
+<span class="c1">// Seq to js.Array -- Copy to js.Array</span>
+<span class="k">val</span> <span class="n">jsArray</span><span class="k">:</span> <span class="kt">js.Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">scSeq</span><span class="o">.</span><span class="n">toJSArray</span></code></pre></div>
+
+<h5 id="jsdictionaryt----mutablemapstring-t">js.Dictionary[T] &lt;–&gt; mutable.Map[String, T]</h5>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="k">val</span> <span class="n">jsDict</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Dictionary</span><span class="o">(</span><span class="s">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">)</span>
+
+<span class="c1">// Scala style operations on js.Dictionary (returns mutable.Map)</span>
+<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">mutable.Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsDict</span><span class="o">.</span><span class="n">mapValues</span><span class="o">(</span><span class="k">_</span> <span class="o">*</span> <span class="mi">2</span><span class="o">)</span>
+
+<span class="c1">// Use a js.Dictionary as Scala mutable.Map</span>
+<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">mutable.Map</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsDict</span>
+
+<span class="k">import</span> <span class="nn">js.JSConverters._</span>
+
+<span class="k">val</span> <span class="n">scMap</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;a&quot;</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">,</span> <span class="s">&quot;b&quot;</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">)</span>
+
+<span class="c1">// Map to js.Dictionary -- Copy to js.Dictionary</span>
+<span class="k">val</span> <span class="n">jsDictionary</span><span class="k">:</span> <span class="kt">js.Dictionary</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">scMap</span><span class="o">.</span><span class="n">toJSDictionary</span></code></pre></div>
+
+<h5 id="jsundefort----optiont">js.UndefOr[T] &lt;–&gt; Option[T]</h5>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="k">val</span> <span class="n">jsUndefOr</span><span class="k">:</span> <span class="kt">js.UndefOr</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="mi">1</span>
+
+<span class="c1">// Convert to scala.Option</span>
+<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">jsUndefOr</span><span class="o">.</span><span class="n">toOption</span>
+
+<span class="k">import</span> <span class="nn">js.JSConverters._</span>
+
+<span class="k">val</span> <span class="n">opt</span> <span class="k">=</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+
+<span class="c1">// Convert to js.Undefined</span>
+<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">js.UndefOr</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">orUndefined</span></code></pre></div>
+
+<h2 id="pre-defined-javascript-types">Pre-defined JavaScript types</h2>
+
+<p>Primitive JavaScript types (<code>number</code>, <code>boolean</code>, <code>string</code>, <code>null</code> and
+<code>undefined</code>) are represented by their natural equivalent in Scala, as shown
+<a href="#type-correspondence">above</a>.</p>
+
+<p>For other pre-defined JavaScript types, such as arrays and functions, the package <code>scala.scalajs.js</code>
+(<a href="http://www.scala-js.org/api/scalajs-library//#scala.scalajs.js.package">ScalaDoc</a>)
+provides dedicated definitions.</p>
+
+<p>The class hierarchy for these standard types is as follows:</p>
+
+<pre><code>js.Any
+ +- js.Object
+ |   +- js.Date
+ |   +- js.RegExp
+ |   +- js.Array[A]
+ |   +- js.Function
+ |       +- js.Function0[+R]
+ |       +- js.Function1[-T1, +R]
+ |       +- ...
+ |       +- js.Function22[-T1, ..., -T22, +R]
+ |       +- js.ThisFunction
+ |           +- js.ThisFunction0[-T0, +R]
+ |           +- js.ThisFunction1[-T0, -T1, +R]
+ |           +- ...
+ |           +- js.ThisFunction21[-T0, ..., -T21, +R]
+ +- js.Dictionary[A]
+</code></pre>
+
+<p>Note that most of these types are similar to standard Scala types. For example,
+<code>js.Array[A]</code> is similar to <code>scala.Array[A]</code>, and <code>js.FunctionN</code> is similar to
+<code>scala.FunctionN</code>. However, they are not completely equivalent, and must not be confused.</p>
+
+<p>With the exception of <code>js.Array[A]</code> and <code>js.Dictionary[A]</code>, these types have
+all the fields and methods available in the JavaScript API.
+The collection types feature the standard Scala collection API instead, so that
+they can be used idiomatically in Scala code.</p>
+
+<p><strong>0.5.x note</strong>: In Scala.js 0.5.x, <code>js.Array[A]</code> and <code>js.Dictionary[A]</code> did not
+really have the collection API. The methods defined in JavaScript took
+precedence. This was changed in 0.6.x to avoid pitfalls when confusing the
+APIs, avoiding common JavaScript warts, and improving performance.</p>
+
+<h2 id="function-types">Function types</h2>
+
+<h3 id="jsfunction-and-its-subtypes"><code>js.Function</code> and its subtypes</h3>
+
+<p><code>js.FunctionN[T1, ..., TN, R]</code> is, as expected, the type of a JavaScript
+function taking N parameters of types <code>T1</code> to <code>TN</code>, and returning a value of
+type <code>R</code>.</p>
+
+<p>There are implicit conversions from <code>scala.FunctionN</code> to <code>js.FunctionN</code> and
+back, with the obvious meaning.
+These conversions are the only way to create a <code>js.FunctionN</code> in Scala.js.
+For example:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">js.Function1</span><span class="o">[</span><span class="kt">Double</span>, <span class="kt">Double</span><span class="o">]</span> <span class="k">=</span> <span class="o">{</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">}</span></code></pre></div>
+
+<p>defines a JavaScript <code>function</code> object which squares its argument.
+This corresponds to the following JavaScript code:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span><span class="o">*</span><span class="nx">x</span><span class="p">;</span>
+<span class="p">};</span></code></pre></div>
+
+<p>You can call a <code>js.FunctionN</code> in Scala.js with the usual syntax:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="n">f</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span></code></pre></div>
+
+<h3 id="jsthisfunction-and-its-subtypes"><code>js.ThisFunction</code> and its subtypes</h3>
+
+<p>The series of <code>js.ThisFunctionN</code> solve the problem of modeling the <code>this</code>
+value of JavaScript in Scala. Consider the following call to the <code>each</code> method
+of a jQuery object:</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">lis</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="s2">&quot;ol &gt; li&quot;</span><span class="p">);</span>
+<span class="nx">lis</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">jQuery</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">jQuery</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">text</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; - transformed&quot;</span><span class="p">)</span>
+<span class="p">});</span></code></pre></div>
+
+<p>Inside the closure, the value of <code>this</code> is the DOM element currently being
+enumerated. This usage of <code>this</code>, which is nonsense from a Scala point of view,
+is standard in JavaScript. <code>this</code> can actually be thought of as an additional
+parameter to the closure.</p>
+
+<p>In Scala.js, the <code>this</code> keyword always follows the same rules as in Scala,
+i.e., it binds to the enclosing class, trait or object. It will never bind to
+the equivalent of the JavaScript <code>this</code> in an anonymous function.</p>
+
+<p>To access the JavaScript <code>this</code> in Scala.js, it can be made explicit using
+<code>js.ThisFunctionN</code>. A <code>js.ThisFunctionN[T0, T1, ..., TN, R]</code> is the type of a
+JavaScript function taking a <code>this</code> parameter of type <code>T0</code>, as well as N
+normal parameters of types <code>T1</code> to <code>TN</code>, and returning a value of type <code>R</code>.
+From Scala.js, the <code>this</code> parameter appears as any other parameter: it has a
+non-keyword name, a type, and is listed first in the parameter list. Hence,
+a <code>scala.FunctionN</code> is convertible to/from a <code>js.ThisFunction{N-1}</code>.</p>
+
+<p>The previous example would be written as follows in Scala.js:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">lis</span> <span class="k">=</span> <span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;ol &gt; li&quot;</span><span class="o">)</span>
+<span class="n">lis</span><span class="o">.</span><span class="n">each</span><span class="o">({</span> <span class="o">(</span><span class="n">li</span><span class="k">:</span> <span class="kt">dom.HTMLElement</span><span class="o">)</span> <span class="k">=&gt;</span>
+  <span class="n">jQuery</span><span class="o">(</span><span class="n">li</span><span class="o">).</span><span class="n">text</span><span class="o">(</span><span class="n">jQuery</span><span class="o">(</span><span class="n">li</span><span class="o">).</span><span class="n">text</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; - transformed&quot;</span><span class="o">)</span>
+<span class="o">}</span><span class="k">:</span> <span class="kt">js.ThisFunction</span><span class="o">)</span></code></pre></div>
+
+<p>Skipping over the irrelevant details, note that the parameter <code>li</code> completely
+corresponds to the JavaScript <code>this</code>. Note also that we have ascribed the
+lambda with <code>: js.ThisFunction</code> explicitly to make sure that the right implicit
+conversion is being used (by default it would convert it to a <code>js.Function1</code>).
+If you call a statically typed API which expects a <code>js.ThisFunction0</code>, this is
+not needed.</p>
+
+<p>The mapping between JS <code>this</code> and first parameter of a <code>js.ThisFunction</code> also
+works in the other direction, i.e., if calling the <code>apply</code> method of a
+<code>js.ThisFunction</code>, the first actual argument is transferred to the called
+function as its <code>this</code>. For example, the following snippet:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">js.ThisFunction1</span><span class="o">[</span><span class="kt">js.Object</span>, <span class="kt">js.Number</span>, <span class="kt">js.Number</span><span class="o">]</span> <span class="k">=</span> <span class="o">???</span>
+<span class="k">val</span> <span class="n">o</span> <span class="k">=</span> <span class="k">new</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span>
+<span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="n">f</span><span class="o">(</span><span class="n">o</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span></code></pre></div>
+
+<p>will map to</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">...;</span>
+<span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Object</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">x</span> <span class="o">=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span></code></pre></div>
+
+
+            <div class="spacing"></div>
+        </div>
+        <div class="col-md-3">
+            <nav class="toc" role="navigation">
+                
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/">
+            
+            Introduction
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/quick-start.html">
+            
+            Quick Start
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/why-scalajs.html">
+            
+            Why Scala.js?
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/scalajs_for_jsdevs.html">
+            
+            Scala.js for JavaScript developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/scalajs_for_scaladevs.html">
+            
+            Scala.js for Scala developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/">
+            
+            Project setup
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/">
+            
+            JavaScript interoperability
+            
+        </a>
+    </li>
+    
+      
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/types.html">
+            
+            <b>JavaScript types</b>
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/calling_js.html">
+            
+            Call JavaScript APIs
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/export_to_js.html">
+            
+            Export Scala.js APIs
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/sjs_defined_js_classes.html">
+            
+            Write JavaScript classes in Scala.js
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+    
+    
+    <li>
+        <a href="/sjs2/doc/api.html">
+            
+            Scala.js API
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/semantics.html">
+            
+            Semantics of Scala.js
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/internals">
+            
+            Internals
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/faq.html">
+            
+            FAQ
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-twitter-square"></i>
+                <i class="fa fa-google-plus-square"></i>
+                <i class="fa fa-linkedin-square"></i>
+            </div>
+        </div>
+        <! --/row -->
+    </div>
+    <! --/container -->
+</div><! --/footerwrap -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+<script>
+hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>
