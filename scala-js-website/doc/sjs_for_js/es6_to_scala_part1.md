@@ -116,7 +116,7 @@ val b: Byte = z.toByte // Ok!
 {% endcolumn %}
 {% endcolumns %}
 
-Actually the integer types `Int`, `Short` and `Byte` also exist in JavaScript if you use [_typed
+Actually the integer types `Int`, `Short`, `Byte` and `Float` also exist in JavaScript if you use [_typed
 arrays_](https://developer.mozilla.org/en/docs/Web/JavaScript/Typed_arrays). These are not commonly used in regular
 JavaScript code, but for some specific purposes, like WebGL, they are required.
 
@@ -156,8 +156,8 @@ in ES6 you need to supply them with the object notation.
 function mult(x, y = 42.0) { return x * y; }
 
 // variable number of parameters
-function sum( first, ...rest) {
-  return first + rest.reduce( (a, b) => a + b, 0 );
+function sum(first, ...rest) {
+  return first + rest.reduce((a, b) => a + b, 0);
 }
 
 const s = sum(5, 4, 3, 2, 1); // == 15
@@ -180,7 +180,7 @@ def mult(x: Double, y: Double = 42.0): Double = {
 
 // variable number of parameters
 def sum(first: Double, rest: Double*): Double = {
-  first + rest.foldLeft(0.0)( (a, b) => a + b ) 
+  first + rest.foldLeft(0.0)((a, b) => a + b) 
 }
 
 val s = sum(5, 4, 3, 2, 1) // == 15
@@ -190,7 +190,7 @@ def vec(x: Int = 0, y: Int = 0, z: Int = 0): Vec = {
   new Vec(x, y, z)
 }
 
-val v = vec( 8, z = 42 ) // Vec(8, 0, 42)
+val v = vec(8, z = 42) // Vec(8, 0, 42)
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -209,8 +209,8 @@ it can be anonymous. Both languages support the nice "fat arrow" notation for de
 const f = (x, y) => x + y;
 
 const p = ["Fox", "jumped", "over", "me"];
-const l = p.map( s => s.length )
-  .reduce( (a, b) => a + b, 0 ); // == 15
+const l = p.map(s => s.length)
+  .reduce((a, b) => a + b, 0); // == 15
 {% endhighlight %}
 {% endcolumn %}
         
@@ -219,8 +219,8 @@ const l = p.map( s => s.length )
 val f = (x: Double, y: Double) => x + y
          
 val p = Array("Fox", "jumped", "over", "me")
-val l = p.map( s => s.length )
-  .foldLeft(0)( (a, b) => a + b ) // == 15
+val l = p.map(s => s.length)
+  .foldLeft(0)((a, b) => a + b) // == 15
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -234,13 +234,13 @@ JavaScript you have the special `a ? b : c` construct to achieve the same result
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-const res = ( name === "" ) ? 0 : 1;
+const res = (name === "") ? 0 : 1;
 {% endhighlight %}
 {% endcolumn %}
         
 {% column 6 Scala %}
 {% highlight scala %}
-val res = if( name.isEmpty ) 0 else 1
+val res = if (name.isEmpty) 0 else 1
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -252,11 +252,11 @@ it to iterate over numerical ranges or collections in both languages:
 {% column 6 ES6 %}
 {% highlight javascript %}
 let x = 0;
-for(let i = 0; i < 100; i++)
+for (let i = 0; i < 100; i++)
   x += i*i;
   
 const p = ["Fox", "jumped", "over", "me"];
-for(let s of p) {
+for (let s of p) {
   console.log(`Word ${s}`);
 }
 {% endhighlight %}
@@ -265,11 +265,11 @@ for(let s of p) {
 {% column 6 Scala %}
 {% highlight scala %}
 var x = 0
-for( i <- 0 until 100 )
+for (i <- 0 until 100)
   x += i*i
   
 val p = Array("Fox", "jumped", "over", "me")
-for( s <- p ) {
+for (s <- p) {
   println(s"Word $s")
 }
 {% endhighlight %}
@@ -284,9 +284,9 @@ you can even filter using `if` expressions. In Scala a _for-comprehension_ is ju
 {% column 6 ES6 %}
 {% highlight javascript %}
 function findPairs(n, sum) {
-  for(let i = 0; i < n; i++) {
-    for(let j = i; j < n; j++) {
-      if( i + j == sum) {
+  for (let i = 0; i < n; i++) {
+    for (let j = i; j < n; j++) {
+      if (i + j == sum) {
         console.log(`Found pair ${i}, ${j}`);
       }
     }
@@ -464,53 +464,93 @@ val person = Person("James", "Bond")
 
 Case classes enforce type safety and prevent constructing invalid objects with missing fields.
 
-Finally case classes can be used nicely in _pattern matching_ which is covered later.
+Scala compiler automatically generates a proper `equals` method for case classes, making comparing them trivial. In ES6
+you would typically go for a library like [lodash](https://lodash.com/docs#isEqual) to avoid writing the complex
+comparison code yourself.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const o1 = { a: 1, x: "test" };
+const o2 = { a: 1, x: "test" };
+
+if (o1 == o2) {
+  // this doesn't work as expected
+  console.log("They are not equal!");
+}
+
+if (_.isEqual(o1, o2)) {
+  console.log("They are equal!");
+}
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+case class AX(a: Int, x: String)
+
+val o1 = AX(1, "test")
+val o2 = AX(1, "test")
+if (o1 == o2) {
+  println("They are equal!")
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Fields in case classes are immutable by default (unless you define them with `var` modifier) so you cannot make changes
+to instances. Instead of modifying the instance you make a copy and modify one or more fields during the copy. Scala
+provides a suitable `copy` function for each case class automatically. In ES6 you can use `Object.assign` to achieve the
+same result.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const o1 = { a: 1, x: "test" };
+
+// start with empty object to prevent 
+// modification of o1
+const o2 = Object.assign({}, o1, {a: 42}); 
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+case class AX(a: Int, x: String)
+
+val o1 = AX(1, "test")
+val o2 = o1.copy(a = 42)
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Finally case classes can be used nicely in _pattern matching_ which is covered in the advanced section.
 
 #### Objects
 
 An `object` is a special class with only a single instance: a singleton. JavaScript also has a singleton design pattern
 (or actually several) even though the language itself does not have direct support for the concept. Singletons are
-useful for putting stuff in a shared namespace without polluting the global scope. Both Scala and JavaScript singletons
-are lazy in the sense that they are initialized only when first accessed. In Scala this happens automatically behind the
-scenes, in JavaScript you need to invoke the `getInstance` function.
+useful for putting stuff in a shared namespace without polluting the global scope. Scala singletons are lazy in the
+sense that they are initialized only when first accessed. In JavaScript you can achieve lazyness, but typically it's
+not done as it makes things complicated.
 
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-const RandomGen = (() => {
-  let instance;
- 
-  function init() {
-    // Private methods and variables
-    function privateMethod(){
-        console.log( "I am private" );
-    }
-    const rnd = () => Math.random();
- 
-    return {
-      // Public methods and variables
-      publicMethod: () => {
-        console.log( "The public can see me!" );
-        privateMethod();
-      },
-      name: "RandomGen",
-      getRandomNumber: () => rnd()
-    };
-  };
- 
-  return {
-    // Get the Singleton instance if one exists
-    // or create one if it doesn't
-    getInstance: () => {
-      if ( !instance ) {
-        instance = init();
-      }
-      return instance;
-    }
-  };
-})();
+const RandomGen = {
+    _privateMethod() {
+        console.log("I am private");
+    },
+    rnd() { return Math.random() },
+    publicMethod() {
+        console.log("The public can see me!");
+        this._privateMethod();
+    },
+    name: "RandomGen",
+    getRandomNumber() { return this.rnd() }
+}
 
-const r = RandomGen.getInstance().getRandomNumber();
+const r = RandomGen.getRandomNumber();
 {% endhighlight %}
 {% endcolumn %}
         
@@ -526,7 +566,7 @@ object RandomGen {
   private val rnd = new Random()
   
   def publicMethod() {
-    println( "The public can see me!" )
+    println("The public can see me!")
     privateMethod()
   }
   
@@ -622,7 +662,7 @@ instance of `Some[A]`, containing the present value of type `A`. If the value is
 {% highlight javascript %}
 function log(msg, context) {
   let s = "";
-  if(context !== undefined)
+  if (context !== undefined)
     s = `[${context}] `;
   s = s + msg;  
   console.log(s);
@@ -675,7 +715,7 @@ Whoa, quite a reduction in code size! Next let's see how we can process a sequen
 {% column 6 ES6 %}
 {% highlight javascript %}
 const data = [1, 2, 3, undefined, 5, undefined, 7];
-const res = data.filter( (x) => x !== undefined );
+const res = data.filter((x) => x !== undefined);
 {% endhighlight %}
 {% endcolumn %}
         
@@ -683,7 +723,7 @@ const res = data.filter( (x) => x !== undefined );
 {% highlight scala %}
 val data = Array(Some(1), Some(2), Some(3), 
   None, Some(5), None, Some(7))
-val res = data.filter( x => x.isDefined )
+val res = data.filter(x => x.isDefined)
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}

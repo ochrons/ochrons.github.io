@@ -89,13 +89,13 @@ can <em>infer</em> most of the types automatically.</p>
 <p>Let’s start with something simple, variables. Both Scala and ES6 support mutable and immutable variables.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// mutable variable</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// mutable variable</span>
 <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
 <span class="c1">// immutable variable</span>
 <span class="kr">const</span> <span class="nx">y</span> <span class="o">=</span> <span class="s2">&quot;Constant&quot;</span><span class="p">;</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// mutable variable</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// mutable variable</span>
 <span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">5</span>
 <span class="c1">// immutable variable</span>
 <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="s">&quot;Constant&quot;</span></code></pre></div>
@@ -134,10 +134,10 @@ making some calculations. In Scala calculations are always performed using the t
 with another <code>Int</code>, the result is rounded to an <code>Int</code>.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// == 1.6666666666666667</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span> <span class="c1">// == 1.6666666666666667</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">3</span> <span class="c1">// == 1</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mi">3</span> <span class="c1">// == 1</span>
 <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="mf">5.0</span> <span class="o">/</span> <span class="mi">3</span> <span class="c1">// == 1.6666666666666667</span>
 <span class="k">val</span> <span class="n">z</span> <span class="k">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mf">3.0</span> <span class="c1">// == 1.6666666666666667</span></code></pre></div>
 </div>
@@ -148,7 +148,7 @@ error if you try to assign a higher precision value to a lower precision variabl
 an appropriate function.</p>
 
 <div class="row">
-<div class="col-md-12"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mf">3.5</span> <span class="c1">// ERROR!</span>
+<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mf">3.5</span> <span class="c1">// ERROR!</span>
 <span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">// Ok!</span>
 <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Float</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="c1">// ERROR! 3.0f would be ok</span>
 <span class="k">val</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mf">3.5</span><span class="o">.</span><span class="n">toInt</span> <span class="c1">// Ok!</span>
@@ -157,7 +157,7 @@ an appropriate function.</p>
 </div>
 </div>
 
-<p>Actually the integer types <code>Int</code>, <code>Short</code> and <code>Byte</code> also exist in JavaScript if you use <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Typed_arrays"><em>typed
+<p>Actually the integer types <code>Int</code>, <code>Short</code>, <code>Byte</code> and <code>Float</code> also exist in JavaScript if you use <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Typed_arrays"><em>typed
 arrays</em></a>. These are not commonly used in regular
 JavaScript code, but for some specific purposes, like WebGL, they are required.</p>
 
@@ -169,12 +169,12 @@ function is automatically used as the return value. Return type is usually autom
 (when not using <code>return</code>), but it is good practice to define it to help catch potential type errors.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">mult</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">mult</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
    <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">mult</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">mult</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span></code></pre></div>
 </div>
 </div>
 
@@ -185,12 +185,12 @@ number of parameters, you can access those as a <code>Seq</code>. Named paramete
 in ES6 you need to supply them with the object notation.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// default value</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// default value</span>
 <span class="kd">function</span> <span class="nx">mult</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">=</span> <span class="mf">42.0</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">y</span><span class="p">;</span> <span class="p">}</span>
 
 <span class="c1">// variable number of parameters</span>
-<span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span> <span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span>
+<span class="kd">function</span> <span class="nx">sum</span><span class="p">(</span><span class="nx">first</span><span class="p">,</span> <span class="p">...</span><span class="nx">rest</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">first</span> <span class="o">+</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">s</span> <span class="o">=</span> <span class="nx">sum</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span> <span class="c1">// == 15</span>
@@ -203,14 +203,14 @@ in ES6 you need to supply them with the object notation.</p>
 <span class="kr">const</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">vec</span><span class="p">({</span><span class="nx">x</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nx">z</span><span class="o">:</span> <span class="mi">42</span><span class="p">});</span> <span class="c1">// Vec(8, 0, 42)</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// default value</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// default value</span>
 <span class="k">def</span> <span class="n">mult</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">42.0</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">{</span>
   <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
 <span class="o">}</span>
 
 <span class="c1">// variable number of parameters</span>
 <span class="k">def</span> <span class="n">sum</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">rest</span><span class="k">:</span> <span class="kt">Double*</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">{</span>
-  <span class="n">first</span> <span class="o">+</span> <span class="n">rest</span><span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mf">0.0</span><span class="o">)(</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">)</span> 
+  <span class="n">first</span> <span class="o">+</span> <span class="n">rest</span><span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mf">0.0</span><span class="o">)((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">)</span> 
 <span class="o">}</span>
 
 <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="n">sum</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="c1">// == 15</span>
@@ -220,7 +220,7 @@ in ES6 you need to supply them with the object notation.</p>
   <span class="k">new</span> <span class="nc">Vec</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">z</span><span class="o">)</span>
 <span class="o">}</span>
 
-<span class="k">val</span> <span class="n">v</span> <span class="k">=</span> <span class="n">vec</span><span class="o">(</span> <span class="mi">8</span><span class="o">,</span> <span class="n">z</span> <span class="k">=</span> <span class="mi">42</span> <span class="o">)</span> <span class="c1">// Vec(8, 0, 42)</span></code></pre></div>
+<span class="k">val</span> <span class="n">v</span> <span class="k">=</span> <span class="n">vec</span><span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">z</span> <span class="k">=</span> <span class="mi">42</span><span class="o">)</span> <span class="c1">// Vec(8, 0, 42)</span></code></pre></div>
 </div>
 </div>
 
@@ -233,18 +233,18 @@ function given to the <code>reduceLeft</code> function.</p>
 it can be anonymous. Both languages support the nice “fat arrow” notation for defining anonymous functions conveniently.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
 
 <span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fox&quot;</span><span class="p">,</span> <span class="s2">&quot;jumped&quot;</span><span class="p">,</span> <span class="s2">&quot;over&quot;</span><span class="p">,</span> <span class="s2">&quot;me&quot;</span><span class="p">];</span>
-<span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span> <span class="nx">s</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span> <span class="p">)</span>
-  <span class="p">.</span><span class="nx">reduce</span><span class="p">(</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span> <span class="p">);</span> <span class="c1">// == 15</span></code></pre></div>
+<span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">s</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// == 15</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
          
 <span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;Fox&quot;</span><span class="o">,</span> <span class="s">&quot;jumped&quot;</span><span class="o">,</span> <span class="s">&quot;over&quot;</span><span class="o">,</span> <span class="s">&quot;me&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">l</span> <span class="k">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="o">(</span> <span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span> <span class="o">)</span>
-  <span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mi">0</span><span class="o">)(</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">)</span> <span class="c1">// == 15</span></code></pre></div>
+<span class="k">val</span> <span class="n">l</span> <span class="k">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mi">0</span><span class="o">)((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">)</span> <span class="c1">// == 15</span></code></pre></div>
 </div>
 </div>
 
@@ -255,10 +255,10 @@ languages. The big difference to JavaScript is that <code>if</code> statements a
 JavaScript you have the special <code>a ? b : c</code> construct to achieve the same result.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">(</span> <span class="nx">name</span> <span class="o">===</span> <span class="s2">&quot;&quot;</span> <span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">(</span><span class="nx">name</span> <span class="o">===</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">res</span> <span class="k">=</span> <span class="k">if</span><span class="o">(</span> <span class="n">name</span><span class="o">.</span><span class="n">isEmpty</span> <span class="o">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">res</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">name</span><span class="o">.</span><span class="n">isEmpty</span><span class="o">)</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span></code></pre></div>
 </div>
 </div>
 
@@ -266,22 +266,22 @@ JavaScript you have the special <code>a ? b : c</code> construct to achieve the 
 it to iterate over numerical ranges or collections in both languages:</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-<span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
   <span class="nx">x</span> <span class="o">+=</span> <span class="nx">i</span><span class="o">*</span><span class="nx">i</span><span class="p">;</span>
   
 <span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fox&quot;</span><span class="p">,</span> <span class="s2">&quot;jumped&quot;</span><span class="p">,</span> <span class="s2">&quot;over&quot;</span><span class="p">,</span> <span class="s2">&quot;me&quot;</span><span class="p">];</span>
-<span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">s</span> <span class="nx">of</span> <span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">s</span> <span class="nx">of</span> <span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">Word</span> <span class="nx">$</span><span class="p">{</span><span class="nx">s</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
 <span class="p">}</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">0</span>
-<span class="k">for</span><span class="o">(</span> <span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="mi">100</span> <span class="o">)</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="mi">100</span><span class="o">)</span>
   <span class="n">x</span> <span class="o">+=</span> <span class="n">i</span><span class="o">*</span><span class="n">i</span>
   
 <span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;Fox&quot;</span><span class="o">,</span> <span class="s">&quot;jumped&quot;</span><span class="o">,</span> <span class="s">&quot;over&quot;</span><span class="o">,</span> <span class="s">&quot;me&quot;</span><span class="o">)</span>
-<span class="k">for</span><span class="o">(</span> <span class="n">s</span> <span class="k">&lt;-</span> <span class="n">p</span> <span class="o">)</span> <span class="o">{</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">s</span> <span class="k">&lt;-</span> <span class="n">p</span><span class="o">)</span> <span class="o">{</span>
   <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Word $s&quot;</span><span class="o">)</span>
 <span class="o">}</span></code></pre></div>
 </div>
@@ -292,10 +292,10 @@ you can even filter using <code>if</code> expressions. In Scala a <em>for-compre
 <code>flatMap</code>, <code>map</code> and <code>withFilter</code> calls making it <em>very</em> handy when dealing with Scala collections.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">findPairs</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">sum</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span><span class="p">(</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">j</span> <span class="o">==</span> <span class="nx">sum</span><span class="p">)</span> <span class="p">{</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">findPairs</span><span class="p">(</span><span class="nx">n</span><span class="p">,</span> <span class="nx">sum</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span> <span class="o">=</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">j</span> <span class="o">==</span> <span class="nx">sum</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">Found</span> <span class="nx">pair</span> <span class="nx">$</span><span class="p">{</span><span class="nx">i</span><span class="p">},</span> <span class="nx">$</span><span class="p">{</span><span class="nx">j</span><span class="p">}</span><span class="err">`</span><span class="p">);</span>
       <span class="p">}</span>
     <span class="p">}</span>
@@ -304,7 +304,7 @@ you can even filter using <code>if</code> expressions. In Scala a <em>for-compre
 <span class="nx">findPairs</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">31</span><span class="p">);</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">findPairs</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">sum</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">findPairs</span><span class="o">(</span><span class="n">n</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">sum</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
   <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">n</span><span class="o">;</span>
        <span class="n">j</span> <span class="k">&lt;-</span> <span class="n">i</span> <span class="n">until</span> <span class="n">n</span> <span class="k">if</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">==</span> <span class="n">sum</span><span class="o">)</span> <span class="o">{</span>
          <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Found pair $i, $j&quot;</span><span class="o">)</span>
@@ -319,7 +319,7 @@ covered in more detail in the advanced section of this article, so here we just 
 replacing JavaScript <code>switch</code>/<code>case</code> with it.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">animal</span> <span class="o">=</span> <span class="s2">&quot;Dog&quot;</span><span class="p">;</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">animal</span> <span class="o">=</span> <span class="s2">&quot;Dog&quot;</span><span class="p">;</span>
 <span class="kd">let</span> <span class="nx">description</span><span class="p">;</span>
 <span class="k">switch</span><span class="p">(</span><span class="nx">animal</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">case</span> <span class="s2">&quot;Cat&quot;</span><span class="o">:</span>
@@ -337,7 +337,7 @@ replacing JavaScript <code>switch</code>/<code>case</code> with it.</p>
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">description</span><span class="p">);</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">animal</span> <span class="k">=</span> <span class="s">&quot;Dog&quot;</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">animal</span> <span class="k">=</span> <span class="s">&quot;Dog&quot;</span>
 <span class="k">val</span> <span class="n">description</span> <span class="k">=</span> <span class="n">animal</span> <span class="k">match</span> <span class="o">{</span>
   <span class="k">case</span> <span class="s">&quot;Cat&quot;</span> <span class="o">|</span> <span class="s">&quot;Lion&quot;</span> <span class="o">|</span> <span class="s">&quot;Tiger&quot;</span> <span class="k">=&gt;</span>
     <span class="s">&quot;It&#39;s feline!&quot;</span>
@@ -369,7 +369,7 @@ also has:</p>
 <p>A simple class hierarchy can be achieved in both languages.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">Shape</span> <span class="p">{</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">Shape</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">x</span><span class="p">;</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">y</span><span class="p">;</span>
@@ -400,7 +400,7 @@ also has:</p>
 <span class="kr">const</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">r</span><span class="p">;</span> <span class="c1">// == 42</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// use var to make coordinates mutable</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// use var to make coordinates mutable</span>
 <span class="k">abstract</span> <span class="k">class</span> <span class="nc">Shape</span><span class="o">(</span><span class="k">var</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">var</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">move</span><span class="o">(</span><span class="n">dx</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">dy</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">x</span> <span class="o">+=</span> <span class="n">dx</span>
@@ -441,10 +441,10 @@ implementations for <code>toString</code> and equality making them convenient to
 using a case class instead.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">};</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">};</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">last</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">last</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
 
 <span class="k">val</span> <span class="n">person</span> <span class="k">=</span> <span class="nc">Person</span><span class="o">(</span><span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Bond&quot;</span><span class="o">)</span></code></pre></div>
 </div>
@@ -452,54 +452,82 @@ using a case class instead.</p>
 
 <p>Case classes enforce type safety and prevent constructing invalid objects with missing fields.</p>
 
-<p>Finally case classes can be used nicely in <em>pattern matching</em> which is covered later.</p>
+<p>Scala compiler automatically generates a proper <code>equals</code> method for case classes, making comparing them trivial. In ES6
+you would typically go for a library like <a href="https://lodash.com/docs#isEqual">lodash</a> to avoid writing the complex
+comparison code yourself.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span> <span class="p">};</span>
+<span class="kr">const</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span> <span class="p">};</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">o1</span> <span class="o">==</span> <span class="nx">o2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// this doesn&#39;t work as expected</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;They are not equal!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">isEqual</span><span class="p">(</span><span class="nx">o1</span><span class="p">,</span> <span class="nx">o2</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;They are equal!&quot;</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">AX</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">x</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">o1</span> <span class="k">=</span> <span class="nc">AX</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">o2</span> <span class="k">=</span> <span class="nc">AX</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">o1</span> <span class="o">==</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">println</span><span class="o">(</span><span class="s">&quot;They are equal!&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>Fields in case classes are immutable by default (unless you define them with <code>var</code> modifier) so you cannot make changes
+to instances. Instead of modifying the instance you make a copy and modify one or more fields during the copy. Scala
+provides a suitable <code>copy</code> function for each case class automatically. In ES6 you can use <code>Object.assign</code> to achieve the
+same result.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span> <span class="p">};</span>
+
+<span class="c1">// start with empty object to prevent </span>
+<span class="c1">// modification of o1</span>
+<span class="kr">const</span> <span class="nx">o2</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">({},</span> <span class="nx">o1</span><span class="p">,</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span> <span class="mi">42</span><span class="p">});</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">AX</span><span class="o">(</span><span class="n">a</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">x</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">o1</span> <span class="k">=</span> <span class="nc">AX</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">&quot;test&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">o2</span> <span class="k">=</span> <span class="n">o1</span><span class="o">.</span><span class="n">copy</span><span class="o">(</span><span class="n">a</span> <span class="k">=</span> <span class="mi">42</span><span class="o">)</span></code></pre></div>
+</div>
+</div>
+
+<p>Finally case classes can be used nicely in <em>pattern matching</em> which is covered in the advanced section.</p>
 
 <h4 id="objects">Objects</h4>
 
 <p>An <code>object</code> is a special class with only a single instance: a singleton. JavaScript also has a singleton design pattern
 (or actually several) even though the language itself does not have direct support for the concept. Singletons are
-useful for putting stuff in a shared namespace without polluting the global scope. Both Scala and JavaScript singletons
-are lazy in the sense that they are initialized only when first accessed. In Scala this happens automatically behind the
-scenes, in JavaScript you need to invoke the <code>getInstance</code> function.</p>
+useful for putting stuff in a shared namespace without polluting the global scope. Scala singletons are lazy in the
+sense that they are initialized only when first accessed. In JavaScript you can achieve lazyness, but typically it’s
+not done as it makes things complicated.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">RandomGen</span> <span class="o">=</span> <span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kd">let</span> <span class="nx">instance</span><span class="p">;</span>
- 
-  <span class="kd">function</span> <span class="nx">init</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Private methods and variables</span>
-    <span class="kd">function</span> <span class="nx">privateMethod</span><span class="p">(){</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&quot;I am private&quot;</span> <span class="p">);</span>
-    <span class="p">}</span>
-    <span class="kr">const</span> <span class="nx">rnd</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">();</span>
- 
-    <span class="k">return</span> <span class="p">{</span>
-      <span class="c1">// Public methods and variables</span>
-      <span class="nx">publicMethod</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span> <span class="s2">&quot;The public can see me!&quot;</span> <span class="p">);</span>
-        <span class="nx">privateMethod</span><span class="p">();</span>
-      <span class="p">},</span>
-      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;RandomGen&quot;</span><span class="p">,</span>
-      <span class="nx">getRandomNumber</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">rnd</span><span class="p">()</span>
-    <span class="p">};</span>
-  <span class="p">};</span>
- 
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="c1">// Get the Singleton instance if one exists</span>
-    <span class="c1">// or create one if it doesn&#39;t</span>
-    <span class="nx">getInstance</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="nx">instance</span> <span class="p">)</span> <span class="p">{</span>
-        <span class="nx">instance</span> <span class="o">=</span> <span class="nx">init</span><span class="p">();</span>
-      <span class="p">}</span>
-      <span class="k">return</span> <span class="nx">instance</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">};</span>
-<span class="p">})();</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">RandomGen</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">_privateMethod</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I am private&quot;</span><span class="p">);</span>
+    <span class="p">},</span>
+    <span class="nx">rnd</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="p">},</span>
+    <span class="nx">publicMethod</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The public can see me!&quot;</span><span class="p">);</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_privateMethod</span><span class="p">();</span>
+    <span class="p">},</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;RandomGen&quot;</span><span class="p">,</span>
+    <span class="nx">getRandomNumber</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">rnd</span><span class="p">()</span> <span class="p">}</span>
+<span class="p">}</span>
 
-<span class="kr">const</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">RandomGen</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">().</span><span class="nx">getRandomNumber</span><span class="p">();</span></code></pre></div>
+<span class="kr">const</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">RandomGen</span><span class="p">.</span><span class="nx">getRandomNumber</span><span class="p">();</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.util.Random</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.util.Random</span>
 
 <span class="k">object</span> <span class="nc">RandomGen</span> <span class="o">{</span>
   <span class="k">private</span> <span class="k">def</span> <span class="n">privateMethod</span><span class="o">()</span> <span class="o">{</span>
@@ -509,7 +537,7 @@ scenes, in JavaScript you need to invoke the <code>getInstance</code> function.<
   <span class="k">private</span> <span class="k">val</span> <span class="n">rnd</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Random</span><span class="o">()</span>
   
   <span class="k">def</span> <span class="n">publicMethod</span><span class="o">()</span> <span class="o">{</span>
-    <span class="n">println</span><span class="o">(</span> <span class="s">&quot;The public can see me!&quot;</span> <span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">&quot;The public can see me!&quot;</span><span class="o">)</span>
     <span class="n">privateMethod</span><span class="o">()</span>
   <span class="o">}</span>
   
@@ -535,7 +563,7 @@ of implementation classes. JavaScript itself has no need for interfaces, but som
 them for the same purpose as Scala.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">Circle</span> <span class="kr">extends</span> <span class="nx">Shape</span> <span class="p">{</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">class</span> <span class="nx">Circle</span> <span class="kr">extends</span> <span class="nx">Shape</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
     <span class="kr">super</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">r</span> <span class="o">=</span> <span class="nx">r</span><span class="p">;</span>
@@ -557,7 +585,7 @@ them for the same purpose as Scala.</p>
 <span class="nx">cc</span><span class="p">.</span><span class="nx">onClick</span><span class="p">();</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Circle</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">val</span> <span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Shape</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Circle</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">val</span> <span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Shape</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">override</span> <span class="k">def</span> <span class="n">draw</span><span class="o">()</span> <span class="o">{</span>
     <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Circle at $x, $y with radius $r&quot;</span><span class="o">)</span>
   <span class="o">}</span>
@@ -594,9 +622,9 @@ instance of <code>Some[A]</code>, containing the present value of type <code>A</
 <code>None</code>.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-  <span class="k">if</span><span class="p">(</span><span class="nx">context</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">context</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
     <span class="nx">s</span> <span class="o">=</span> <span class="err">`</span><span class="p">[</span><span class="nx">$</span><span class="p">{</span><span class="nx">context</span><span class="p">}]</span> <span class="err">`</span><span class="p">;</span>
   <span class="nx">s</span> <span class="o">=</span> <span class="nx">s</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">;</span>  
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
@@ -608,7 +636,7 @@ instance of <code>Some[A]</code>, containing the present value of type <code>A</
 <span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Second message&quot;</span><span class="p">,</span> <span class="s2">&quot;debug&quot;</span><span class="p">);</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="n">context</span> <span class="k">match</span> <span class="o">{</span>
     <span class="k">case</span> <span class="nc">Some</span><span class="o">(</span><span class="n">c</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">&quot;[$c] $msg&quot;</span>
     <span class="k">case</span> <span class="nc">None</span> <span class="k">=&gt;</span> <span class="n">msg</span>
@@ -625,7 +653,7 @@ instance of <code>Some[A]</code>, containing the present value of type <code>A</
 function in two other ways giving us the same result.</p>
 
 <div class="row">
-<div class="col-md-12"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
+<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="n">context</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">&quot;[$c] $msg&quot;</span><span class="o">).</span><span class="n">getOrElse</span><span class="o">(</span><span class="n">msg</span><span class="o">)</span>
   <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
 <span class="o">}</span>
@@ -639,13 +667,13 @@ function in two other ways giving us the same result.</p>
 <p>Whoa, quite a reduction in code size! Next let’s see how we can process a sequence of option values.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">7</span><span class="p">];</span>
-<span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">!==</span> <span class="kc">undefined</span> <span class="p">);</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">,</span> <span class="mi">7</span><span class="p">];</span>
+<span class="kr">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">);</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span> 
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">data</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="nc">Some</span><span class="o">(</span><span class="mi">1</span><span class="o">),</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">2</span><span class="o">),</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span> 
   <span class="nc">None</span><span class="o">,</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">5</span><span class="o">),</span> <span class="nc">None</span><span class="o">,</span> <span class="nc">Some</span><span class="o">(</span><span class="mi">7</span><span class="o">))</span>
-<span class="k">val</span> <span class="n">res</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">isDefined</span> <span class="o">)</span></code></pre></div>
+<span class="k">val</span> <span class="n">res</span> <span class="k">=</span> <span class="n">data</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">.</span><span class="n">isDefined</span><span class="o">)</span></code></pre></div>
 </div>
 </div>
 
@@ -655,10 +683,10 @@ chapter</a>.</p>
 <hr />
 
 <div class="row">
-<div class="col-md-6"><h6 class="text-right">ES6</h6>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6>
 </div>
         
-<div class="col-md-6"><h6 class="text-right">Scala</h6>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6>
 </div>
 </div>
 

@@ -25,7 +25,7 @@ module Tags
             content = super.strip
             content = converter.convert(content)
             if @header != ''
-                content = '<h6 class="text-right">' + @header + '</h6>' + content
+                content = '<h6 class="code-block-header">' + @header + '</h6>' + content
             end
             '<div class="col-md-' + @width +'">' + content + '</div>'
         end
