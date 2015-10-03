@@ -52,30 +52,80 @@ val y = "Constant"
 {% endcolumn %}
 {% endcolumns %}
 
-Note that the Scala compiler automatically infers the types for `x` and `y` from the values that are assigned. In case you
-need an uninitialized mutable variable, you need to specify the type yourself.
+Note that the Scala compiler automatically infers the types for `x` and `y` from the values that are assigned. In Scala
+both mutable and immutable variables must always be initialized when declared.
+
+## Primitive types
+
+Scala defines several primitive types, of which most have corresponding types in JavaScript as well. See the table below.
+
+<table class="table table-bordered">
+  <thead>
+    <tr><th>Scala type</th><th>JavaScript type</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>String</td><td>string</td><td></td></tr>
+    <tr><td>Boolean</td><td>boolean</td><td></td></tr>
+    <tr><td>Char</td><td><i>N/A</i></td><td>16-bit Unicode code point</td></tr>
+    <tr><td>Byte</td><td>number</td><td>integer, range (-128, 127)</td></tr>
+    <tr><td>Short</td><td>number</td><td>integer, range (-32768, 32767)</td></tr>
+    <tr><td>Int</td><td>number</td><td>integer, range (-2147483648, 2147483647)</td></tr>
+    <tr><td>Long</td><td><i>N/A</i></td><td>64-bit integer</td></tr>
+    <tr><td>Float</td><td>number</td><td>32-bit floating point</td></tr>
+    <tr><td>Double</td><td>number</td><td>64-bit floating point, fully equivalent to JS number</td></tr>
+    <tr><td>Symbol</td><td>symbol</td><td></td></tr>
+    <tr><td>Unit</td><td>undefined</td><td></td></tr>
+    <tr><td>Null</td><td>null</td><td></td></tr>
+  </tbody>
+</table>
+
+In JavaScript all numbers are represented as 64-bit floating point internally, which may give surprising results when
+making some calculations. In Scala calculations are always performed using the types of operands, so dividing an `Int`
+with another `Int`, the result is rounded to an `Int`.
+
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-// uninitialized mutable variable
-let x;
+const x = 5 / 3; // == 1.6666666666666667 
 {% endhighlight %}
 {% endcolumn %}
         
 {% column 6 Scala %}
-{% highlight scala %}            
-// uninitialized mutable variable
-var x: Int = _
+{% highlight scala %}
+val x = 5 / 3 // == 1
+val y = 5.0 / 3 // == 1.6666666666666667
+val z = 5 / 3.0 // == 1.6666666666666667
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
 
+Because in JavaScript every number is a `number` there is no need to do type conversions. In Scala, however, it is an
+error if you try to assign a higher precision value to a lower precision variable. You must explicitly convert it using
+an appropriate function.
+
+{% columns %}
+{% column 12 Scala %}
+{% highlight scala %}
+val x: Int = 3.5 // ERROR!
+val y: Double = 3 // Ok!
+val f: Float = 3.0 // ERROR! 3.0f would be ok
+val z: Int = 3.5.toInt // Ok!
+val a: Byte = z // ERROR!
+val b: Byte = z.toByte // Ok!
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Actually the integer types `Int`, `Short` and `Byte` also exist in JavaScript if you use [_typed
+arrays_](https://developer.mozilla.org/en/docs/Web/JavaScript/Typed_arrays). These are not commonly used in regular
+JavaScript code, but for some specific purposes, like WebGL, they are required.
+
 ## Functions
 
 Defining functions is quite similar in both languages. You just replace the `function` keyword with `def` and add types
-for function parameters and return type. In Scala you can also omit the `return` keyword as the last expression in the
+for function parameters and return type. In Scala you can omit the `return` keyword as the last expression in the
 function is automatically used as the return value. Return type is usually automatically inferred by the Scala compiler
-(when not using `return`).
+(when not using `return`), but it is good practice to define it to help catch potential type errors.
 
 {% columns %}
 {% column 6 ES6 %}
@@ -88,12 +138,7 @@ function mult(x, y) {
         
 {% column 6 Scala %}
 {% highlight scala %}            
-def mult(x: Double, y: Double): Double = {
-  return x * y
-}
-
-// shorter version
-def mult(x: Double, y: Double) = x * y
+def mult(x: Double, y: Double): Double = x * y
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -112,7 +157,7 @@ function mult(x, y = 42.0) { return x * y; }
 
 // variable number of parameters
 function sum( first, ...rest) {
-  return first + rest.reduce( (a, b) => a + b );
+  return first + rest.reduce( (a, b) => a + b, 0 );
 }
 
 const s = sum(5, 4, 3, 2, 1); // == 15
@@ -129,17 +174,19 @@ const v = vec({x: 8, z: 42}); // Vec(8, 0, 42)
 {% column 6 Scala %}
 {% highlight scala %}            
 // default value
-def mult(x: Double, y: Double = 42.0) = x * y
+def mult(x: Double, y: Double = 42.0): Double = {
+  x * y
+}
 
 // variable number of parameters
-def sum(first: Double, rest: Double*) = {
-  first + rest.reduceLeft( (a, b) => a + b ) 
+def sum(first: Double, rest: Double*): Double = {
+  first + rest.foldLeft(0.0)( (a, b) => a + b ) 
 }
 
 val s = sum(5, 4, 3, 2, 1) // == 15
 
 // named parameters (works directly)
-def vec(x: Int = 0, y: Int = 0, z: Int = 0) = {
+def vec(x: Int = 0, y: Int = 0, z: Int = 0): Vec = {
   new Vec(x, y, z)
 }
 
@@ -163,7 +210,7 @@ const f = (x, y) => x + y;
 
 const p = ["Fox", "jumped", "over", "me"];
 const l = p.map( s => s.length )
-  .reduce( (a, b) => a + b ); // == 15
+  .reduce( (a, b) => a + b, 0 ); // == 15
 {% endhighlight %}
 {% endcolumn %}
         
@@ -172,12 +219,142 @@ const l = p.map( s => s.length )
 val f = (x: Double, y: Double) => x + y
          
 val p = Array("Fox", "jumped", "over", "me")
-val l = p.map( _.length ) // use _ as a shorthand
-  .reduce( (a, b) => a + b ) // == 15
+val l = p.map( s => s.length )
+  .foldLeft(0)( (a, b) => a + b ) // == 15
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
 
+## `if`, `while`, `for`, `match` control structures
+
+As you would expect, Scala has the regular `if-else` and `while` control structures found in most programming
+languages. The big difference to JavaScript is that `if` statements are actually expressions returning a value. In
+JavaScript you have the special `a ? b : c` construct to achieve the same result.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const res = ( name === "" ) ? 0 : 1;
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+val res = if( name.isEmpty ) 0 else 1
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+The `for` construct in Scala is quite different from the for-loop in JavaScript and also much more powerful. You can use
+it to iterate over numerical ranges or collections in both languages:
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+let x = 0;
+for(let i = 0; i < 100; i++)
+  x += i*i;
+  
+const p = ["Fox", "jumped", "over", "me"];
+for(let s of p) {
+  console.log(`Word ${s}`);
+}
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+var x = 0
+for( i <- 0 until 100 )
+  x += i*i
+  
+val p = Array("Fox", "jumped", "over", "me")
+for( s <- p ) {
+  println(s"Word $s")
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+In case you have nested for-loops, you can easily combine them into one _for-comprehension_ in Scala. Inside the `for`
+you can even filter using `if` expressions. In Scala a _for-comprehension_ is just syntactic sugar for a series of
+`flatMap`, `map` and `withFilter` calls making it _very_ handy when dealing with Scala collections.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+function findPairs(n, sum) {
+  for(let i = 0; i < n; i++) {
+    for(let j = i; j < n; j++) {
+      if( i + j == sum) {
+        console.log(`Found pair ${i}, ${j}`);
+      }
+    }
+  }
+};
+findPairs(20, 31);
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+def findPairs(n: Int, sum: Int): Unit = {
+  for (i <- 0 until n;
+       j <- i until n if i + j == sum) {
+         println(s"Found pair $i, $j")
+  }
+}
+findPairs(20, 31)
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Finally the `match` construct provides _pattern matching_ capabilities in Scala. Pattern matching is a complex topic
+covered in more detail in the advanced section of this article, so here we just focus on the simple use cases like
+replacing JavaScript `switch`/`case` with it.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const animal = "Dog";
+let description;
+switch(animal) {
+  case "Cat":
+  case "Lion":
+  case "Tiger":
+    description = "It's feline!";
+    break;
+  case "Dog":
+  case "Wolf":
+    description = "It's canine!";
+    break;
+  default:
+    description = "It's something else";
+}
+console.log(description);
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+val animal = "Dog"
+val description = animal match {
+  case "Cat" | "Lion" | "Tiger" =>
+    "It's feline!"
+  case "Dog" | "Wolf" =>
+    "It's canine!"
+  case _ =>
+    "It's something else"
+}
+println(description)
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+In Scala you can use the `|`-operator to match multiple choices and there is no need (nor support) for `break`, as cases
+never fall through like they do in JavaScript. For the default case, use the ubiquitous `_` syntax (it has many many
+more uses in Scala!) As with `if`, a `match` is an expression returning a value that you can directly assign to a
+variable.
 
 ## Classes
 
@@ -235,14 +412,14 @@ abstract class Shape(var x: Int, var y: Int) {
     y += dy
   }
   
-  def draw() = {
+  def draw() {
     println(s"Shape at $x, $y")
   }
 }
   
 // r is immutable but accessible outside class  
 class Circle(x: Int, y: Int, val r: Int) extends Shape(x, y) {
-  override def draw() = {
+  override def draw() {
     println(s"Circle at $x, $y with radius $r")
   }
 }  
@@ -308,7 +485,7 @@ const RandomGen = (() => {
     function privateMethod(){
         console.log( "I am private" );
     }
-    const privateRandomNumber = () => Math.random();
+    const rnd = () => Math.random();
  
     return {
       // Public methods and variables
@@ -317,7 +494,7 @@ const RandomGen = (() => {
         privateMethod();
       },
       name: "RandomGen",
-      getRandomNumber: () => privateRandomNumber()
+      getRandomNumber: () => rnd()
     };
   };
  
@@ -342,20 +519,20 @@ const r = RandomGen.getInstance().getRandomNumber();
 import scala.util.Random
 
 object RandomGen {
-  private def privateMethod() = {
+  private def privateMethod() {
     println("I am private")
   }
   
-  private val privateRandomNumber = new Random()
+  private val rnd = new Random()
   
-  def publicMethod() = {
+  def publicMethod() {
     println( "The public can see me!" )
     privateMethod()
   }
   
   val name = "RandomGen"
   
-  def getRandomNumber = privateRandomNumber.nextDouble()
+  def getRandomNumber: Double = rnd.nextDouble()
 }
 
 val r = RandomGen.getRandomNumber
@@ -404,13 +581,13 @@ cc.onClick();
 {% column 6 Scala %}
 {% highlight scala %}
 class Circle(x: Int, y: Int, val r: Int) extends Shape(x, y) {
-  override def draw() = {
+  override def draw() {
     println(s"Circle at $x, $y with radius $r")
   }
 }  
 
 trait Clickable {
-  def onClick() = println("Clicked!")
+  def onClick() { println("Clicked!") }
 }
 
 class ClickableCircle(x: Int, y: Int, r: Int) 
@@ -425,139 +602,7 @@ cc.onClick()
 Note that there are many ways for defining mixins in JavaScript, using `Object.assign` is just one of them supported by
 ES6.
 
-
-## `if`, `while`, `for`, `match` control structures
-
-As you would expect, Scala has the regular `if-else` and `while` control structures found in most programming
-languages. The big difference to JavaScript is that `if` statements are actually expressions returning a value. In
-JavaScript you have the special `a ? b : c` construct to achieve the same result.
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-const res = ( name === "" ) ? 0 : 1;
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-val res = if( name.isEmpty ) 0 else 1
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
-
-The `for` construct in Scala is quite different from the for-loop in JavaScript and also much more powerful. You can use
-it to iterate over numerical ranges or collections in both languages:
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-let x = 0;
-for(let i = 0; i < 100; i++)
-  x += i*i;
-  
-const p = ["Fox", "jumped", "over", "me"];
-for(let s of p) {
-  console.log(`Word ${s}`)
-}
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-var x = 0
-for( i <- 0 until 100 )
-  x += i*i
-  
-val p = Array("Fox", "jumped", "over", "me")
-for( s <- p ) {
-  println(s"Word $s")
-}
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
-
-In case you have nested for-loops, you can easily combine them into one _for-comprehension_ in Scala. Inside the _for_
-you can even filter using `if` expressions. In Scala a _for-comprehension_ is just syntactic sugar for a series of
-`flatMap`, `map` and `withFilter` calls making it _very_ handy when dealing with Scala collections.
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-function findPairs(n, sum) {
-  for(let i = 0; i < n; i++) {
-    for(let j = i; j < n; j++) {
-      if( i + j == sum) {
-        console.log(`Found pair ${i}, ${j}`);
-      }
-    }
-  }
-};
-findPairs(20, 31);
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-def findPairs(n: Int, sum: Int) = {
-  for (i <- 0 until n;
-       j <- i until n if i + j == sum) {
-         println(s"Found pair $i, $j")
-  }
-}
-findPairs(20, 31)
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
-
-Finally the `match` construct provides _pattern matching_ capabilities in Scala. Pattern matching is a complex topic
-covered in more detail in the advanced section of this article, so here we just focus on the simple use cases like
-replacing JavaScript `switch`/`case` with it.
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-const animal = "Dog";
-let description;
-switch(animal) {
-  case "Cat":
-  case "Lion":
-  case "Tiger":
-    description = "It's feline!";
-    break;
-  case "Dog":
-  case "Wolf":
-    description = "It's canine!";
-    break;
-  default:
-    description = "It's something else";
-}
-console.log(description);
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-val animal = "Dog"
-val description = animal match {
-  case "Cat" | "Lion" | "Tiger" =>
-    "It's feline!"
-  case "Dog" | "Wolf" =>
-    "It's canine!"
-  case _ =>
-    "It's something else"
-}
-println(description)
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
-
-In Scala you can use the `|`-operator to match multiple choices and there is no need for `break`, as cases never fall
-through like they do in JavaScript. For default case, use the ubiquitous `_` syntax (it has many many more uses in
-Scala!) As with `if`, a `match` is an expression returning a value that you can directly assign to a variable.
-
-
-## `Option[A]` the type safe `undefined`
+## `Option[A]`, the type safe `undefined`
 
 The notorious `undefined` type in JavaScript can be a blessing or a curse. On the other hand it makes life easy by
 allowing you to drop function parameters or leave variables undefined. But then it also masks many errors and makes
@@ -565,9 +610,12 @@ you write extra code to check for `undefined`. Quite often `undefined` is used t
 existing value (of any type) and a missing value.
 
 Scala doesn't have `undefined` (it does have `null` but its use is discouraged), but instead it has an `Option[A]` trait
-for representing optional values. `Option[A]` is a container for an optional value of type `A`. If the value of type `A`
-is present, the `Option[A]` is an instance of `Some[A]`, containing the present value of type `A`. If the value is
-absent, the `Option[A]` is the object `None`.
+for representing optional values. In Scala.js the `undefined` type exists to support interoperability with JS libraries,
+but even there it is recommended to use `Option` whenever possible.
+
+`Option[A]` is a container for an optional value of type `A`. If the value of type `A` is present, the `Option[A]` is an
+instance of `Some[A]`, containing the present value of type `A`. If the value is absent, the `Option[A]` is the object
+`None`.
 
 {% columns %}
 {% column 6 ES6 %}
@@ -635,16 +683,13 @@ const res = data.filter( (x) => x !== undefined );
 {% highlight scala %}
 val data = Array(Some(1), Some(2), Some(3), 
   None, Some(5), None, Some(7))
-val res = data.flatten
+val res = data.filter( x => x.isDefined )
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
 
-We could also use a `filter` in the Scala version, but there is a `flatten` function that converts it into a new array
-consisting of elements inside the options. `None` naturally contains no elements, so those are dropped. This
-demonstrates how `Option` is a close relative to the different _collections_ in the Scala library, which are discussed
-in the [next chapter](es6_to_scala_part2.html).
-
+'Option' provides many of the _collection_ methods like `map`, `filter` and `flatMap`, which are discussed in the [next
+chapter](es6_to_scala_part2.html).
 
 
 -------------
