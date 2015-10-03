@@ -5,7 +5,14 @@
 - text: Why Scala.js?
   url: /doc/why-scalajs.html
 - text: Scala.js for JavaScript developers
-  url: /doc/scalajs_for_jsdevs.html
+  url: /doc/sjs_for_js
+  subitems:
+    - text: "From ES6 to Scala: Basics"
+      url: /doc/sjs_for_js/es6_to_scala_part1.html
+    - text: "From ES6 to Scala: Collections"
+      url: /doc/sjs_for_js/es6_to_scala_part2.html
+    - text: "From ES6 to Scala: Advanced"
+      url: /doc/sjs_for_js/es6_to_scala_part3.html
 - text: Scala.js for Scala developers
   url: /doc/scalajs_for_scaladevs.html
 - text: Project setup
