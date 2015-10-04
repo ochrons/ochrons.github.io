@@ -514,12 +514,16 @@ not done as it makes things complicated.</p>
     <span class="nx">_privateMethod</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I am private&quot;</span><span class="p">);</span>
     <span class="p">},</span>
+    
     <span class="nx">_rnd</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="p">},</span>
+    
     <span class="nx">publicMethod</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The public can see me!&quot;</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_privateMethod</span><span class="p">();</span>
     <span class="p">},</span>
+    
     <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;RandomGen&quot;</span><span class="p">,</span>
+    
     <span class="nx">getRandomNumber</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_rnd</span><span class="p">()</span> <span class="p">}</span>
 <span class="p">}</span>
 
@@ -623,10 +627,11 @@ instance of <code>Some[A]</code>, containing the present value of type <code>A</
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">log</span><span class="p">(</span><span class="nx">msg</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">let</span> <span class="nx">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">s</span><span class="p">;</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">context</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
-    <span class="nx">s</span> <span class="o">=</span> <span class="err">`</span><span class="p">[</span><span class="nx">$</span><span class="p">{</span><span class="nx">context</span><span class="p">}]</span> <span class="err">`</span><span class="p">;</span>
-  <span class="nx">s</span> <span class="o">=</span> <span class="nx">s</span> <span class="o">+</span> <span class="nx">msg</span><span class="p">;</span>  
+    <span class="nx">s</span> <span class="o">=</span> <span class="err">`</span><span class="p">[</span><span class="nx">$</span><span class="p">{</span><span class="nx">context</span><span class="p">}]</span> <span class="nx">$</span><span class="p">{</span><span class="nx">msg</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+  <span class="k">else</span> 
+    <span class="nx">s</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">;</span>  
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
 <span class="p">};</span>
 

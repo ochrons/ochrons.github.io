@@ -18,20 +18,23 @@ interfaces. The high-level hierarchy for the abstract base classes and traits is
 
 ![Scala collection hierarchy](http://docs.scala-lang.org/resources/images/collections.png)
 
-Scala provides _immutable_ and _mutable_ implementations for all these collection types. It is important to understand
-the difference between these two, as they behave quite differently. Below you can see the type hierarchy for _immutable_
-collections.
+Scala provides _immutable_ and _mutable_ implementations for all these collection types.
 
-![Immutable collections](http://docs.scala-lang.org/resources/images/collections.immutable.png)
-
-And the hierarchy for _mutable_ collections.
-
-![Mutable collections](http://docs.scala-lang.org/resources/images/collections.mutable.png)
+<table class="table table-bordered">
+<tr><th colspan="2"><h6>Common <i>immutable</i> collections</h6></th></tr>
+<tr><td>Seq</td><td>List, Vector, Stream, Range</td></tr>
+<tr><td>Map</td><td>HashMap, TreeMap</td></tr>
+<tr><td>Set</td><td>HashSet, TreeSet</td></tr>
+<tr><th colspan="2"><h6>Common <i>mutable</i> collections</h6></th></tr>
+<tr><td>Seq</td><td>Buffer, LinkedList, Queue</td></tr>
+<tr><td>Map</td><td>HashMap, LinkedHashMap</td></tr>
+<tr><td>Set</td><td>HashSet</td></tr>
+</table>
 
 ## Comparing to JavaScript
 
 Let's start with familiar things and see how Scala collections compare with the JavaScript `Array` and `Object` (or
-`Map`). The closest match for `Array` would be the mutable `ArrayBuffer` since arrays in Scala cannot change size after
+`Map`). The closest match for `Array` would be the mutable `Buffer` since arrays in Scala cannot change size after
 initialization. For `Object` (or `Map`) the best match is the mutable `HashMap`.
 
 A simple example of array manipulation.
@@ -51,7 +54,7 @@ console.log(a.join(" "));
 {% column 6 Scala %}
 {% highlight scala %}
 import scala.collection.mutable
-val a = mutable.ArrayBuffer("Fox", "jumped", "over")
+val a = mutable.Buffer("Fox", "jumped", "over")
 a.append("me") // Fox jumped over me
 a.prepend("Red") // Red Fox jumped over me
 val fox = a(1)
@@ -100,10 +103,26 @@ You may have noticed that `Tuple` is not shown in the collection hierarchy above
 collection type of its own. Scala tuple combines a fixed number of items together so that they can be passed around as a
 whole. A tuple is immutable and can hold different types, so it's quite close to an anonymous case class in that sense.
 Tuples are used in situations where you need to group items together, like key and value in a map, or to return multiple
-values.
+values. In JavaScript you can use a fixed size array to represent a tuple.
 
 {% columns %}
-{% column 9 Scala %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const t = ["James", "Bond", 42];
+const kv = ["key", 42];
+
+function sumCount(s) {
+  let sum = 0;
+  let count = 0;
+  for(let i of s) {
+    sum += i;
+    count += 1;
+  }
+  return [sum, count];
+}
+{% endhighlight %}
+{% endcolumn %}
+{% column 6 Scala %}
 {% highlight scala %}
 val t = ("James", "Bond", 42)
 val kv = "key" -> 42 // same as ("key", 42)
@@ -111,7 +130,7 @@ val kv = "key" -> 42 // same as ("key", 42)
 def sumCount(s: Seq[Int]):(Int, Int) = {
   var sum = 0
   var count = 0
-  s.forEach { i =>
+  for(i <- s) {
     sum += i
     count += 1
   }
@@ -125,7 +144,17 @@ To access values inside a tuple, use the `tuple._1` syntax, where the number ind
 (starting from 1, not 0). Quite often you can also use _destructuring_ to extract the values.
 
 {% columns %}
-{% column 9 Scala %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const sc = sumCount([1, 2, 3]);
+const sum = sc[0];
+const count = sc[1];
+
+// with destructuring
+const [sum, count] = sumCount([1, 2, 3]);
+{% endhighlight %}
+{% endcolumn %}
+{% column 6 Scala %}
 {% highlight scala %}
 val sc = sumCount(Seq(1, 2, 3))
 val sum = sc._1
@@ -139,16 +168,15 @@ val (sum, count) = sumCount(Seq(1, 2, 3))
 
 #### Seq
 
-`Seq` represents an iterable that has a _length_ and whose elements have fixed index positions, starting from 0. Typical
-implementations include `List`, `Vector`, `ArrayBuffer` and `Range`. Although Scala `Array` is not a `Seq`, it can be
-wrapped into a `WrappedArray` to enable all `Seq` operations on arrays. In Scala this is done automatically through an
-implicit conversion, allowing you to write code like following.
+`Seq` is an ordered sequence. Typical implementations include `List`, `Vector`, `Buffer` and `Range`. Although Scala
+`Array` is not a `Seq`, it can be wrapped into a `WrappedArray` to enable all `Seq` operations on arrays. In Scala this
+is done automatically through an implicit conversion, allowing you to write code like following.
 
 {% columns %}
 {% column 9 Scala %}
 {% highlight scala %}
 val ar = Array(1, 2, 3, 4)
-val sum = ar.foldLeft(0)((a, x) => a + x) // foldLeft comes from WrappedArray
+val product = ar.foldLeft(1)((a, x) => a * x) // foldLeft comes from WrappedArray
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}

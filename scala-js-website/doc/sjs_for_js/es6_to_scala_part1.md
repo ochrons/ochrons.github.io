@@ -540,12 +540,16 @@ const RandomGen = {
     _privateMethod() {
         console.log("I am private");
     },
+    
     _rnd() { return Math.random() },
+    
     publicMethod() {
         console.log("The public can see me!");
         this._privateMethod();
     },
+    
     name: "RandomGen",
+    
     getRandomNumber() { return this._rnd() }
 }
 
@@ -661,10 +665,11 @@ instance of `Some[A]`, containing the present value of type `A`. If the value is
 {% column 6 ES6 %}
 {% highlight javascript %}
 function log(msg, context) {
-  let s = "";
+  let s;
   if (context !== undefined)
-    s = `[${context}] `;
-  s = s + msg;  
+    s = `[${context}] ${msg}`;
+  else 
+    s = msg;  
   console.log(s);
 };
 
