@@ -73,7 +73,6 @@ Scala defines several primitive types, of which most have corresponding types in
     <tr><td>Long</td><td><i>N/A</i></td><td>64-bit integer</td></tr>
     <tr><td>Float</td><td>number</td><td>32-bit floating point</td></tr>
     <tr><td>Double</td><td>number</td><td>64-bit floating point, fully equivalent to JS number</td></tr>
-    <tr><td>Symbol</td><td>symbol</td><td></td></tr>
     <tr><td>Unit</td><td>undefined</td><td></td></tr>
     <tr><td>Null</td><td>null</td><td></td></tr>
   </tbody>
@@ -104,7 +103,7 @@ error if you try to assign a higher precision value to a lower precision variabl
 an appropriate function.
 
 {% columns %}
-{% column 12 Scala %}
+{% column 9 Scala %}
 {% highlight scala %}
 val x: Int = 3.5 // ERROR!
 val y: Double = 3 // Ok!
@@ -139,6 +138,33 @@ function mult(x, y) {
 {% column 6 Scala %}
 {% highlight scala %}            
 def mult(x: Double, y: Double): Double = x * y
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+#### Anonymous functions
+
+In functional programming you quite often need to provide a function as a parameter, but you don't need it elsewhere so
+it can be anonymous. Both languages support the nice "fat arrow" notation for defining anonymous functions conveniently.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const f = (x, y) => x + y;
+
+const p = ["Fox", "jumped", "over", "me"];
+const l = p.map(s => s.length)
+  .reduce((a, b) => a + b, 0); // == 15
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+val f = (x: Double, y: Double) => x + y
+         
+val p = Array("Fox", "jumped", "over", "me")
+val l = p.map(s => s.length)
+  .foldLeft(0)((a, b) => a + b) // == 15
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -197,33 +223,6 @@ val v = vec(8, z = 42) // Vec(8, 0, 42)
 
 Again, Scala compiler can infer all the required types in the code above, including the parameters for the anonymous
 function given to the `reduceLeft` function.
-
-#### Anonymous functions
-
-In functional programming you quite often need to provide a function as a parameter, but you don't need it elsewhere so
-it can be anonymous. Both languages support the nice "fat arrow" notation for defining anonymous functions conveniently.
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-const f = (x, y) => x + y;
-
-const p = ["Fox", "jumped", "over", "me"];
-const l = p.map(s => s.length)
-  .reduce((a, b) => a + b, 0); // == 15
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-val f = (x: Double, y: Double) => x + y
-         
-val p = Array("Fox", "jumped", "over", "me")
-val l = p.map(s => s.length)
-  .foldLeft(0)((a, b) => a + b) // == 15
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
 
 ## `if`, `while`, `for`, `match` control structures
 
@@ -541,13 +540,13 @@ const RandomGen = {
     _privateMethod() {
         console.log("I am private");
     },
-    rnd() { return Math.random() },
+    _rnd() { return Math.random() },
     publicMethod() {
         console.log("The public can see me!");
         this._privateMethod();
     },
     name: "RandomGen",
-    getRandomNumber() { return this.rnd() }
+    getRandomNumber() { return this._rnd() }
 }
 
 const r = RandomGen.getRandomNumber();
@@ -610,7 +609,7 @@ const Clickable = {
   onClick() { console.log("Clicked!"); }
 };
 
-class ClickableCircle extends Circle;
+class ClickableCircle extends Circle {}
 Object.assign(ClickableCircle.prototype, Clickable);
 
 const cc = new ClickableCircle(0, 0, 42);
@@ -620,7 +619,8 @@ cc.onClick();
         
 {% column 6 Scala %}
 {% highlight scala %}
-class Circle(x: Int, y: Int, val r: Int) extends Shape(x, y) {
+class Circle(x: Int, y: Int, val r: Int) 
+  extends Shape(x, y) {
   override def draw() {
     println(s"Circle at $x, $y with radius $r")
   }
@@ -642,14 +642,14 @@ cc.onClick()
 Note that there are many ways for defining mixins in JavaScript, using `Object.assign` is just one of them supported by
 ES6.
 
-## `Option[A]`, the type safe `undefined`
+## `Option`, the type safe `undefined`
 
 The notorious `undefined` type in JavaScript can be a blessing or a curse. On the other hand it makes life easy by
 allowing you to drop function parameters or leave variables undefined. But then it also masks many errors and makes
 you write extra code to check for `undefined`. Quite often `undefined` is used to make a distinction between an
 existing value (of any type) and a missing value.
 
-Scala doesn't have `undefined` (it does have `null` but its use is discouraged), but instead it has an `Option[A]` trait
+Scala doesn't have `undefined` (it does have `null` but its use is discouraged), but instead it has an `Option` trait
 for representing optional values. In Scala.js the `undefined` type exists to support interoperability with JS libraries,
 but even there it is recommended to use `Option` whenever possible.
 
@@ -692,18 +692,14 @@ log("Second message", Some("debug"))
 {% endcolumns %}
 
 Pattern matching works nicely with `Option`, but there are more powerful ways to use it. Let's rewrite the previous
-function in two other ways giving us the same result.
+function another way giving us the same result.
 
 {% columns %}
-{% column 12 Scala %}
+{% column 9 Scala %}
 {% highlight scala %}
 def log(msg: String, context: Option[String] = None) {
   val s = context.map(c => s"[$c] $msg").getOrElse(msg)
   println(s)
-}
-
-def log(msg: String, context: Option[String] = None) {
-  println(context.fold(msg)(c => s"[$c] $msg"))
 }
 {% endhighlight %}
 {% endcolumn %}
@@ -728,7 +724,7 @@ val res = data.filter(x => x.isDefined)
 {% endcolumn %}
 {% endcolumns %}
 
-'Option' provides many of the _collection_ methods like `map`, `filter` and `flatMap`, which are discussed in the [next
+`Option` provides many _collection like_ methods like `map`, `filter` and `flatMap`, which are discussed in the [next
 chapter](es6_to_scala_part2.html).
 
 

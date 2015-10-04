@@ -59,7 +59,188 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            
+            <p>In JavaScript there are basically two kinds of collections you have used to store your data: the <code>Array</code> for sequential
+data and <code>Object</code> (aka dictionary or hash map) for storing key-value pairs. Furthermore both of these are mutable by
+default, so if you pass them to a function, that function might go and modify them without your knowledge.</p>
+
+<p>ES6 extends your options with four new collection types <code>Map</code>, <code>Set</code>, <code>WeakMap</code> and <code>WeakSet</code>. Of these the <code>WeakMap</code>
+and <code>WeakSet</code> are for special purposes only, so in your application you would typically use only <code>Map</code> and <code>Set</code>.</p>
+
+<h2 id="scala-collection-hierarchy">Scala collection hierarchy</h2>
+
+<p>Unlike JavaScript, the Scala standard library has a huge variety of different collection types to choose from.
+Furthermore the collections are organized in a type hierarchy, meaning they share a lot of common functionality and
+interfaces. The high-level hierarchy for the abstract base classes and traits is shown in the image below.</p>
+
+<p><img src="http://docs.scala-lang.org/resources/images/collections.png" alt="Scala collection hierarchy" /></p>
+
+<p>Scala provides <em>immutable</em> and <em>mutable</em> implementations for all these collection types. It is important to understand
+the difference between these two, as they behave quite differently. Below you can see the type hierarchy for <em>immutable</em>
+collections.</p>
+
+<p><img src="http://docs.scala-lang.org/resources/images/collections.immutable.png" alt="Immutable collections" /></p>
+
+<p>And the hierarchy for <em>mutable</em> collections.</p>
+
+<p><img src="http://docs.scala-lang.org/resources/images/collections.mutable.png" alt="Mutable collections" /></p>
+
+<h2 id="comparing-to-javascript">Comparing to JavaScript</h2>
+
+<p>Let’s start with familiar things and see how Scala collections compare with the JavaScript <code>Array</code> and <code>Object</code> (or
+<code>Map</code>). The closest match for <code>Array</code> would be the mutable <code>ArrayBuffer</code> since arrays in Scala cannot change size after
+initialization. For <code>Object</code> (or <code>Map</code>) the best match is the mutable <code>HashMap</code>.</p>
+
+<p>A simple example of array manipulation.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fox&quot;</span><span class="p">,</span> <span class="s2">&quot;jumped&quot;</span><span class="p">,</span> <span class="s2">&quot;over&quot;</span><span class="p">];</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;me&quot;</span><span class="p">);</span> <span class="c1">// Fox jumped over me</span>
+<span class="nx">a</span><span class="p">.</span><span class="nx">unshift</span><span class="p">(</span><span class="s2">&quot;Red&quot;</span><span class="p">);</span> <span class="c1">// Red Fox jumped over me</span>
+<span class="kr">const</span> <span class="nx">fox</span> <span class="o">=</span> <span class="nx">a</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="nx">a</span><span class="p">[</span><span class="nx">a</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;you&quot;</span><span class="p">;</span> <span class="c1">// Red Fox jumped over you</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">));</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.collection.mutable</span>
+<span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">ArrayBuffer</span><span class="o">(</span><span class="s">&quot;Fox&quot;</span><span class="o">,</span> <span class="s">&quot;jumped&quot;</span><span class="o">,</span> <span class="s">&quot;over&quot;</span><span class="o">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="o">(</span><span class="s">&quot;me&quot;</span><span class="o">)</span> <span class="c1">// Fox jumped over me</span>
+<span class="n">a</span><span class="o">.</span><span class="n">prepend</span><span class="o">(</span><span class="s">&quot;Red&quot;</span><span class="o">)</span> <span class="c1">// Red Fox jumped over me</span>
+<span class="k">val</span> <span class="n">fox</span> <span class="k">=</span> <span class="n">a</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
+<span class="n">a</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">=</span> <span class="s">&quot;you&quot;</span> <span class="c1">// Red Fox jumped over you</span>
+<span class="n">println</span><span class="o">(</span><span class="n">a</span><span class="o">.</span><span class="n">mkString</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">))</span></code></pre></div>
+</div>
+</div>
+
+<p>Working with a hash map (or Object).</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">};</span>
+<span class="nx">p</span><span class="p">[</span><span class="s2">&quot;profession&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Spy&quot;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">name</span> <span class="o">=</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">p</span><span class="p">.</span><span class="nx">first</span><span class="p">}</span> <span class="nx">$</span><span class="p">{</span><span class="nx">p</span><span class="p">.</span><span class="nx">last</span><span class="p">}</span><span class="err">`</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.collection.mutable</span>
+<span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">HashMap</span><span class="o">(</span><span class="s">&quot;first&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;James&quot;</span><span class="o">,</span> 
+  <span class="s">&quot;last&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;Bond&quot;</span><span class="o">)</span>
+<span class="n">p</span><span class="o">(</span><span class="s">&quot;profession&quot;</span><span class="o">)</span> <span class="k">=</span> <span class="s">&quot;Spy&quot;</span>
+<span class="k">val</span> <span class="n">name</span> <span class="k">=</span> <span class="n">s</span><span class="s">&quot;${p(&quot;</span><span class="n">first</span><span class="s">&quot;)} ${p(&quot;</span><span class="n">last</span><span class="s">&quot;)}&quot;</span></code></pre></div>
+</div>
+</div>
+
+<p>Even though you can use Scala collections like you would use arrays and objects in JavaScript, you really shouldn’t,
+because you are missing a lot of great functionality.</p>
+
+<h2 id="common-collections-seq-map-set-and-tuple">Common collections <code>Seq</code>, <code>Map</code>, <code>Set</code> and <code>Tuple</code></h2>
+
+<p>For 99% of the time you will be working with those four common collection types in your code. You will instantiate
+implementation collections like <code>Vector</code> or <code>HashMap</code>, but in your code you don’t really care what the implementation is,
+as long as it behaves like a <code>Seq</code> or a <code>Map</code>.</p>
+
+<h4 id="tuple">Tuple</h4>
+
+<p>You may have noticed that <code>Tuple</code> is not shown in the collection hierarchy above, because it’s a very specific
+collection type of its own. Scala tuple combines a fixed number of items together so that they can be passed around as a
+whole. A tuple is immutable and can hold different types, so it’s quite close to an anonymous case class in that sense.
+Tuples are used in situations where you need to group items together, like key and value in a map, or to return multiple
+values.</p>
+
+<div class="row">
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">t</span> <span class="k">=</span> <span class="o">(</span><span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Bond&quot;</span><span class="o">,</span> <span class="mi">42</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">kv</span> <span class="k">=</span> <span class="s">&quot;key&quot;</span> <span class="o">-&gt;</span> <span class="mi">42</span> <span class="c1">// same as (&quot;key&quot;, 42)</span>
+
+<span class="k">def</span> <span class="n">sumCount</span><span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="o">(</span><span class="kt">Int</span><span class="o">,</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">sum</span> <span class="k">=</span> <span class="mi">0</span>
+  <span class="k">var</span> <span class="n">count</span> <span class="k">=</span> <span class="mi">0</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">forEach</span> <span class="o">{</span> <span class="n">i</span> <span class="k">=&gt;</span>
+    <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+  <span class="o">}</span>
+  <span class="o">(</span><span class="n">sum</span><span class="o">,</span> <span class="n">count</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>To access values inside a tuple, use the <code>tuple._1</code> syntax, where the number indicates position within the tuple
+(starting from 1, not 0). Quite often you can also use <em>destructuring</em> to extract the values.</p>
+
+<div class="row">
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">sc</span> <span class="k">=</span> <span class="n">sumCount</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span>
+<span class="k">val</span> <span class="n">sum</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">_1</span>
+<span class="k">val</span> <span class="n">count</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">_2</span>
+
+<span class="c1">// with destructuring</span>
+<span class="k">val</span> <span class="o">(</span><span class="n">sum</span><span class="o">,</span> <span class="n">count</span><span class="o">)</span> <span class="k">=</span> <span class="n">sumCount</span><span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span></code></pre></div>
+</div>
+</div>
+
+<h4 id="seq">Seq</h4>
+
+<p><code>Seq</code> represents an iterable that has a <em>length</em> and whose elements have fixed index positions, starting from 0. Typical
+implementations include <code>List</code>, <code>Vector</code>, <code>ArrayBuffer</code> and <code>Range</code>. Although Scala <code>Array</code> is not a <code>Seq</code>, it can be
+wrapped into a <code>WrappedArray</code> to enable all <code>Seq</code> operations on arrays. In Scala this is done automatically through an
+implicit conversion, allowing you to write code like following.</p>
+
+<div class="row">
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">ar</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">sum</span> <span class="k">=</span> <span class="n">ar</span><span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mi">0</span><span class="o">)((</span><span class="n">a</span><span class="o">,</span> <span class="n">x</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">x</span><span class="o">)</span> <span class="c1">// foldLeft comes from WrappedArray</span></code></pre></div>
+</div>
+</div>
+
+<p>The <code>Seq</code> trait exposes many methods familiar to the users of JavaScript arrays, including <code>forEach</code>, <code>map</code>, <code>filter</code>,
+<code>slice</code>, <code>find</code> and <code>reverse</code>. In addition to these, there are several more useful methods shown with examples in the
+code block below.</p>
+
+<div class="row">
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">ar</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">isEmpty</span> <span class="o">==</span> <span class="kc">false</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">forall</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="kc">true</span> <span class="c1">// similar to JS Array.every()</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">exists</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">==</span> <span class="kc">true</span> <span class="c1">// similar to JS Array.some()</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">head</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">last</span> <span class="o">==</span> <span class="mi">5</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">tail</span> <span class="o">==</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">init</span> <span class="o">==</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">drop</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span> <span class="o">==</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">dropRight</span><span class="o">(</span><span class="mi">2</span><span class="o">)</span> <span class="o">==</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">count</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">==</span> <span class="mi">2</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="o">)</span> <span class="o">==</span> <span class="nc">Map</span><span class="o">(</span><span class="mi">1</span> <span class="o">-&gt;</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">),</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">))</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">sortBy</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="o">-</span><span class="n">x</span><span class="o">)</span> <span class="o">==</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span>
+<span class="n">ar</span><span class="o">.</span><span class="n">partition</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">)</span> <span class="o">==</span> <span class="o">(</span><span class="nc">Seq</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">),</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">))</span></code></pre></div>
+</div>
+</div>
+
+<p>JavaScript <code>Array.reduce</code> functionality is covered by separate <code>reduceLeft</code> and <code>foldLeft</code> methods. The difference is
+that in <code>foldLeft</code> you provide an initial (“zero”) value (which is optional parameter to <code>Array.reduce</code>) and in 
+<code>reduceLeft</code> you don’t. Also note that in <code>foldLeft</code> the type of the accumulator can be something else, for example a
+tuple, but in <code>reduceLeft</code> it must always be a supertype of the value.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sumCount</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// use an array to represent a tuple</span>
+  <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(([</span><span class="nx">sum</span><span class="p">,</span> <span class="nx">count</span><span class="p">],</span> <span class="nx">x</span><span class="p">)</span> <span class="o">=&gt;</span> 
+    <span class="p">[</span><span class="nx">sum</span> <span class="o">+</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> 
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="p">);</span>
+<span class="p">}</span></code></pre></div>
+</div>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// use foldLeft to calculate sum and count</span>
+<span class="k">def</span> <span class="n">sumCount</span><span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span><span class="o">(</span><span class="kt">Int</span><span class="o">,</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="c1">// use a tuple accumulator to hold sum and count</span>
+  <span class="n">s</span><span class="o">.</span><span class="n">foldLeft</span><span class="o">((</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)){</span> <span class="k">case</span> <span class="o">((</span><span class="n">sum</span><span class="o">,</span> <span class="n">count</span><span class="o">),</span> <span class="n">x</span><span class="o">)</span> <span class="k">=&gt;</span> 
+    <span class="o">(</span><span class="n">sum</span> <span class="o">+</span> <span class="n">x</span><span class="o">,</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> 
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<hr />
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6>
+</div>
+</div>
 
             <div class="spacing"></div>
         </div>

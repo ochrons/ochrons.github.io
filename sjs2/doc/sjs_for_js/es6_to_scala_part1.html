@@ -123,7 +123,6 @@ both mutable and immutable variables must always be initialized when declared.</
     <tr><td>Long</td><td><i>N/A</i></td><td>64-bit integer</td></tr>
     <tr><td>Float</td><td>number</td><td>32-bit floating point</td></tr>
     <tr><td>Double</td><td>number</td><td>64-bit floating point, fully equivalent to JS number</td></tr>
-    <tr><td>Symbol</td><td>symbol</td><td></td></tr>
     <tr><td>Unit</td><td>undefined</td><td></td></tr>
     <tr><td>Null</td><td>null</td><td></td></tr>
   </tbody>
@@ -148,7 +147,7 @@ error if you try to assign a higher precision value to a lower precision variabl
 an appropriate function.</p>
 
 <div class="row">
-<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mf">3.5</span> <span class="c1">// ERROR!</span>
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mf">3.5</span> <span class="c1">// ERROR!</span>
 <span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1">// Ok!</span>
 <span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">Float</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="c1">// ERROR! 3.0f would be ok</span>
 <span class="k">val</span> <span class="n">z</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mf">3.5</span><span class="o">.</span><span class="n">toInt</span> <span class="c1">// Ok!</span>
@@ -175,6 +174,27 @@ function is automatically used as the return value. Return type is usually autom
 </div>
         
 <div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">mult</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span></code></pre></div>
+</div>
+</div>
+
+<h4 id="anonymous-functions">Anonymous functions</h4>
+
+<p>In functional programming you quite often need to provide a function as a parameter, but you don’t need it elsewhere so
+it can be anonymous. Both languages support the nice “fat arrow” notation for defining anonymous functions conveniently.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fox&quot;</span><span class="p">,</span> <span class="s2">&quot;jumped&quot;</span><span class="p">,</span> <span class="s2">&quot;over&quot;</span><span class="p">,</span> <span class="s2">&quot;me&quot;</span><span class="p">];</span>
+<span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">s</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// == 15</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+         
+<span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;Fox&quot;</span><span class="o">,</span> <span class="s">&quot;jumped&quot;</span><span class="o">,</span> <span class="s">&quot;over&quot;</span><span class="o">,</span> <span class="s">&quot;me&quot;</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">l</span> <span class="k">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mi">0</span><span class="o">)((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">)</span> <span class="c1">// == 15</span></code></pre></div>
 </div>
 </div>
 
@@ -226,27 +246,6 @@ in ES6 you need to supply them with the object notation.</p>
 
 <p>Again, Scala compiler can infer all the required types in the code above, including the parameters for the anonymous
 function given to the <code>reduceLeft</code> function.</p>
-
-<h4 id="anonymous-functions">Anonymous functions</h4>
-
-<p>In functional programming you quite often need to provide a function as a parameter, but you don’t need it elsewhere so
-it can be anonymous. Both languages support the nice “fat arrow” notation for defining anonymous functions conveniently.</p>
-
-<div class="row">
-<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">f</span> <span class="o">=</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span><span class="p">;</span>
-
-<span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Fox&quot;</span><span class="p">,</span> <span class="s2">&quot;jumped&quot;</span><span class="p">,</span> <span class="s2">&quot;over&quot;</span><span class="p">,</span> <span class="s2">&quot;me&quot;</span><span class="p">];</span>
-<span class="kr">const</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">s</span> <span class="o">=&gt;</span> <span class="nx">s</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
-  <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// == 15</span></code></pre></div>
-</div>
-        
-<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">f</span> <span class="k">=</span> <span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
-         
-<span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="s">&quot;Fox&quot;</span><span class="o">,</span> <span class="s">&quot;jumped&quot;</span><span class="o">,</span> <span class="s">&quot;over&quot;</span><span class="o">,</span> <span class="s">&quot;me&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="n">l</span> <span class="k">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="o">.</span><span class="n">length</span><span class="o">)</span>
-  <span class="o">.</span><span class="n">foldLeft</span><span class="o">(</span><span class="mi">0</span><span class="o">)((</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="o">)</span> <span class="c1">// == 15</span></code></pre></div>
-</div>
-</div>
 
 <h2 id="if-while-for-match-control-structures"><code>if</code>, <code>while</code>, <code>for</code>, <code>match</code> control structures</h2>
 
@@ -515,13 +514,13 @@ not done as it makes things complicated.</p>
     <span class="nx">_privateMethod</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I am private&quot;</span><span class="p">);</span>
     <span class="p">},</span>
-    <span class="nx">rnd</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="p">},</span>
+    <span class="nx">_rnd</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="p">},</span>
     <span class="nx">publicMethod</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The public can see me!&quot;</span><span class="p">);</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">_privateMethod</span><span class="p">();</span>
     <span class="p">},</span>
     <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;RandomGen&quot;</span><span class="p">,</span>
-    <span class="nx">getRandomNumber</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">rnd</span><span class="p">()</span> <span class="p">}</span>
+    <span class="nx">getRandomNumber</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_rnd</span><span class="p">()</span> <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="kr">const</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">RandomGen</span><span class="p">.</span><span class="nx">getRandomNumber</span><span class="p">();</span></code></pre></div>
@@ -578,14 +577,15 @@ them for the same purpose as Scala.</p>
   <span class="nx">onClick</span><span class="p">()</span> <span class="p">{</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Clicked!&quot;</span><span class="p">);</span> <span class="p">}</span>
 <span class="p">};</span>
 
-<span class="kr">class</span> <span class="nx">ClickableCircle</span> <span class="kr">extends</span> <span class="nx">Circle</span><span class="p">;</span>
+<span class="kr">class</span> <span class="nx">ClickableCircle</span> <span class="kr">extends</span> <span class="nx">Circle</span> <span class="p">{}</span>
 <span class="nb">Object</span><span class="p">.</span><span class="nx">assign</span><span class="p">(</span><span class="nx">ClickableCircle</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">Clickable</span><span class="p">);</span>
 
 <span class="kr">const</span> <span class="nx">cc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ClickableCircle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">42</span><span class="p">);</span>
 <span class="nx">cc</span><span class="p">.</span><span class="nx">onClick</span><span class="p">();</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Circle</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">val</span> <span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">Shape</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">Circle</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="k">val</span> <span class="n">r</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> 
+  <span class="k">extends</span> <span class="nc">Shape</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">override</span> <span class="k">def</span> <span class="n">draw</span><span class="o">()</span> <span class="o">{</span>
     <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Circle at $x, $y with radius $r&quot;</span><span class="o">)</span>
   <span class="o">}</span>
@@ -606,14 +606,14 @@ them for the same purpose as Scala.</p>
 <p>Note that there are many ways for defining mixins in JavaScript, using <code>Object.assign</code> is just one of them supported by
 ES6.</p>
 
-<h2 id="optiona-the-type-safe-undefined"><code>Option[A]</code>, the type safe <code>undefined</code></h2>
+<h2 id="option-the-type-safe-undefined"><code>Option</code>, the type safe <code>undefined</code></h2>
 
 <p>The notorious <code>undefined</code> type in JavaScript can be a blessing or a curse. On the other hand it makes life easy by
 allowing you to drop function parameters or leave variables undefined. But then it also masks many errors and makes
 you write extra code to check for <code>undefined</code>. Quite often <code>undefined</code> is used to make a distinction between an
 existing value (of any type) and a missing value.</p>
 
-<p>Scala doesn’t have <code>undefined</code> (it does have <code>null</code> but its use is discouraged), but instead it has an <code>Option[A]</code> trait
+<p>Scala doesn’t have <code>undefined</code> (it does have <code>null</code> but its use is discouraged), but instead it has an <code>Option</code> trait
 for representing optional values. In Scala.js the <code>undefined</code> type exists to support interoperability with JS libraries,
 but even there it is recommended to use <code>Option</code> whenever possible.</p>
 
@@ -650,16 +650,12 @@ instance of <code>Some[A]</code>, containing the present value of type <code>A</
 </div>
 
 <p>Pattern matching works nicely with <code>Option</code>, but there are more powerful ways to use it. Let’s rewrite the previous
-function in two other ways giving us the same result.</p>
+function another way giving us the same result.</p>
 
 <div class="row">
-<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
   <span class="k">val</span> <span class="n">s</span> <span class="k">=</span> <span class="n">context</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">&quot;[$c] $msg&quot;</span><span class="o">).</span><span class="n">getOrElse</span><span class="o">(</span><span class="n">msg</span><span class="o">)</span>
   <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
-<span class="o">}</span>
-
-<span class="k">def</span> <span class="n">log</span><span class="o">(</span><span class="n">msg</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">context</span><span class="k">:</span> <span class="kt">Option</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">None</span><span class="o">)</span> <span class="o">{</span>
-  <span class="n">println</span><span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="n">fold</span><span class="o">(</span><span class="n">msg</span><span class="o">)(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">s</span><span class="s">&quot;[$c] $msg&quot;</span><span class="o">))</span>
 <span class="o">}</span></code></pre></div>
 </div>
 </div>
@@ -677,7 +673,7 @@ function in two other ways giving us the same result.</p>
 </div>
 </div>
 
-<p>‘Option’ provides many of the <em>collection</em> methods like <code>map</code>, <code>filter</code> and <code>flatMap</code>, which are discussed in the <a href="es6_to_scala_part2.html">next
+<p><code>Option</code> provides many <em>collection like</em> methods like <code>map</code>, <code>filter</code> and <code>flatMap</code>, which are discussed in the <a href="es6_to_scala_part2.html">next
 chapter</a>.</p>
 
 <hr />
