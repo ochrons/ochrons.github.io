@@ -308,6 +308,11 @@ findPairs(20, 31)
 {% endcolumn %}
 {% endcolumns %}
 
+The code above also serves as an example for _string interpolation_ (in Scala) and _template strings_ (in ES6). Both
+make it easier to construct strings using variables or function calls. In Scala you don't need to enclose the variable
+in {} if it's just a simple variable name. For more complex cases you'll need to use the `s"Length = ${data.length}"`
+syntax.
+
 Finally the `match` construct provides _pattern matching_ capabilities in Scala. Pattern matching is a complex topic
 covered in more detail in the advanced section of this article, so here we just focus on the simple use cases like
 replacing JavaScript `switch`/`case` with it.
@@ -431,10 +436,6 @@ val r = c.r // == 42
 
 Even though Scala has the concept of `this` it is not that often used in your own code.
 
-The code above also serves as an example for _string interpolation_ (Scala) and _template strings_ (in ES6). Both make
-it easier to construct strings using variables or function calls. In Scala you don't need to enclose the variable in {}
-if it's just a simple variable name. For more complex cases you'll need to use the `s"Length = ${data.length}"` syntax.
-
 #### Case classes
 
 When reading Scala application code you will probably encounter more `case class`es than regular `class`es. This is due
@@ -448,7 +449,7 @@ using a case class instead.
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-const person = {"first": "James", "last": "Bond"};
+const person = {first: "James", last: "Bond"};
 {% endhighlight %}
 {% endcolumn %}
         
@@ -470,10 +471,10 @@ comparison code yourself.
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-const o1 = { a: 1, x: "test" };
-const o2 = { a: 1, x: "test" };
+const o1 = {a: 1, x: "test"};
+const o2 = {a: 1, x: "test"};
 
-if (o1 == o2) {
+if (o1 != o2) {
   // this doesn't work as expected
   console.log("They are not equal!");
 }
@@ -505,7 +506,7 @@ same result.
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-const o1 = { a: 1, x: "test" };
+const o1 = {a: 1, x: "test"};
 
 // start with empty object to prevent 
 // modification of o1

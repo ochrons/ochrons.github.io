@@ -313,6 +313,11 @@ you can even filter using <code>if</code> expressions. In Scala a <em>for-compre
 </div>
 </div>
 
+<p>The code above also serves as an example for <em>string interpolation</em> (in Scala) and <em>template strings</em> (in ES6). Both
+make it easier to construct strings using variables or function calls. In Scala you don’t need to enclose the variable
+in {} if it’s just a simple variable name. For more complex cases you’ll need to use the <code>s"Length = ${data.length}"</code>
+syntax.</p>
+
 <p>Finally the <code>match</code> construct provides <em>pattern matching</em> capabilities in Scala. Pattern matching is a complex topic
 covered in more detail in the advanced section of this article, so here we just focus on the simple use cases like
 replacing JavaScript <code>switch</code>/<code>case</code> with it.</p>
@@ -425,10 +430,6 @@ also has:</p>
 
 <p>Even though Scala has the concept of <code>this</code> it is not that often used in your own code.</p>
 
-<p>The code above also serves as an example for <em>string interpolation</em> (Scala) and <em>template strings</em> (in ES6). Both make
-it easier to construct strings using variables or function calls. In Scala you don’t need to enclose the variable in {}
-if it’s just a simple variable name. For more complex cases you’ll need to use the <code>s"Length = ${data.length}"</code> syntax.</p>
-
 <h4 id="case-classes">Case classes</h4>
 
 <p>When reading Scala application code you will probably encounter more <code>case class</code>es than regular <code>class</code>es. This is due
@@ -440,7 +441,7 @@ implementations for <code>toString</code> and equality making them convenient to
 using a case class instead.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;first&quot;</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="s2">&quot;last&quot;</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">};</span></code></pre></div>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">};</span></code></pre></div>
 </div>
         
 <div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">last</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span>
@@ -456,10 +457,10 @@ you would typically go for a library like <a href="https://lodash.com/docs#isEqu
 comparison code yourself.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span> <span class="p">};</span>
-<span class="kr">const</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span> <span class="p">};</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span><span class="p">};</span>
+<span class="kr">const</span> <span class="nx">o2</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span><span class="p">};</span>
 
-<span class="k">if</span> <span class="p">(</span><span class="nx">o1</span> <span class="o">==</span> <span class="nx">o2</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">o1</span> <span class="o">!=</span> <span class="nx">o2</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// this doesn&#39;t work as expected</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;They are not equal!&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -485,7 +486,7 @@ provides a suitable <code>copy</code> function for each case class automatically
 same result.</p>
 
 <div class="row">
-<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span> <span class="p">};</span>
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">o1</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">x</span><span class="o">:</span> <span class="s2">&quot;test&quot;</span><span class="p">};</span>
 
 <span class="c1">// start with empty object to prevent </span>
 <span class="c1">// modification of o1</span>

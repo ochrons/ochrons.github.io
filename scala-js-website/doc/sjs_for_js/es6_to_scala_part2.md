@@ -182,28 +182,30 @@ val product = ar.foldLeft(1)((a, x) => a * x) // foldLeft comes from WrappedArra
 {% endcolumns %}
 
 The `Seq` trait exposes many methods familiar to the users of JavaScript arrays, including `foreach`, `map`, `filter`,
-`slice`, `find` and `reverse`. In addition to these, there are several more useful methods shown with examples in the
+`slice` and `reverse`. In addition to these, there are several more useful methods shown with examples in the
 code block below.
 
 {% columns %}
 {% column 9 Scala %}
 {% highlight scala %}
-val ar = Seq(1, 2, 3, 4, 5)
-ar.isEmpty == false
-ar.forall(x => x > 0) == true // JS Array.every()
-ar.exists(x => x % 3 == 0) == true // JS Array.some()
-ar.head == 1
-ar.tail == Seq(2, 3, 4, 5)
-ar.last == 5
-ar.init == Seq(1, 2, 3, 4)
-ar.drop(2) == Seq(3, 4, 5)
-ar.dropRight(2) == Seq(1, 2, 3)
-ar.count(x => x < 3) == 2
-ar.groupBy(x => x % 2) == Map(1 -> Seq(1, 3, 5), 0 -> Seq(2, 4))
-ar.sortBy(x => -x) == Seq(5, 4, 3, 2, 1)
-ar.partition(x => x > 3) == (Seq(4, 5), Seq(1, 2, 3))
-ar :+ 6 == Seq(1, 2, 3, 4, 5, 6)
-ar ++ Seq(6, 7) == Seq(1, 2, 3, 4, 5, 6, 7) // JS Array.concat()
+val seq = Seq(1, 2, 3, 4, 5)
+seq.isEmpty == false
+seq.contains(6) == false // JS Array.indexOf(6) == -1
+seq.forall(x => x > 0) == true // JS Array.every()
+seq.exists(x => x % 3 == 0) == true // JS Array.some()
+seq.find(x => x > 3) == Some(4) // JS Array.find()
+seq.head == 1
+seq.tail == Seq(2, 3, 4, 5)
+seq.last == 5
+seq.init == Seq(1, 2, 3, 4)
+seq.drop(2) == Seq(3, 4, 5)
+seq.dropRight(2) == Seq(1, 2, 3)
+seq.count(x => x < 3) == 2
+seq.groupBy(x => x % 2) == Map(1 -> Seq(1, 3, 5), 0 -> Seq(2, 4))
+seq.sortBy(x => -x) == Seq(5, 4, 3, 2, 1)
+seq.partition(x => x > 3) == (Seq(4, 5), Seq(1, 2, 3))
+seq :+ 6 == Seq(1, 2, 3, 4, 5, 6)
+seq ++ Seq(6, 7) == Seq(1, 2, 3, 4, 5, 6, 7) // JS Array.concat()
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -256,7 +258,7 @@ You can build a map directly or from a sequence of key-value pairs.
 {% column 6 ES6 %}
 {% highlight javascript %}
 // object style map
-const m = { first: "James", last: "Bond" };
+const m = {first: "James", last: "Bond"};
 // ES6 Map
 const data = [["first", "James"], ["last", "Bond"]];
 const m2 = new Map(data);
@@ -387,6 +389,68 @@ def averageScore: Int = {
   else
     allScores.sum / allScores.size
 }
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+In the example above the JavaScript version is using mutable object and arrays, while the Scala version is using
+immutable `Map` and `Seq`. Because you cannot update an immutable collection, you must create a new one, updating it in
+the process and then store the new reference. Immutable collections in Scala use structural sharing to minimize copying
+and to provide high performance. Sharing is ok, because the data is immutable!
+
+The best score is found by first flattening the whole structure into a sequence of (player, score) pairs. Then we use
+the `maxBy` method to find the maximum score by looking at the second value in the tuple.
+
+Average is calculated simply by flattening all scores into a single sequence and then calculating its sum and divide by
+count.
+
+## Set
+
+A `Set` is like a `Map` without values, just the distinct keys. In JavaScript it's typical to emulate a Set by storing
+the values as keys into an `Object`. This of course means that the values must be converted to strings. In ES6 there is
+a new `Set` type that works with all kinds of value types, but like with `Map`, it's based on reference equality making
+it less useful when dealing with complex value types.
+
+In Scala sets are quite often used when you need to have distinct values with no duplicates. Adding values to a set
+automatically guarantees that all duplicate values are eliminated. They are also useful when you just need to check if
+something exists, without storing its value. Set operations like `diff`, `intersect` and `union` allow you to build new
+sets out of other sets to check, for example, what has changed.
+
+{% columns %}
+{% column 9 Scala %}
+{% highlight scala %}
+val set1 = Set(1, 2, 3, 4, 5)
+val set2 = Set(2, 3, 5, 1, 6)
+val addedValues = set2 diff set1 // Set(6)
+val removedValues = set1 diff set2 // Set(4)
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Note how in Scala you can also omit the `.` and parentheses in method calls.
+
+Sets are also a convenient way to check for multiple values in methods like `filter`.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const common = {"a":true, "the":true, "an":true, 
+  "and":true};
+const text = "The sun is a star and an energy source"
+const words = text.split(" ")
+  .map(s => s.toLowerCase())
+  .filter(s => !common[s]);
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+val common = Set("a", "the", "an", "and")
+val text = "The sun is a star and an energy source"
+val words = text.split(" ")
+  .map(_.toLowerCase)
+  .filterNot(common)
+// Array(sun, is, star, energy, source)
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
