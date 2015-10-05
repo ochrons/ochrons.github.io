@@ -58,7 +58,7 @@ val a = mutable.Buffer("Fox", "jumped", "over")
 a.append("me") // Fox jumped over me
 a.prepend("Red") // Red Fox jumped over me
 val fox = a(1)
-a(a.size - 1) = "you" // Red Fox jumped over you
+a(a.length - 1) = "you" // Red Fox jumped over you
 println(a.mkString(" "))
 {% endhighlight %}
 {% endcolumn %}
@@ -111,14 +111,14 @@ values. In JavaScript you can use a fixed size array to represent a tuple.
 const t = ["James", "Bond", 42];
 const kv = ["key", 42];
 
-function sumCount(s) {
+function sumProduct(s) {
   let sum = 0;
-  let count = 0;
+  let product = 1;
   for(let i of s) {
     sum += i;
-    count += 1;
+    product += i;
   }
-  return [sum, count];
+  return [sum, product];
 }
 {% endhighlight %}
 {% endcolumn %}
@@ -127,14 +127,14 @@ function sumCount(s) {
 val t = ("James", "Bond", 42)
 val kv = "key" -> 42 // same as ("key", 42)
 
-def sumCount(s: Seq[Int]):(Int, Int) = {
+def sumProduct(s: Seq[Int]):(Int, Int) = {
   var sum = 0
-  var count = 0
+  var product = 1
   for(i <- s) {
     sum += i
-    count += 1
+    product +=i1
   }
-  (sum, count)
+  (sum, product)
 }
 {% endhighlight %}
 {% endcolumn %}
@@ -146,22 +146,22 @@ To access values inside a tuple, use the `tuple._1` syntax, where the number ind
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-const sc = sumCount([1, 2, 3]);
+const sc = sumProduct([1, 2, 3]);
 const sum = sc[0];
-const count = sc[1];
+const product = sc[1];
 
 // with destructuring
-const [sum, count] = sumCount([1, 2, 3]);
+const [sum, product] = sumProduct([1, 2, 3]);
 {% endhighlight %}
 {% endcolumn %}
 {% column 6 Scala %}
 {% highlight scala %}
-val sc = sumCount(Seq(1, 2, 3))
+val sc = sumProduct(Seq(1, 2, 3))
 val sum = sc._1
-val count = sc._2
+val product = sc._2
 
 // with destructuring
-val (sum, count) = sumCount(Seq(1, 2, 3))
+val (sum, product) = sumProduct(Seq(1, 2, 3))
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -181,7 +181,7 @@ val product = ar.foldLeft(1)((a, x) => a * x) // foldLeft comes from WrappedArra
 {% endcolumn %}
 {% endcolumns %}
 
-The `Seq` trait exposes many methods familiar to the users of JavaScript arrays, including `forEach`, `map`, `filter`,
+The `Seq` trait exposes many methods familiar to the users of JavaScript arrays, including `foreach`, `map`, `filter`,
 `slice`, `find` and `reverse`. In addition to these, there are several more useful methods shown with examples in the
 code block below.
 
@@ -190,11 +190,11 @@ code block below.
 {% highlight scala %}
 val ar = Seq(1, 2, 3, 4, 5)
 ar.isEmpty == false
-ar.forall(x => x > 0) == true // similar to JS Array.every()
-ar.exists(x => x % 3 == 0) == true // similar to JS Array.some()
+ar.forall(x => x > 0) == true // JS Array.every()
+ar.exists(x => x % 3 == 0) == true // JS Array.some()
 ar.head == 1
-ar.last == 5
 ar.tail == Seq(2, 3, 4, 5)
+ar.last == 5
 ar.init == Seq(1, 2, 3, 4)
 ar.drop(2) == Seq(3, 4, 5)
 ar.dropRight(2) == Seq(1, 2, 3)
@@ -202,6 +202,8 @@ ar.count(x => x < 3) == 2
 ar.groupBy(x => x % 2) == Map(1 -> Seq(1, 3, 5), 0 -> Seq(2, 4))
 ar.sortBy(x => -x) == Seq(5, 4, 3, 2, 1)
 ar.partition(x => x > 3) == (Seq(4, 5), Seq(1, 2, 3))
+ar :+ 6 == Seq(1, 2, 3, 4, 5, 6)
+ar ++ Seq(6, 7) == Seq(1, 2, 3, 4, 5, 6, 7) // JS Array.concat()
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -214,23 +216,176 @@ tuple, but in `reduceLeft` it must always be a supertype of the value.
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-function sumCount(s) {
-  // use an array to represent a tuple
-  return s.reduce(([sum, count], x) => 
-    [sum + x, count + 1], 
-    [0, 0]
+function sumProduct(s) {
+  // destructuring works in the function argument
+  return s.reduce(([sum, product], x) => 
+    [sum + x, product * x], 
+    [0, 1] // use an array to represent a tuple
   );
 }
 {% endhighlight %}
 {% endcolumn %}
 {% column 6 Scala %}
 {% highlight scala %}
-// use foldLeft to calculate sum and count
-def sumCount(s: Seq[Int]):(Int, Int) = {
-  // use a tuple accumulator to hold sum and count
-  s.foldLeft((0, 0)){ case ((sum, count), x) => 
-    (sum + x, count + 1) 
+def sumProduct(s: Seq[Int]):(Int, Int) = {
+  // use a tuple accumulator to hold sum and product
+  s.foldLeft((0, 1)){ case ((sum, product), x) => 
+    (sum + x, product * x) 
   }
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+
+## Map
+
+A `Map` consists of pairs of keys and values. Both keys and values can be of any valid Scala type, unlike in JavaScript
+where an `Object` may only contain `string` keys (the new ES6 `Map` allows using other types as keys, but supports only
+referential equality for comparing keys). As keys must be unique, a `Map` is a great way to store information you need
+to look up later.
+
+JavaScript `Object` doesn't really have methods for using it as a map, although you can iterate over the keys
+with `Object.keys`. When using `Object` as a map, most developers use utility libraries like
+[lodash](https://lodash.com/docs#mapValues) to get access to suitable functionality. The ES6 `Map` object contains
+`keys`, `values` and `forEach` methods for accessing its contents, but all transformation methods are missing.
+
+You can build a map directly or from a sequence of key-value pairs.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+// object style map
+const m = { first: "James", last: "Bond" };
+// ES6 Map
+const data = [["first", "James"], ["last", "Bond"]];
+const m2 = new Map(data);
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+val m = Map("first" -> "James", "last" -> "Bond")
+val data = Seq("first" -> "James", "last" -> "Bond")
+val m2 = Map(data:_*)
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+In Scala when a function expects a variable number of parameters (like the `Map` constructor), you can destructure a
+sequence with the `seq:_*` syntax.
+
+Accessing `Map` contents can be done in many ways.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+// object syntax
+const name = `${m.last}, ${m.first} ${m.last}`
+// ES6 Map syntax
+const name2 = `${m2.get("last"), m2.get("first") m2.get("last")`
+// use default value when missing
+const age = m.age === undefined ? "42" : m.age;
+// check all fields are present
+const person = m.first !== undefined && 
+  m.last !== undefined && 
+  m.age !== undefined ? `${m.last}, ${m.first}: ${m.age}` :
+  "missing";
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+val name = s"${m("last")}, ${m("first")} ${m("last")}"
+// use default value when missing
+val age = m.getOrElse("age", "42")
+// check all fields are present
+val person = (for {
+    first <- m.get("first")
+    last <- m.get("last")
+    age <- m.get("age")
+  } yield s"$last, $first: $age"
+  ).getOrElse("missing")
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+In the previous example `m.get("first")` returns an `Option[String]` indicating whether the key is present in the map
+or not. By using for comprehension we can easily extract three separate values from the map and use them to build the
+result. The result from `for {} yield` is also an `Option[String]` so we can use `getOrElse` to provide a default value.
+
+Let's try something more complicated. Say we need to maintain a collection of players and all their game scores. This
+could be represented by a `Map[String, Seq[Int]]`
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+const scores = {};
+
+function addScore(player, score) {
+  if (scores[player] === undefined) 
+    scores[player] = [];
+  scores[player].push(score);
+}
+
+function bestScore() {
+  let bestScore = 0;
+  let bestPlayer = "";
+  for(let player in scores) {
+    const max = scores[player].reduce( (a, score) =>
+      Math.max(score, a)
+    );
+    if( max > bestScore ) {
+      bestScore = max;
+      bestPlayer = player;
+    }
+  }
+  return [bestPlayer, bestScore];
+}
+
+function averageScore() {
+  let sum = 0;
+  let count = 0;
+  for(let player in scores) {
+    for(let score of scores[player]) {
+      sum += score;
+      count++;
+    }
+  }
+  if( count == 0 )
+    return 0;
+  else 
+    return Math.round(sum / count); 
+}
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+var scores = Map.empty[String, Seq[Int]]
+
+def addScore(player: String, score: Int) {
+  val prev = scores.getOrElse(player, Seq())
+  scores = scores.updated(player, prev :+ score)
+}
+
+def bestScore: (String, Int) = {
+  val all = scores.flatMap { 
+    case (player, pScores) =>
+      pScores.map(s => (player, s))
+  }
+  if (all.isEmpty)
+    ("", 0)
+  else
+    all.maxBy(_._2)
+}
+
+def averageScore: Int = {
+  val allScores = scores.flatMap(_._2)
+  if (allScores.isEmpty)
+    0
+  else
+    allScores.sum / allScores.size
 }
 {% endhighlight %}
 {% endcolumn %}
