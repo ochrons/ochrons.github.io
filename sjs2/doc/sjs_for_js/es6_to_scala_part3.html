@@ -59,15 +59,223 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>… placeholder …</p>
+            <p>Scala is a feature rich language that is easy to learn but takes time to master. Depending on your programming
+background, typically you start by writing Scala as you would’ve written the language you know best (JavaScript, Java or
+C# for example) and gradually learn more and more idiomatic Scala paradigms to use. In this section we cover some of the
+more useful design patterns and features, to get you started quickly.</p>
 
 <h2 id="pattern-matching">Pattern matching</h2>
 
-<p>… placeholder …</p>
+<p>In the Basics part we already saw simple examples of <em>pattern matching</em> as a replacement for JavaScript switch
+statement. However, it can be used for much more, for example checking the type of input.</p>
 
-<h2 id="destructuring">Destructuring</h2>
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">printType</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">typeOf</span> <span class="nx">o</span> <span class="o">===</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">It</span><span class="s1">&#39;s a string: ${o}`)</span>
+<span class="s1">  else if (typeOf o === &quot;number&quot;)</span>
+<span class="s1">    console.log(`It&#39;</span><span class="nx">s</span> <span class="nx">a</span> <span class="nx">number</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">o</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">typeOf</span> <span class="nx">o</span> <span class="o">===</span> <span class="s2">&quot;boolean&quot;</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">It</span><span class="s1">&#39;s a boolean: ${o}`)</span>
+<span class="s1">  else</span>
+<span class="s1">    console.log(`It&#39;</span><span class="nx">s</span> <span class="nx">something</span> <span class="k">else</span><span class="err">`</span><span class="p">)</span>
+<span class="p">}</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">printType</span><span class="o">(</span><span class="n">o</span><span class="k">:</span> <span class="kt">Any</span><span class="o">)</span> <span class="o">{</span>
+  <span class="n">o</span> <span class="k">match</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">s</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=&gt;</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;It&#39;s a string: $s&quot;</span><span class="o">)</span>
+    <span class="k">case</span> <span class="n">i</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=&gt;</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;It&#39;s an int: $i&quot;</span><span class="o">)</span>
+    <span class="k">case</span> <span class="n">b</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=&gt;</span>
+      <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;It&#39;s a boolean: $b&quot;</span><span class="o">)</span>
+    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span>
+      <span class="n">println</span><span class="o">(</span><span class="s">&quot;It&#39;s something else&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
 
-<p>… placeholder …</p>
+<p>Pattern matching uses something called <em>partial functions</em> which means it can be used in place of regular functions, for
+example in a call to <code>filter</code> or <code>map</code>. You can also add a <em>guard clause</em> in the form of an <code>if</code>, to limit the match. If
+you need to match to a variable, use backticks to indicate that.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">magicKey</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">res</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">c</span> <span class="nx">of</span> <span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">c</span> <span class="o">===</span> <span class="nx">magicKey</span><span class="p">)</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;magic&quot;</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\d/</span><span class="p">))</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;digit&quot;</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\w/</span><span class="p">))</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;letter&quot;</span><span class="p">);</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/\s/</span><span class="p">))</span>
+      <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">);</span>
+    <span class="k">else</span> 
+      <span class="nx">res</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&quot;char&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">res</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">(</span><span class="s2">&quot;JB/007&quot;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">);</span>
+<span class="c1">// [letter, letter, magic, digit, digit, digit]</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">parse</span><span class="o">(</span><span class="n">str</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">magicKey</span><span class="k">:</span> <span class="kt">Char</span><span class="o">)</span><span class="k">=</span> <span class="o">{</span>
+  <span class="n">str</span><span class="o">.</span><span class="n">map</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="n">`magicKey`</span> <span class="k">=&gt;</span>
+      <span class="s">&quot;magic&quot;</span>
+    <span class="k">case</span> <span class="n">c</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isDigit</span> <span class="k">=&gt;</span>
+      <span class="s">&quot;digit&quot;</span>
+    <span class="k">case</span> <span class="n">c</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isLetter</span> <span class="k">=&gt;</span>
+      <span class="s">&quot;letter&quot;</span>
+    <span class="k">case</span> <span class="n">c</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isWhitespace</span> <span class="k">=&gt;</span>
+      <span class="s">&quot; &quot;</span>
+    <span class="k">case</span> <span class="n">c</span> <span class="k">=&gt;</span>
+      <span class="s">&quot;char&quot;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+<span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="n">parse</span><span class="o">(</span><span class="s">&quot;JB/007&quot;</span><span class="o">,</span> <span class="sc">&#39;/&#39;</span><span class="o">)</span>
+<span class="c1">// Seq(letter, letter, magic, digit, digit, digit)</span></code></pre></div>
+</div>
+</div>
+
+<h4 id="destructuring">Destructuring</h4>
+
+<p>Where pattern matching really shines is at destructuring. This means matching to a more complex pattern and extracting
+values inside that structure. ES6 also supports destructuring (yay!) in assignments and function parameters, but not
+in matching.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">person</span> <span class="o">=</span> <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">,</span> 
+  <span class="nx">age</span><span class="o">:</span> <span class="mi">42</span><span class="p">};</span>
+<span class="kr">const</span> <span class="p">{</span><span class="nx">first</span><span class="p">,</span> <span class="nx">last</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="nx">years</span><span class="p">}</span> <span class="o">=</span> <span class="nx">person</span><span class="p">;</span>
+<span class="c1">// first = &quot;James&quot;, last = &quot;Bond&quot;, years = 42</span>
+<span class="kr">const</span> <span class="nx">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">];</span>
+<span class="kr">const</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="p">...</span><span class="nx">c</span><span class="p">]</span> <span class="o">=</span> <span class="nx">seq</span><span class="p">;</span>
+<span class="c1">// a = 1, b = 2, c = [3, 4, 5]</span>
+<span class="kr">const</span> <span class="p">[,,,,</span><span class="nx">x</span><span class="p">]</span> <span class="o">=</span> <span class="nx">seq</span><span class="p">;</span> <span class="c1">// x = 5</span>
+
+<span class="kr">const</span> <span class="nx">seq2</span> <span class="o">=</span> <span class="p">[</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">].</span><span class="nx">concat</span><span class="p">(</span><span class="nx">c</span><span class="p">);</span> <span class="c1">// [1, 2, 3, 4, 5]</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">first</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">last</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> 
+  <span class="n">age</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">person</span> <span class="k">=</span> <span class="nc">Person</span><span class="o">(</span><span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Bond&quot;</span><span class="o">,</span> <span class="mi">42</span><span class="o">)</span>
+<span class="k">val</span> <span class="nc">Person</span><span class="o">(</span><span class="n">first</span><span class="o">,</span> <span class="n">last</span><span class="o">,</span> <span class="n">years</span><span class="o">)</span> <span class="k">=</span> <span class="n">person</span>
+<span class="c1">// first = &quot;James&quot;, last = &quot;Bond&quot;, years = 42</span>
+<span class="k">val</span> <span class="n">seq</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">+:</span> <span class="n">b</span> <span class="o">+:</span> <span class="n">c</span> <span class="k">=</span> <span class="n">seq</span> 
+<span class="c1">// a = 1, b = 2, c = Seq(3, 4, 5)</span>
+<span class="k">val</span> <span class="k">_</span> <span class="o">:+</span> <span class="n">x</span> <span class="k">=</span> <span class="n">seq</span> <span class="c1">// x = 5</span>
+
+<span class="k">val</span> <span class="n">seq2</span> <span class="k">=</span> <span class="n">a</span> <span class="o">+:</span> <span class="n">b</span> <span class="o">+:</span> <span class="n">c</span> <span class="c1">// Seq(1, 2, 3, 4, 5)</span></code></pre></div>
+</div>
+</div>
+
+<p>In Scala the destructuring and rebuilding have nice symmetry making it easy to remember how to do it. ES6 also has quite
+good symmetry, but there are some edge cases you need to take care of. The <em>rest</em> parameter (<code>...c</code>) in ES6 can only be
+applied at the last position, while in Scala you can also use it in the beginning by swapping the <code>+:</code> operator into
+<code>:+</code>.</p>
+
+<p>In pattern matching the use of destructuring results in clean, simple and understandable code.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">ageSum</span><span class="p">(</span><span class="nx">persons</span><span class="p">,</span> <span class="nx">family</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">persons</span><span class="p">.</span><span class="nx">filter</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">last</span> <span class="o">===</span> <span class="nx">family</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">p</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">p</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kr">const</span> <span class="nx">persons</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">42</span><span class="p">},</span>
+  <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&quot;Hillary&quot;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&quot;Bond&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">35</span><span class="p">},</span>
+  <span class="p">{</span><span class="nx">first</span><span class="o">:</span> <span class="s2">&quot;James&quot;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s2">&quot;Smith&quot;</span><span class="p">,</span> <span class="nx">age</span><span class="o">:</span> <span class="mi">55</span><span class="p">}</span>
+<span class="p">];</span>
+
+<span class="nx">ageSum</span><span class="p">(</span><span class="nx">persons</span><span class="p">,</span> <span class="s2">&quot;Bond&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">77</span><span class="p">;</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">ageSum</span><span class="o">(</span><span class="n">persons</span><span class="k">:</span> <span class="kt">Seq</span><span class="o">[</span><span class="kt">Person</span><span class="o">],</span> 
+           <span class="n">family</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">persons</span><span class="o">.</span><span class="n">collect</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">Person</span><span class="o">(</span><span class="k">_</span><span class="o">,</span> <span class="n">`family`</span><span class="o">,</span> <span class="n">age</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">age</span>
+  <span class="o">}.</span><span class="n">sum</span>
+<span class="o">}</span>
+<span class="k">val</span> <span class="n">persons</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span>
+  <span class="nc">Person</span><span class="o">(</span><span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Bond&quot;</span><span class="o">,</span> <span class="mi">42</span><span class="o">),</span>
+  <span class="nc">Person</span><span class="o">(</span><span class="s">&quot;Hillary&quot;</span><span class="o">,</span> <span class="s">&quot;Bond&quot;</span><span class="o">,</span> <span class="mi">35</span><span class="o">),</span>
+  <span class="nc">Person</span><span class="o">(</span><span class="s">&quot;James&quot;</span><span class="o">,</span> <span class="s">&quot;Smith&quot;</span><span class="o">,</span> <span class="mi">55</span><span class="o">)</span>
+<span class="o">)</span>
+
+<span class="n">ageSum</span><span class="o">(</span><span class="n">persons</span><span class="o">,</span> <span class="s">&quot;Bond&quot;</span><span class="o">)</span> <span class="o">==</span> <span class="mi">77</span></code></pre></div>
+</div>
+</div>
+
+<p>We could’ve implemented the Scala function using a <code>filter</code> and <code>foldLeft</code>, but it is more understandable using
+<code>collect</code> and pattern matching. It would be read as “Collect every person with a last name equaling <code>family</code> and extract
+the age of those persons. Then sum up the ages.”</p>
+
+<p>Another good use case for pattern matching is regular expressions (also in ES6!). Let’s extract a date in different
+formats.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">getDate</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">YMD</span> <span class="o">=</span> <span class="sr">/(\d{4})-(\d{1,2})-(\d{1,2})/</span>
+  <span class="kr">const</span> <span class="nx">MDY</span> <span class="o">=</span> <span class="sr">/(\d{1,2})\/(\d{1,2})\/(\d{4})/</span>
+  <span class="kr">const</span> <span class="nx">DMY</span> <span class="o">=</span> <span class="sr">/(\d{1,2})\.(\d{1,2})\.(\d{4})/</span>
+  <span class="p">{</span>
+    <span class="kr">const</span> <span class="p">[,</span> <span class="nx">year</span><span class="p">,</span> <span class="nx">month</span><span class="p">,</span> <span class="nx">day</span><span class="p">]</span> <span class="o">=</span> <span class="nx">YMD</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">||</span> <span class="p">[];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">year</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
+      <span class="k">return</span> <span class="p">{</span><span class="nx">year</span><span class="o">:</span> <span class="nx">year</span><span class="p">,</span> <span class="nx">month</span><span class="o">:</span> <span class="nx">month</span><span class="p">,</span> <span class="nx">day</span><span class="o">:</span> <span class="nx">day</span><span class="p">};</span>
+    <span class="k">else</span> <span class="p">{</span>
+      <span class="kr">const</span> <span class="p">[,</span> <span class="nx">month</span><span class="p">,</span> <span class="nx">day</span><span class="p">,</span> <span class="nx">year</span><span class="p">]</span> <span class="o">=</span> 
+        <span class="nx">MDY</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">||</span> <span class="p">[];</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">year</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="nx">year</span><span class="o">:</span> <span class="nx">year</span><span class="p">,</span> <span class="nx">month</span><span class="o">:</span> <span class="nx">month</span><span class="p">,</span> <span class="nx">day</span><span class="o">:</span> <span class="nx">day</span><span class="p">};</span>
+      <span class="k">else</span> <span class="p">{</span>
+        <span class="kr">const</span> <span class="p">[,</span> <span class="nx">day</span><span class="p">,</span> <span class="nx">month</span><span class="p">,</span> <span class="nx">year</span><span class="p">]</span> <span class="o">=</span> 
+          <span class="nx">DMY</span><span class="p">.</span><span class="nx">exec</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span> <span class="o">||</span> <span class="p">[];</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">year</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">)</span>
+          <span class="k">return</span> <span class="p">{</span><span class="nx">year</span><span class="o">:</span> <span class="nx">year</span><span class="p">,</span> <span class="nx">month</span><span class="o">:</span> <span class="nx">month</span><span class="p">,</span> 
+            <span class="nx">day</span><span class="o">:</span> <span class="nx">day</span><span class="p">};</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">throw</span> <span class="s2">&quot;Invalid date!&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">getDate</span><span class="p">(</span><span class="s2">&quot;2015-10-9&quot;</span><span class="p">);</span> <span class="c1">// {year:2015,month:10,day:9}</span>
+<span class="nx">getDate</span><span class="p">(</span><span class="s2">&quot;10/9/2015&quot;</span><span class="p">);</span> <span class="c1">// {year:2015,month:10,day:9}</span>
+<span class="nx">getDate</span><span class="p">(</span><span class="s2">&quot;9.10.2015&quot;</span><span class="p">);</span> <span class="c1">// {year:2015,month:10,day:9}</span>
+<span class="nx">getDate</span><span class="p">(</span><span class="s2">&quot;10 Nov 2015&quot;</span><span class="p">)</span> <span class="c1">// exception</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">case</span> <span class="k">class</span> <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">month</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">day</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+
+<span class="k">def</span> <span class="n">getDate</span><span class="o">(</span><span class="n">d</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Date</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="nc">YMD</span> <span class="k">=</span> <span class="s">&quot;&quot;&quot;(\d{4})-(\d{1,2})-(\d{1,2})&quot;&quot;&quot;</span><span class="o">.</span><span class="n">r</span>
+  <span class="k">val</span> <span class="nc">MDY</span> <span class="k">=</span> <span class="s">&quot;&quot;&quot;(\d{1,2})/(\d{1,2})/(\d{4})&quot;&quot;&quot;</span><span class="o">.</span><span class="n">r</span>
+  <span class="k">val</span> <span class="nc">DMY</span> <span class="k">=</span> <span class="s">&quot;&quot;&quot;(\d{1,2})\.(\d{1,2})\.(\d{4})&quot;&quot;&quot;</span><span class="o">.</span><span class="n">r</span>
+  <span class="n">d</span> <span class="k">match</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="nc">YMD</span><span class="o">(</span><span class="n">year</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">)</span> <span class="k">=&gt;</span> 
+      <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="o">.</span><span class="n">toInt</span><span class="o">,</span> <span class="n">month</span><span class="o">.</span><span class="n">toInt</span><span class="o">,</span> <span class="n">day</span><span class="o">.</span><span class="n">toInt</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">MDY</span><span class="o">(</span><span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">,</span> <span class="n">year</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="o">.</span><span class="n">toInt</span><span class="o">,</span> <span class="n">month</span><span class="o">.</span><span class="n">toInt</span><span class="o">,</span> <span class="n">day</span><span class="o">.</span><span class="n">toInt</span><span class="o">)</span>
+    <span class="k">case</span> <span class="nc">DMY</span><span class="o">(</span><span class="n">day</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">year</span><span class="o">)</span> <span class="k">=&gt;</span>
+      <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="o">.</span><span class="n">toInt</span><span class="o">,</span> <span class="n">month</span><span class="o">.</span><span class="n">toInt</span><span class="o">,</span> <span class="n">day</span><span class="o">.</span><span class="n">toInt</span><span class="o">)</span>
+    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> 
+      <span class="k">throw</span> <span class="k">new</span> <span class="nc">Exception</span><span class="o">(</span><span class="s">&quot;Invalid date!&quot;</span><span class="o">)</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="n">getDate</span><span class="o">(</span><span class="s">&quot;2015-10-9&quot;</span><span class="o">)</span> <span class="c1">// = Date(2015,10,9)</span>
+<span class="n">getDate</span><span class="o">(</span><span class="s">&quot;10/9/2015&quot;</span><span class="o">)</span> <span class="c1">// = Date(2015,10,9)</span>
+<span class="n">getDate</span><span class="o">(</span><span class="s">&quot;9.10.2015&quot;</span><span class="o">)</span> <span class="c1">// = Date(2015,10,9)</span>
+<span class="n">getDate</span><span class="o">(</span><span class="s">&quot;10 Nov 2015&quot;</span><span class="o">)</span> <span class="c1">// exception</span></code></pre></div>
+</div>
+</div>
+
+<p>Here we use triple-quoted strings that allow us to write regex without escaping special characters. The string is
+converted into a <code>Regex</code> object with the <code>.r</code> method. Because regex extracts strings, we need to convert matched groups
+to integers ourselves.</p>
 
 <h2 id="implicits">Implicits</h2>
 
@@ -79,6 +287,13 @@
 
 <h2 id="recursion">Recursion</h2>
 
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6>
+</div>
+</div>
 
             <div class="spacing"></div>
         </div>

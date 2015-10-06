@@ -116,7 +116,7 @@ function sumProduct(s) {
   let product = 1;
   for(let i of s) {
     sum += i;
-    product += i;
+    product *= i;
   }
   return [sum, product];
 }
@@ -132,7 +132,7 @@ def sumProduct(s: Seq[Int]):(Int, Int) = {
   var product = 1
   for(i <- s) {
     sum += i
-    product +=i1
+    product *= i
   }
   (sum, product)
 }
