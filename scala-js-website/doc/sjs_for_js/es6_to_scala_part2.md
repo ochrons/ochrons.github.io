@@ -364,15 +364,18 @@ function averageScore() {
         
 {% column 6 Scala %}
 {% highlight scala %}
-var scores = Map.empty[String, Seq[Int]]
+import scala.collection.mutable
+
+val scores = mutable.Map.empty[String, 
+                               mutable.Buffer[Int]]
 
 def addScore(player: String, score: Int) {
-  val prev = scores.getOrElse(player, Seq())
-  scores = scores.updated(player, prev :+ score)
+  scores.getOrElseUpdate(player, mutable.Buffer())
+    .append(score)
 }
 
 def bestScore: (String, Int) = {
-  val all = scores.flatMap { 
+  val all = scores.flatMap {
     case (player, pScores) =>
       pScores.map(s => (player, s))
   }
@@ -393,10 +396,10 @@ def averageScore: Int = {
 {% endcolumn %}
 {% endcolumns %}
 
-In the example above the JavaScript version is using mutable object and arrays, while the Scala version is using
-immutable `Map` and `Seq`. Because you cannot update an immutable collection, you must create a new one, updating it in
-the process and then store the new reference. Immutable collections in Scala use structural sharing to minimize copying
-and to provide high performance. Sharing is ok, because the data is immutable!
+In the example above the both versions are using mutable collections. Coming from JavaScript it's good to start with the
+more familiar mutable collections, but over time Scala developers tend to favor immutable versions. Immutable
+collections in Scala use structural sharing to minimize copying and to provide good performance. Sharing is ok, because
+the data is immutable!
 
 The best score is found by first flattening the whole structure into a sequence of (player, score) pairs. Then we use
 the `maxBy` method to find the maximum score by looking at the second value in the tuple.
@@ -455,19 +458,4 @@ val words = text.split(" ")
 {% endcolumn %}
 {% endcolumns %}
 
-
-
--------------
-
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
+Next, let's look at some more [advanced paradigms](es6_to_scala_part3.html) and features of Scala.

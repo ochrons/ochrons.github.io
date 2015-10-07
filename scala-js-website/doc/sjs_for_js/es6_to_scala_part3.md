@@ -17,11 +17,11 @@ statement. However, it can be used for much more, for example checking the type 
 {% column 6 ES6 %}
 {% highlight javascript %}
 function printType(o) {
-  if (typeOf o === "string")
+  if (typeof o === "string")
     console.log(`It's a string: ${o}`)
-  else if (typeOf o === "number")
+  else if (typeof o === "number")
     console.log(`It's a number: ${o}`)
-  else if (typeOf o === "boolean")
+  else if (typeof o === "boolean")
     console.log(`It's a boolean: ${o}`)
   else
     console.log(`It's something else`)
@@ -78,7 +78,7 @@ const r = parse("JB/007", '/');
 {% highlight scala %}
 def parse(str: String, magicKey: Char)= {
   str.map {
-    case `magicKey` =>
+    case c if c == magicKey =>
       "magic"
     case c if c.isDigit =>
       "digit"
@@ -102,7 +102,6 @@ Where pattern matching really shines is at destructuring. This means matching to
 values inside that structure. ES6 also supports destructuring (yay!) in assignments and function parameters, but not
 in matching.
 
-
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
@@ -111,11 +110,10 @@ const person = {first: "James", last: "Bond",
 const {first, last, age: years} = person;
 // first = "James", last = "Bond", years = 42
 const seq = [1, 2, 3, 4, 5];
-const [a, b, ...c] = seq;
-// a = 1, b = 2, c = [3, 4, 5]
-const [,,,,x] = seq; // x = 5
+const [a, b, , ...c] = seq;
+// a = 1, b = 2, c = [4, 5]
 
-const seq2 = [a, b].concat(c); // [1, 2, 3, 4, 5]
+const seq2 = [a, b].concat(c); // [1, 2, 4, 5]
 {% endhighlight %}
 {% endcolumn %}
         
@@ -127,19 +125,16 @@ val person = Person("James", "Bond", 42)
 val Person(first, last, years) = person
 // first = "James", last = "Bond", years = 42
 val seq = Seq(1, 2, 3, 4, 5)
-val a +: b +: c = seq 
-// a = 1, b = 2, c = Seq(3, 4, 5)
-val _ :+ x = seq // x = 5
+val Seq(a, b, _, c @ _*) = seq 
+// a = 1, b = 2, c = Seq(4, 5)
 
-val seq2 = a +: b +: c // Seq(1, 2, 3, 4, 5)
+val seq2 = Seq(a, b) ++ c // Seq(1, 2, 4, 5)
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
 
-In Scala the destructuring and rebuilding have nice symmetry making it easy to remember how to do it. ES6 also has quite
-good symmetry, but there are some edge cases you need to take care of. The _rest_ parameter (`...c`) in ES6 can only be
-applied at the last position, while in Scala you can also use it in the beginning by swapping the `+:` operator into
-`:+`.
+In Scala the destructuring and rebuilding have nice symmetry making it easy to remember how to do it. Use `_` to skip
+values in destructuring.
 
 In pattern matching the use of destructuring results in clean, simple and understandable code.
 
@@ -165,7 +160,8 @@ ageSum(persons, "Bond") == 77;
 def ageSum(persons: Seq[Person], 
            family: String): Int = {
   persons.collect {
-    case Person(_, `family`, age) => age
+    case Person(_, last, age) if last == family => 
+      age
   }.sum
 }
 val persons = Seq(
@@ -189,7 +185,7 @@ formats.
 {% columns %}
 {% column 6 ES6 %}
 {% highlight javascript %}
-function getDate(d) {
+function convertToDate(d) {
   const YMD = /(\d{4})-(\d{1,2})-(\d{1,2})/
   const MDY = /(\d{1,2})\/(\d{1,2})\/(\d{4})/
   const DMY = /(\d{1,2})\.(\d{1,2})\.(\d{4})/
@@ -213,10 +209,10 @@ function getDate(d) {
   }
   throw "Invalid date!";
 }
-getDate("2015-10-9"); // {year:2015,month:10,day:9}
-getDate("10/9/2015"); // {year:2015,month:10,day:9}
-getDate("9.10.2015"); // {year:2015,month:10,day:9}
-getDate("10 Nov 2015") // exception
+convertToDate("2015-10-9"); // {year:2015,month:10,day:9}
+convertToDate("10/9/2015"); // {year:2015,month:10,day:9}
+convertToDate("9.10.2015"); // {year:2015,month:10,day:9}
+convertToDate("10 Nov 2015") // exception
 {% endhighlight %}
 {% endcolumn %}
         
@@ -224,7 +220,7 @@ getDate("10 Nov 2015") // exception
 {% highlight scala %}
 case class Date(year: Int, month: Int, day: Int)
 
-def getDate(d: String): Date = {
+def convertToDate(d: String): Date = {
   val YMD = """(\d{4})-(\d{1,2})-(\d{1,2})""".r
   val MDY = """(\d{1,2})/(\d{1,2})/(\d{4})""".r
   val DMY = """(\d{1,2})\.(\d{1,2})\.(\d{4})""".r
@@ -240,10 +236,10 @@ def getDate(d: String): Date = {
   }
 }
 
-getDate("2015-10-9") // = Date(2015,10,9)
-getDate("10/9/2015") // = Date(2015,10,9)
-getDate("9.10.2015") // = Date(2015,10,9)
-getDate("10 Nov 2015") // exception
+convertToDate("2015-10-9") // = Date(2015,10,9)
+convertToDate("10/9/2015") // = Date(2015,10,9)
+convertToDate("9.10.2015") // = Date(2015,10,9)
+convertToDate("10 Nov 2015") // exception
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
@@ -254,16 +250,93 @@ to integers ourselves.
 
 ## Implicits
 
-... placeholder ...
+Being type safe is great in Scala, but sometimes the type system can be a bit prohibitive when you want to do something
+else, like add methods to existing classes. To allow you to do this in a type safe manner, Scala provides _implicits_.
+You can think of implicits as something that's available in the scope when you need it, and the compiler can
+automatically provide it. For example we can provide a function to automatically convert a `String` to an `Int`, when
+and `Int` is required. This makes the previous regex example more straightforward.
 
-#### Implicit conversions and duck typing
+{% columns %}
+{% column 9 Scala %}
+{% highlight scala %}
+import scala.language.implicitConversions
 
-... placeholder ...
+case class Date(year: Int, month: Int, day: Int)
 
+def convertToDate(d: String): Date = {
+  implicit def str2int(s: String): Int = Integer.parseInt(s)
+  
+  val YMD = """(\d{4})-(\d{1,2})-(\d{1,2})""".r
+  val MDY = """(\d{1,2})/(\d{1,2})/(\d{4})""".r
+  val DMY = """(\d{1,2})\.(\d{1,2})\.(\d{4})""".r
+  d match {
+    case YMD(year, month, day) => 
+      Date(year, month, day)
+    case MDY(month, day, year) =>
+      Date(year, month, day)
+    case DMY(day, month, year) =>
+      Date(year, month, day)
+    case _ => 
+      throw new Exception("Invalid date!")
+  }
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
 
-## Recursion
+Even though the `Date()` constructor requires `Int`s and we provide `String`s, it still works because Scala
+automatically adds calls to `str2int`.  Here we defined the `str2int` function within `convertToDate` so it won't be visible
+elsewhere and cause surprises. 
 
+#### Implicit conversions for "monkey patching" 
 
+Monkey patching -term comes originally from the Ruby language and it has been adopted into JavaScript to describe
+a way of extending existing classes with new methods. It has several pitfalls in dynamic languages and is generally
+not a recommended practice. Especially dangerous is to patch JavaScript's host objects like `String` or `DOM.Node`. This
+technique is, however, commonly used to provide support for new JavaScript functionality missing from older JS engines.
+The practice is known as _polyfilling_ or _shimming_.
+
+In Scala using implicits to provide extension methods is _perfectly safe_ and even a _recommended_ practice. Scala
+standard library does it all the time. For example did you notice the `.r` or `.toInt` functions that were used on
+strings in the regex example? Both are extension methods coming from implicit classes.
+
+Let's use the `convertToDate` we defined before and add a `toDate` extension method to `String`.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+String.prototype.toDate = function() {
+  return convertToDate(this);
+}
+"2015-10-09".toDate; // = Date(2015,10,9)
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+implicit class strToDate(val s: String) 
+  extends AnyVal {
+  def toDate = convertToDate(s)
+}
+"2015-10-09".toDate // = Date(2015,10,9)
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Note that the JavaScript version modifies the global `String` class (dangerous!), whereas the Scala version only
+introduces a conversion from `String` to a custom `strToDate` class providing an additional method. This `toDate` method
+is not added to the `String` class in any way, but the compiler generates appropriate code to call it when required.
+Basically a `"2010-10-09".toDate` is converted into `strToDate("2010-10-09").toDate` which is then inlined/optimized
+(due to the use of Value Class) to `convertToDate("2010-10-09")` at the call site.
+
+Scala IDEs are also smart enough to know what implicit extension methods are in scope and will show them to you next
+to the other methods.
+
+![Extension method in IDE]({{site.baseurl}}/assets/img/implicitIDE.png)
+
+## Futures
+
+Future is the Promise.
 
 
 {% columns %}

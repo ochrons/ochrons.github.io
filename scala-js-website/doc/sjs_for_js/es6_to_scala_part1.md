@@ -196,7 +196,7 @@ function vec({x = 0, y = 0, z = 0}) {
 const v = vec({x: 8, z: 42}); // Vec(8, 0, 42)
 {% endhighlight %}
 {% endcolumn %}
-        
+
 {% column 6 Scala %}
 {% highlight scala %}            
 // default value
@@ -222,7 +222,7 @@ val v = vec(8, z = 42) // Vec(8, 0, 42)
 {% endcolumns %}
 
 Again, Scala compiler can infer all the required types in the code above, including the parameters for the anonymous
-function given to the `reduceLeft` function.
+function given to the `foldLeft` function.
 
 ## `if`, `while`, `for`, `match` control structures
 
@@ -732,19 +732,3 @@ val res = data.filter(x => x.isDefined)
 
 `Option` provides many _collection like_ methods like `map`, `filter` and `flatMap`, which are discussed in the [next
 chapter](es6_to_scala_part2.html).
-
-
--------------
-
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
