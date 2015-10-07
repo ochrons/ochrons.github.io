@@ -71,14 +71,19 @@ statement. However, it can be used for much more, for example checking the type 
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">printType</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">o</span> <span class="o">===</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">It</span><span class="s1">&#39;s a string: ${o}`)</span>
-<span class="s1">  else if (typeof o === &quot;number&quot;)</span>
-<span class="s1">    console.log(`It&#39;</span><span class="nx">s</span> <span class="nx">a</span> <span class="nx">number</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">o</span><span class="p">}</span><span class="err">`</span><span class="p">)</span>
-  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">o</span> <span class="o">===</span> <span class="s2">&quot;boolean&quot;</span><span class="p">)</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">It</span><span class="s1">&#39;s a boolean: ${o}`)</span>
-<span class="s1">  else</span>
-<span class="s1">    console.log(`It&#39;</span><span class="nx">s</span> <span class="nx">something</span> <span class="k">else</span><span class="err">`</span><span class="p">)</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">o</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s2">&quot;string&quot;</span><span class="o">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">It</span><span class="s1">&#39;s a string: ${o}`); </span>
+<span class="s1">      break;</span>
+<span class="s1">    case &quot;number&quot;:</span>
+<span class="s1">      console.log(`It&#39;</span><span class="nx">s</span> <span class="nx">a</span> <span class="nx">number</span><span class="o">:</span> <span class="nx">$</span><span class="p">{</span><span class="nx">o</span><span class="p">}</span><span class="err">`</span><span class="p">);</span> 
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="s2">&quot;boolean&quot;</span><span class="o">:</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">It</span><span class="s1">&#39;s a boolean: ${o}`); </span>
+<span class="s1">      break;</span>
+<span class="s1">    default:</span>
+<span class="s1">      console.log(`It&#39;</span><span class="nx">s</span> <span class="nx">something</span> <span class="k">else</span><span class="err">`</span><span class="p">);</span>
+  <span class="p">}</span>
 <span class="p">}</span></code></pre></div>
 </div>
         
@@ -279,51 +284,43 @@ to integers ourselves.</p>
 <p>Being type safe is great in Scala, but sometimes the type system can be a bit prohibitive when you want to do something
 else, like add methods to existing classes. To allow you to do this in a type safe manner, Scala provides <em>implicits</em>.
 You can think of implicits as something that’s available in the scope when you need it, and the compiler can
-automatically provide it. For example we can provide a function to automatically convert a <code>String</code> to an <code>Int</code>, when
-and <code>Int</code> is required. This makes the previous regex example more straightforward.</p>
+automatically provide it. For example we can provide a function to automatically convert a JavaScript <code>Date</code> into a
+Scala/Java <code>Date</code></p>
 
 <div class="row">
-<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.language.implicitConversions</span>
+<div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scalajs.js</span>
 
-<span class="k">case</span> <span class="k">class</span> <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">month</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">day</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span>
+<span class="k">implicit</span> <span class="k">def</span> <span class="n">convertFromJSDate</span><span class="o">(</span><span class="n">d</span><span class="k">:</span> <span class="kt">js.Date</span><span class="o">)</span><span class="k">:</span> <span class="kt">java.util.Date</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">Date</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="n">getMilliseconds</span><span class="o">())</span>
+<span class="o">}</span>
 
-<span class="k">def</span> <span class="n">convertToDate</span><span class="o">(</span><span class="n">d</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Date</span> <span class="o">=</span> <span class="o">{</span>
-  <span class="k">implicit</span> <span class="k">def</span> <span class="n">str2int</span><span class="o">(</span><span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="n">parseInt</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
-  
-  <span class="k">val</span> <span class="nc">YMD</span> <span class="k">=</span> <span class="s">&quot;&quot;&quot;(\d{4})-(\d{1,2})-(\d{1,2})&quot;&quot;&quot;</span><span class="o">.</span><span class="n">r</span>
-  <span class="k">val</span> <span class="nc">MDY</span> <span class="k">=</span> <span class="s">&quot;&quot;&quot;(\d{1,2})/(\d{1,2})/(\d{4})&quot;&quot;&quot;</span><span class="o">.</span><span class="n">r</span>
-  <span class="k">val</span> <span class="nc">DMY</span> <span class="k">=</span> <span class="s">&quot;&quot;&quot;(\d{1,2})\.(\d{1,2})\.(\d{4})&quot;&quot;&quot;</span><span class="o">.</span><span class="n">r</span>
-  <span class="n">d</span> <span class="k">match</span> <span class="o">{</span>
-    <span class="k">case</span> <span class="nc">YMD</span><span class="o">(</span><span class="n">year</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">)</span> <span class="k">=&gt;</span> 
-      <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">)</span>
-    <span class="k">case</span> <span class="nc">MDY</span><span class="o">(</span><span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">,</span> <span class="n">year</span><span class="o">)</span> <span class="k">=&gt;</span>
-      <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">)</span>
-    <span class="k">case</span> <span class="nc">DMY</span><span class="o">(</span><span class="n">day</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">year</span><span class="o">)</span> <span class="k">=&gt;</span>
-      <span class="nc">Date</span><span class="o">(</span><span class="n">year</span><span class="o">,</span> <span class="n">month</span><span class="o">,</span> <span class="n">day</span><span class="o">)</span>
-    <span class="k">case</span> <span class="k">_</span> <span class="k">=&gt;</span> 
-      <span class="k">throw</span> <span class="k">new</span> <span class="nc">Exception</span><span class="o">(</span><span class="s">&quot;Invalid date!&quot;</span><span class="o">)</span>
-  <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="k">implicit</span> <span class="k">def</span> <span class="n">convertToJSDate</span><span class="o">(</span><span class="n">d</span><span class="k">:</span> <span class="kt">java.util.Date</span><span class="o">)</span><span class="k">:</span> <span class="kt">js.Date</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">new</span> <span class="n">js</span><span class="o">.</span><span class="nc">Date</span><span class="o">(</span><span class="n">d</span><span class="o">.</span><span class="n">getTime</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">case</span> <span class="k">class</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">joined</span><span class="k">:</span> <span class="kt">js.Date</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="nc">Person</span><span class="o">(</span><span class="s">&quot;James Bond&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="nc">Date</span><span class="o">)</span></code></pre></div>
 </div>
 </div>
 
-<p>Even though the <code>Date()</code> constructor requires <code>Int</code>s and we provide <code>String</code>s, it still works because Scala
-automatically adds calls to <code>str2int</code>.  Here we defined the <code>str2int</code> function within <code>convertToDate</code> so it won’t be visible
-elsewhere and cause surprises.</p>
+<p>When these implicit conversion functions are in lexical scope, you can use JS and Scala dates interchangeably. Outside
+the scope they are not visible and you must use correct types or provide conversion yourself.</p>
 
 <h4 id="implicit-conversions-for-monkey-patching">Implicit conversions for “monkey patching”</h4>
 
-<p>Monkey patching -term comes originally from the Ruby language and it has been adopted into JavaScript to describe
+<p>Monkey patching -term became famous among Ruby developers and it has been adopted into JavaScript to describe
 a way of extending existing classes with new methods. It has several pitfalls in dynamic languages and is generally
 not a recommended practice. Especially dangerous is to patch JavaScript’s host objects like <code>String</code> or <code>DOM.Node</code>. This
 technique is, however, commonly used to provide support for new JavaScript functionality missing from older JS engines.
 The practice is known as <em>polyfilling</em> or <em>shimming</em>.</p>
 
-<p>In Scala using implicits to provide extension methods is <em>perfectly safe</em> and even a <em>recommended</em> practice. Scala
+<p>In Scala providing extension methods via implicits is <em>perfectly safe</em> and even a <em>recommended</em> practice. Scala
 standard library does it all the time. For example did you notice the <code>.r</code> or <code>.toInt</code> functions that were used on
 strings in the regex example? Both are extension methods coming from implicit classes.</p>
 
-<p>Let’s use the <code>convertToDate</code> we defined before and add a <code>toDate</code> extension method to <code>String</code>.</p>
+<p>Let’s use the <code>convertToDate</code> we defined before and add a <code>toDate</code> extension method to <code>String</code> by defining an <em>implicit
+class</em>.</p>
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toDate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -332,7 +329,7 @@ strings in the regex example? Both are extension methods coming from implicit cl
 <span class="s2">&quot;2015-10-09&quot;</span><span class="p">.</span><span class="nx">toDate</span><span class="p">;</span> <span class="c1">// = Date(2015,10,9)</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">implicit</span> <span class="k">class</span> <span class="nc">strToDate</span><span class="o">(</span><span class="k">val</span> <span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> 
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">implicit</span> <span class="k">class</span> <span class="nc">StrToDate</span><span class="o">(</span><span class="k">val</span> <span class="n">s</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span> 
   <span class="k">extends</span> <span class="nc">AnyVal</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">toDate</span> <span class="k">=</span> <span class="n">convertToDate</span><span class="o">(</span><span class="n">s</span><span class="o">)</span>
 <span class="o">}</span>
@@ -341,10 +338,12 @@ strings in the regex example? Both are extension methods coming from implicit cl
 </div>
 
 <p>Note that the JavaScript version modifies the global <code>String</code> class (dangerous!), whereas the Scala version only
-introduces a conversion from <code>String</code> to a custom <code>strToDate</code> class providing an additional method. This <code>toDate</code> method
-is not added to the <code>String</code> class in any way, but the compiler generates appropriate code to call it when required.
-Basically a <code>"2010-10-09".toDate</code> is converted into <code>strToDate("2010-10-09").toDate</code> which is then inlined/optimized
-(due to the use of Value Class) to <code>convertToDate("2010-10-09")</code> at the call site.</p>
+introduces a conversion from <code>String</code> to a custom <code>StrToDate</code> class providing an additional method. Implicit classes are
+<em>safe</em> because they are lexically scoped, meaning the <code>StrToDate</code> is not available in other parts of the program unless
+explicitly imported. The <code>toDate</code> method is not added to the <code>String</code> class in any way, instead the compiler generates
+appropriate code to call it when required. Basically <code>"2010-10-09".toDate</code> is converted into <code>new
+StrToDate("2010-10-09").toDate</code> which is then inlined/optimized (due to the use of Value Class) to
+<code>convertToDate("2010-10-09")</code> at the call site.</p>
 
 <p>Scala IDEs are also smart enough to know what implicit extension methods are in scope and will show them to you next
 to the other methods.</p>
@@ -353,7 +352,10 @@ to the other methods.</p>
 
 <h2 id="futures">Futures</h2>
 
-<p>Future is the Promise.</p>
+<p>Writing asynchronous JavaScript code used to be painful due to the number of callbacks required to handle chained
+asynchronous calls. This is affectionately known as <em>callback hell</em>. Then came the various Promise libraries that
+alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the <code>Promise</code> interface so
+that all implementations (ES6’s own included) can happily coexist.</p>
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6>

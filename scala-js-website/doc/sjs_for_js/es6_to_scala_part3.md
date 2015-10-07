@@ -17,14 +17,19 @@ statement. However, it can be used for much more, for example checking the type 
 {% column 6 ES6 %}
 {% highlight javascript %}
 function printType(o) {
-  if (typeof o === "string")
-    console.log(`It's a string: ${o}`)
-  else if (typeof o === "number")
-    console.log(`It's a number: ${o}`)
-  else if (typeof o === "boolean")
-    console.log(`It's a boolean: ${o}`)
-  else
-    console.log(`It's something else`)
+  switch (typeof o) {
+    case "string":
+      console.log(`It's a string: ${o}`); 
+      break;
+    case "number":
+      console.log(`It's a number: ${o}`); 
+      break;
+    case "boolean":
+      console.log(`It's a boolean: ${o}`); 
+      break;
+    default:
+      console.log(`It's something else`);
+  }
 }
 {% endhighlight %}
 {% endcolumn %}
@@ -253,54 +258,46 @@ to integers ourselves.
 Being type safe is great in Scala, but sometimes the type system can be a bit prohibitive when you want to do something
 else, like add methods to existing classes. To allow you to do this in a type safe manner, Scala provides _implicits_.
 You can think of implicits as something that's available in the scope when you need it, and the compiler can
-automatically provide it. For example we can provide a function to automatically convert a `String` to an `Int`, when
-and `Int` is required. This makes the previous regex example more straightforward.
+automatically provide it. For example we can provide a function to automatically convert a JavaScript `Date` into a
+Scala/Java `Date`
 
 {% columns %}
 {% column 9 Scala %}
 {% highlight scala %}
-import scala.language.implicitConversions
+import scalajs.js
 
-case class Date(year: Int, month: Int, day: Int)
-
-def convertToDate(d: String): Date = {
-  implicit def str2int(s: String): Int = Integer.parseInt(s)
-  
-  val YMD = """(\d{4})-(\d{1,2})-(\d{1,2})""".r
-  val MDY = """(\d{1,2})/(\d{1,2})/(\d{4})""".r
-  val DMY = """(\d{1,2})\.(\d{1,2})\.(\d{4})""".r
-  d match {
-    case YMD(year, month, day) => 
-      Date(year, month, day)
-    case MDY(month, day, year) =>
-      Date(year, month, day)
-    case DMY(day, month, year) =>
-      Date(year, month, day)
-    case _ => 
-      throw new Exception("Invalid date!")
-  }
+implicit def convertFromJSDate(d: js.Date): java.util.Date = {
+  new java.util.Date(d.getMilliseconds())
 }
+
+implicit def convertToJSDate(d: java.util.Date): js.Date = {
+  new js.Date(d.getTime)
+}
+
+case class Person(name: String, joined: js.Date)
+
+val p = Person("James Bond", new java.util.Date)
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}
 
-Even though the `Date()` constructor requires `Int`s and we provide `String`s, it still works because Scala
-automatically adds calls to `str2int`.  Here we defined the `str2int` function within `convertToDate` so it won't be visible
-elsewhere and cause surprises. 
+When these implicit conversion functions are in lexical scope, you can use JS and Scala dates interchangeably. Outside
+the scope they are not visible and you must use correct types or provide conversion yourself.
 
 #### Implicit conversions for "monkey patching" 
 
-Monkey patching -term comes originally from the Ruby language and it has been adopted into JavaScript to describe
+Monkey patching -term became famous among Ruby developers and it has been adopted into JavaScript to describe
 a way of extending existing classes with new methods. It has several pitfalls in dynamic languages and is generally
 not a recommended practice. Especially dangerous is to patch JavaScript's host objects like `String` or `DOM.Node`. This
 technique is, however, commonly used to provide support for new JavaScript functionality missing from older JS engines.
 The practice is known as _polyfilling_ or _shimming_.
 
-In Scala using implicits to provide extension methods is _perfectly safe_ and even a _recommended_ practice. Scala
+In Scala providing extension methods via implicits is _perfectly safe_ and even a _recommended_ practice. Scala
 standard library does it all the time. For example did you notice the `.r` or `.toInt` functions that were used on
 strings in the regex example? Both are extension methods coming from implicit classes.
 
-Let's use the `convertToDate` we defined before and add a `toDate` extension method to `String`.
+Let's use the `convertToDate` we defined before and add a `toDate` extension method to `String` by defining an _implicit
+class_.
 
 {% columns %}
 {% column 6 ES6 %}
@@ -314,7 +311,7 @@ String.prototype.toDate = function() {
         
 {% column 6 Scala %}
 {% highlight scala %}
-implicit class strToDate(val s: String) 
+implicit class StrToDate(val s: String) 
   extends AnyVal {
   def toDate = convertToDate(s)
 }
@@ -324,10 +321,12 @@ implicit class strToDate(val s: String)
 {% endcolumns %}
 
 Note that the JavaScript version modifies the global `String` class (dangerous!), whereas the Scala version only
-introduces a conversion from `String` to a custom `strToDate` class providing an additional method. This `toDate` method
-is not added to the `String` class in any way, but the compiler generates appropriate code to call it when required.
-Basically a `"2010-10-09".toDate` is converted into `strToDate("2010-10-09").toDate` which is then inlined/optimized
-(due to the use of Value Class) to `convertToDate("2010-10-09")` at the call site.
+introduces a conversion from `String` to a custom `StrToDate` class providing an additional method. Implicit classes are
+_safe_ because they are lexically scoped, meaning the `StrToDate` is not available in other parts of the program unless
+explicitly imported. The `toDate` method is not added to the `String` class in any way, instead the compiler generates
+appropriate code to call it when required. Basically `"2010-10-09".toDate` is converted into `new
+StrToDate("2010-10-09").toDate` which is then inlined/optimized (due to the use of Value Class) to
+`convertToDate("2010-10-09")` at the call site.
 
 Scala IDEs are also smart enough to know what implicit extension methods are in scope and will show them to you next
 to the other methods.
@@ -336,7 +335,10 @@ to the other methods.
 
 ## Futures
 
-Future is the Promise.
+Writing asynchronous JavaScript code used to be painful due to the number of callbacks required to handle chained
+asynchronous calls. This is affectionately known as _callback hell_. Then came the various Promise libraries that
+alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the `Promise` interface so
+that all implementations (ES6's own included) can happily coexist.
 
 
 {% columns %}
