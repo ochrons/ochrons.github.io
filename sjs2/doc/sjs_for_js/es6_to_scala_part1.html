@@ -222,7 +222,7 @@ in ES6 you need to supply them with the object notation.</p>
 
 <span class="kr">const</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">vec</span><span class="p">({</span><span class="nx">x</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nx">z</span><span class="o">:</span> <span class="mi">42</span><span class="p">});</span> <span class="c1">// Vec(8, 0, 42)</span></code></pre></div>
 </div>
-        
+
 <div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// default value</span>
 <span class="k">def</span> <span class="n">mult</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Double</span><span class="o">,</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="mf">42.0</span><span class="o">)</span><span class="k">:</span> <span class="kt">Double</span> <span class="o">=</span> <span class="o">{</span>
   <span class="n">x</span> <span class="o">*</span> <span class="n">y</span>
@@ -245,7 +245,7 @@ in ES6 you need to supply them with the object notation.</p>
 </div>
 
 <p>Again, Scala compiler can infer all the required types in the code above, including the parameters for the anonymous
-function given to the <code>reduceLeft</code> function.</p>
+function given to the <code>foldLeft</code> function.</p>
 
 <h2 id="if-while-for-match-control-structures"><code>if</code>, <code>while</code>, <code>for</code>, <code>match</code> control structures</h2>
 
@@ -681,16 +681,6 @@ function another way giving us the same result.</p>
 
 <p><code>Option</code> provides many <em>collection like</em> methods like <code>map</code>, <code>filter</code> and <code>flatMap</code>, which are discussed in the <a href="es6_to_scala_part2.html">next
 chapter</a>.</p>
-
-<hr />
-
-<div class="row">
-<div class="col-md-6"><h6 class="code-block-header">ES6</h6>
-</div>
-        
-<div class="col-md-6"><h6 class="code-block-header">Scala</h6>
-</div>
-</div>
 
             <div class="spacing"></div>
         </div>

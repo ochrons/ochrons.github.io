@@ -364,15 +364,18 @@ could be represented by a <code>Map[String, Seq[Int]]</code></p>
 <span class="p">}</span></code></pre></div>
 </div>
         
-<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">var</span> <span class="n">scores</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">.</span><span class="n">empty</span><span class="o">[</span><span class="kt">String</span>, <span class="kt">Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span>
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.collection.mutable</span>
+
+<span class="k">val</span> <span class="n">scores</span> <span class="k">=</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Map</span><span class="o">.</span><span class="n">empty</span><span class="o">[</span><span class="kt">String</span>, 
+                               <span class="kt">mutable.Buffer</span><span class="o">[</span><span class="kt">Int</span><span class="o">]]</span>
 
 <span class="k">def</span> <span class="n">addScore</span><span class="o">(</span><span class="n">player</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">score</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="o">{</span>
-  <span class="k">val</span> <span class="n">prev</span> <span class="k">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">getOrElse</span><span class="o">(</span><span class="n">player</span><span class="o">,</span> <span class="nc">Seq</span><span class="o">())</span>
-  <span class="n">scores</span> <span class="k">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">updated</span><span class="o">(</span><span class="n">player</span><span class="o">,</span> <span class="n">prev</span> <span class="o">:+</span> <span class="n">score</span><span class="o">)</span>
+  <span class="n">scores</span><span class="o">.</span><span class="n">getOrElseUpdate</span><span class="o">(</span><span class="n">player</span><span class="o">,</span> <span class="n">mutable</span><span class="o">.</span><span class="nc">Buffer</span><span class="o">())</span>
+    <span class="o">.</span><span class="n">append</span><span class="o">(</span><span class="n">score</span><span class="o">)</span>
 <span class="o">}</span>
 
 <span class="k">def</span> <span class="n">bestScore</span><span class="k">:</span> <span class="o">(</span><span class="kt">String</span><span class="o">,</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
-  <span class="k">val</span> <span class="n">all</span> <span class="k">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">flatMap</span> <span class="o">{</span> 
+  <span class="k">val</span> <span class="n">all</span> <span class="k">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">flatMap</span> <span class="o">{</span>
     <span class="k">case</span> <span class="o">(</span><span class="n">player</span><span class="o">,</span> <span class="n">pScores</span><span class="o">)</span> <span class="k">=&gt;</span>
       <span class="n">pScores</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">s</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">player</span><span class="o">,</span> <span class="n">s</span><span class="o">))</span>
   <span class="o">}</span>
@@ -392,10 +395,10 @@ could be represented by a <code>Map[String, Seq[Int]]</code></p>
 </div>
 </div>
 
-<p>In the example above the JavaScript version is using mutable object and arrays, while the Scala version is using
-immutable <code>Map</code> and <code>Seq</code>. Because you cannot update an immutable collection, you must create a new one, updating it in
-the process and then store the new reference. Immutable collections in Scala use structural sharing to minimize copying
-and to provide high performance. Sharing is ok, because the data is immutable!</p>
+<p>In the example above the both versions are using mutable collections. Coming from JavaScript it’s good to start with the
+more familiar mutable collections, but over time Scala developers tend to favor immutable versions. Immutable
+collections in Scala use structural sharing to minimize copying and to provide good performance. Sharing is ok, because
+the data is immutable!</p>
 
 <p>The best score is found by first flattening the whole structure into a sequence of (player, score) pairs. Then we use
 the <code>maxBy</code> method to find the maximum score by looking at the second value in the tuple.</p>
@@ -445,15 +448,7 @@ sets out of other sets to check, for example, what has changed.</p>
 </div>
 </div>
 
-<hr />
-
-<div class="row">
-<div class="col-md-6"><h6 class="code-block-header">ES6</h6>
-</div>
-        
-<div class="col-md-6"><h6 class="code-block-header">Scala</h6>
-</div>
-</div>
+<p>Next, let’s look at some more <a href="es6_to_scala_part3.html">advanced paradigms</a> and features of Scala.</p>
 
             <div class="spacing"></div>
         </div>
