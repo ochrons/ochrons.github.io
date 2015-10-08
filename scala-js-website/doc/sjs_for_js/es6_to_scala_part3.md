@@ -333,12 +333,208 @@ to the other methods.
 
 ![Extension method in IDE]({{site.baseurl}}/assets/img/implicitIDE.png)
 
+Finally we'll make DOM's `NodeList` behave like a regular Scala collection to make it easier to work with them. Or to be
+more accurate, we are extending `DOMList[T]` which provides a type for the nodes. `NodeList` is actually just a
+`DOMList[Node]`.
+
+{% columns %}
+{% column 12 Scala %}
+{% highlight scala %}
+implicit class NodeListSeq[T <: Node](nodes: DOMList[T]) extends IndexedSeq[T] {
+  override def foreach[U](f: (T) => U): Unit = {
+    for (i <- 0 until nodes.length) {
+      f(nodes(i))
+    }
+  }
+  override def length: Int = nodes.length
+
+  override def apply(idx: Int): T = nodes(idx)
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Defining just those three functions we now have access to all the usual collection functionality like `map`, `filter`,
+`find`, `slice`, `foldLeft`, etc. This makes working with `NodeList`s a lot easier and safer. The implicit class makes
+use of Scala generics, providing implementation for all types that extend `Node`.
+
+{% columns %}
+{% column 12 Scala %}
+{% highlight scala %}
+// cast to correct element type
+val images = dom.document.querySelectorAll("img").asInstanceOf[NodeListOf[HTMLImageElement]]
+// get all image source URLs
+val urls = images.map(i => i.src)
+// filter images that have "class" attribute set
+val withClass = images.filter(i => i.className.nonEmpty)
+// set an event listener to 10 widest images
+images.sortBy(i => -i.width).take(10).foreach { i =>
+  i.onclick = (e: MouseEvent) => println("Image clicked!")
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
 ## Futures
 
 Writing asynchronous JavaScript code used to be painful due to the number of callbacks required to handle chained
 asynchronous calls. This is affectionately known as _callback hell_. Then came the various Promise libraries that
 alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the `Promise` interface so
 that all implementations (ES6's own included) can happily coexist.
+
+In Scala a similar concept is the `Future`. On the JVM, futures can be used for both parallel and asynchronous
+processing, but under Scala.js only the latter is possible. Like the `Promise` a `Future` is a placeholder object for a
+value that may not yet exist. Both `Promise` and `Future` can complete successfully, providing a value, or fail with an
+error/exception. Let's look at a typical use case of fetching data from server using Ajax.
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+// using jQuery
+
+$.ajax("http://api.openweathermap.org/" +
+  "data/2.5/weather?q=Tampere").then(
+   (data, textStatus, jqXHR) =>
+      console.log(data)
+);
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+import org.scalajs.dom
+import dom.ext.Ajax
+
+Ajax.get("http://api.openweathermap.org/" +
+  "data/2.5/weather?q=Tampere").foreach { 
+  xhr =>
+    println(xhr.responseText)
+}               
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+The JavaScript code above is using jQuery to provide similar helper for making Ajax calls returning promises as is
+available in the Scala.js DOM library.
+
+Comparison between Scala `Future` and JavaScript `Promise` methods.
+
+<table class="table table-bordered">
+  <thead>
+    <tr><th>Future</th><th>Promise</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>foreach(func)</code></td><td><code>then(func)</code></td><td>Does not return a new promise.</td></tr>
+    <tr><td><code>map(func)</code></td><td><code>then(func)</code></td><td>Return value of <code>func</code> is wrapped in a new promise.</td></tr>
+    <tr><td><code>flatMap(func)</code></td><td><code>then(func)</code></td><td><code>func</code> must return a promise.</td></tr>
+    <tr><td><code>recover(func)</code></td><td><code>catch(func)</code></td><td>Handle error. Return value of <code>func</code> is wrapped in a new promise.</td></tr>
+    <tr><td><code>recoverWith(func)</code></td><td><code>catch(func)</code></td><td>Handle error. <code>func</code> must return a promise.</td></tr>
+    <tr><td><code>onComplete(func)</code></td><td><code>then(func, err)</code></td><td>Callback for handling both success and failure cases.</td></tr>
+    <tr><td><code>onSuccess(func)</code></td><td><code>then(func)</code></td><td>Callback for handling only success cases.</td></tr>
+    <tr><td><code>onFailure(func)</code></td><td><code>catch(func)</code></td><td>Callback for handling only failure cases.</td></tr>
+    <tr><td><code>transform(func, err)</code></td><td><code>then(func, err)</code></td><td>Combines <code>map</code> and <code>recover</code> into a single function.</td></tr>
+    <tr><td><code>filter(predicate)</code></td><td>N/A</td><td>Creates a new future by filtering the value of the current future with a predicate.</td></tr>
+    <tr><td><code>zip(that)</code></td><td>N/A</td><td>Zips the values of <code>this</code> and <code>that</code> future, and creates a new future holding the tuple of their results.</td></tr>
+    <tr><td><code>Future.successful(value)</code></td><td><code>Promise.resolve(value)</code></td><td>Returns a successful future containing <code>value</code></td></tr>
+    <tr><td><code>Future.failed(exception)</code></td><td><code>Promise.reject(value)</code></td><td>Returns a failed future containing <code>exception</code></td></tr>
+    <tr><td><code>Future.sequence(iterable)</code></td><td><code>Promise.all(iterable)</code></td><td>Returns a future that completes when all of the promises in the iterable argument have completes.</td></tr>
+    <tr><td><code>Future.firstCompletedOf(iterable)</code></td><td><code>Promise.race(iterable)</code></td><td>Returns a future that completes as soon as one of the promises in the iterable completes.</td></tr>
+  </tbody>
+</table>
+
+#### Futures from callbacks
+
+Even though ES6 brought the standard promise API to browsers, all asynchronous functions still require the use of
+callbacks. To convert a callback into a `Future` in Scala you need to use a `Promise`. Wait, what? Yes, in addition to
+`Future`, Scala also has a `Promise` class which actually implements the `Future` trait.
+
+As an example, let's convert the `onload` event of an `img` tag into a `Future`.
+
+
+{% columns %}
+{% column 6 ES6 %}
+{% highlight javascript %}
+function onLoadPromise(img) {
+  if (img.complete) {
+    return Promise.resolve(img.src);
+  } else {
+    const p = new Promise( (success) => {
+      img.onload = (e) => {
+        success(img.src);
+      };
+    });
+    return p;
+  }
+}
+
+const img = document.querySelector("#mapimage");
+onLoadPromise(img).then( url => 
+  console.log(`Image ${url} loaded`) 
+);
+{% endhighlight %}
+{% endcolumn %}
+        
+{% column 6 Scala %}
+{% highlight scala %}
+def onLoadFuture(img: HTMLImageElement) = {
+  if (img.complete) {
+    Future.successful(img.src)
+  } else {
+    val p = Promise[String]()
+    img.onload = (e: Event) => {
+      p.success(img.src)
+    }
+    p.future
+  }
+}
+
+val img = dom.document.querySelector("#mapimage")
+  .asInstanceOf[HTMLImageElement]
+onLoadFuture(img).foreach { url =>
+  println(s"Image $url loaded")
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+Because image might have already loaded when we create the promise, we must check for that separately and just return a
+completed future in that case. 
+
+Next we'll add an `onloadF` extension method to the `HTMLImageElement` class, to make it really easy to use the
+futurized version.
+
+{% columns %}
+{% column 12 Scala %}
+{% highlight scala %}
+implicit class HTMLImageElementOps(val img: HTMLImageElement) extends AnyVal {
+  def onloadF = onLoadFuture(img)
+}
+
+val img = dom.document.querySelector("#mapimage").asInstanceOf[HTMLImageElement]
+img.onloadF.foreach { url =>
+  println(s"Image $url loaded")
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+While we are playing with DOM images, let's create a future that completes once all the images on the page have
+completed loading.
+
+{% columns %}
+{% column 12 Scala %}
+{% highlight scala %}
+val images = dom.document.querySelectorAll("img").asInstanceOf[NodeListOf[HTMLImageElement]]
+val loaders = images.map(i => i.onloadF)
+
+Future.sequence(loaders).foreach { urls =>
+  println(s"All ${urls.size} images loaded!")
+}
+{% endhighlight %}
+{% endcolumn %}
+{% endcolumns %}
+
+----------------
 
 
 {% columns %}

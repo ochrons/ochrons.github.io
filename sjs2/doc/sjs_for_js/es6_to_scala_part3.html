@@ -350,12 +350,183 @@ to the other methods.</p>
 
 <p><img src="/sjs2/assets/img/implicitIDE.png" alt="Extension method in IDE" /></p>
 
+<p>Finally we’ll make DOM’s <code>NodeList</code> behave like a regular Scala collection to make it easier to work with them. Or to be
+more accurate, we are extending <code>DOMList[T]</code> which provides a type for the nodes. <code>NodeList</code> is actually just a
+<code>DOMList[Node]</code>.</p>
+
+<div class="row">
+<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">implicit</span> <span class="k">class</span> <span class="nc">NodeListSeq</span><span class="o">[</span><span class="kt">T</span> <span class="k">&lt;:</span> <span class="kt">Node</span><span class="o">](</span><span class="n">nodes</span><span class="k">:</span> <span class="kt">DOMList</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">extends</span> <span class="nc">IndexedSeq</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">{</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">foreach</span><span class="o">[</span><span class="kt">U</span><span class="o">](</span><span class="n">f</span><span class="k">:</span> <span class="o">(</span><span class="kt">T</span><span class="o">)</span> <span class="o">=&gt;</span> <span class="n">U</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">0</span> <span class="n">until</span> <span class="n">nodes</span><span class="o">.</span><span class="n">length</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">f</span><span class="o">(</span><span class="n">nodes</span><span class="o">(</span><span class="n">i</span><span class="o">))</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+  <span class="k">override</span> <span class="k">def</span> <span class="n">length</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">length</span>
+
+  <span class="k">override</span> <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">idx</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">(</span><span class="n">idx</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>Defining just those three functions we now have access to all the usual collection functionality like <code>map</code>, <code>filter</code>,
+<code>find</code>, <code>slice</code>, <code>foldLeft</code>, etc. This makes working with <code>NodeList</code>s a lot easier and safer. The implicit class makes
+use of Scala generics, providing implementation for all types that extend <code>Node</code>.</p>
+
+<div class="row">
+<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// cast to correct element type</span>
+<span class="k">val</span> <span class="n">images</span> <span class="k">=</span> <span class="n">dom</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">querySelectorAll</span><span class="o">(</span><span class="s">&quot;img&quot;</span><span class="o">).</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">NodeListOf</span><span class="o">[</span><span class="kt">HTMLImageElement</span><span class="o">]]</span>
+<span class="c1">// get all image source URLs</span>
+<span class="k">val</span> <span class="n">urls</span> <span class="k">=</span> <span class="n">images</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span><span class="o">.</span><span class="n">src</span><span class="o">)</span>
+<span class="c1">// filter images that have &quot;class&quot; attribute set</span>
+<span class="k">val</span> <span class="n">withClass</span> <span class="k">=</span> <span class="n">images</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span><span class="o">.</span><span class="n">className</span><span class="o">.</span><span class="n">nonEmpty</span><span class="o">)</span>
+<span class="c1">// set an event listener to 10 widest images</span>
+<span class="n">images</span><span class="o">.</span><span class="n">sortBy</span><span class="o">(</span><span class="n">i</span> <span class="k">=&gt;</span> <span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">width</span><span class="o">).</span><span class="n">take</span><span class="o">(</span><span class="mi">10</span><span class="o">).</span><span class="n">foreach</span> <span class="o">{</span> <span class="n">i</span> <span class="k">=&gt;</span>
+  <span class="n">i</span><span class="o">.</span><span class="n">onclick</span> <span class="k">=</span> <span class="o">(</span><span class="n">e</span><span class="k">:</span> <span class="kt">MouseEvent</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="s">&quot;Image clicked!&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
 <h2 id="futures">Futures</h2>
 
 <p>Writing asynchronous JavaScript code used to be painful due to the number of callbacks required to handle chained
 asynchronous calls. This is affectionately known as <em>callback hell</em>. Then came the various Promise libraries that
 alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the <code>Promise</code> interface so
 that all implementations (ES6’s own included) can happily coexist.</p>
+
+<p>In Scala a similar concept is the <code>Future</code>. On the JVM, futures can be used for both parallel and asynchronous
+processing, but under Scala.js only the latter is possible. Like the <code>Promise</code> a <code>Future</code> is a placeholder object for a
+value that may not yet exist. Both <code>Promise</code> and <code>Future</code> can complete successfully, providing a value, or fail with an
+error/exception. Let’s look at a typical use case of fetching data from server using Ajax.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// using jQuery</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="s2">&quot;http://api.openweathermap.org/&quot;</span> <span class="o">+</span>
+  <span class="s2">&quot;data/2.5/weather?q=Tampere&quot;</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span>
+   <span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nx">jqXHR</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">);</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.dom</span>
+<span class="k">import</span> <span class="nn">dom.ext.Ajax</span>
+
+<span class="nc">Ajax</span><span class="o">.</span><span class="n">get</span><span class="o">(</span><span class="s">&quot;http://api.openweathermap.org/&quot;</span> <span class="o">+</span>
+  <span class="s">&quot;data/2.5/weather?q=Tampere&quot;</span><span class="o">).</span><span class="n">foreach</span> <span class="o">{</span> 
+  <span class="n">xhr</span> <span class="k">=&gt;</span>
+    <span class="n">println</span><span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">responseText</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>The JavaScript code above is using jQuery to provide similar helper for making Ajax calls returning promises as is
+available in the Scala.js DOM library.</p>
+
+<p>Comparison between Scala <code>Future</code> and JavaScript <code>Promise</code> methods.</p>
+
+<table class="table table-bordered">
+  <thead>
+    <tr><th>Future</th><th>Promise</th><th>Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>foreach(func)</code></td><td><code>then(func)</code></td><td>Does not return a new promise.</td></tr>
+    <tr><td><code>map(func)</code></td><td><code>then(func)</code></td><td>Return value of <code>func</code> is wrapped in a new promise.</td></tr>
+    <tr><td><code>flatMap(func)</code></td><td><code>then(func)</code></td><td><code>func</code> must return a promise.</td></tr>
+    <tr><td><code>recover(func)</code></td><td><code>catch(func)</code></td><td>Handle error. Return value of <code>func</code> is wrapped in a new promise.</td></tr>
+    <tr><td><code>recoverWith(func)</code></td><td><code>catch(func)</code></td><td>Handle error. <code>func</code> must return a promise.</td></tr>
+    <tr><td><code>onComplete(func)</code></td><td><code>then(func, err)</code></td><td>Callback for handling both success and failure cases.</td></tr>
+    <tr><td><code>onSuccess(func)</code></td><td><code>then(func)</code></td><td>Callback for handling only success cases.</td></tr>
+    <tr><td><code>onFailure(func)</code></td><td><code>catch(func)</code></td><td>Callback for handling only failure cases.</td></tr>
+    <tr><td><code>transform(func, err)</code></td><td><code>then(func, err)</code></td><td>Combines <code>map</code> and <code>recover</code> into a single function.</td></tr>
+    <tr><td><code>filter(predicate)</code></td><td>N/A</td><td>Creates a new future by filtering the value of the current future with a predicate.</td></tr>
+    <tr><td><code>zip(that)</code></td><td>N/A</td><td>Zips the values of <code>this</code> and <code>that</code> future, and creates a new future holding the tuple of their results.</td></tr>
+    <tr><td><code>Future.successful(value)</code></td><td><code>Promise.resolve(value)</code></td><td>Returns a successful future containing <code>value</code></td></tr>
+    <tr><td><code>Future.failed(exception)</code></td><td><code>Promise.reject(value)</code></td><td>Returns a failed future containing <code>exception</code></td></tr>
+    <tr><td><code>Future.sequence(iterable)</code></td><td><code>Promise.all(iterable)</code></td><td>Returns a future that completes when all of the promises in the iterable argument have completes.</td></tr>
+    <tr><td><code>Future.firstCompletedOf(iterable)</code></td><td><code>Promise.race(iterable)</code></td><td>Returns a future that completes as soon as one of the promises in the iterable completes.</td></tr>
+  </tbody>
+</table>
+
+<h4 id="futures-from-callbacks">Futures from callbacks</h4>
+
+<p>Even though ES6 brought the standard promise API to browsers, all asynchronous functions still require the use of
+callbacks. To convert a callback into a <code>Future</code> in Scala you need to use a <code>Promise</code>. Wait, what? Yes, in addition to
+<code>Future</code>, Scala also has a <code>Promise</code> class which actually implements the <code>Future</code> trait.</p>
+
+<p>As an example, let’s convert the <code>onload</code> event of an <code>img</code> tag into a <code>Future</code>.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">onLoadPromise</span><span class="p">(</span><span class="nx">img</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">img</span><span class="p">.</span><span class="nx">complete</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Promise</span><span class="p">(</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">img</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">success</span><span class="p">(</span><span class="nx">img</span><span class="p">.</span><span class="nx">src</span><span class="p">);</span>
+      <span class="p">};</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">p</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">img</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;#mapimage&quot;</span><span class="p">);</span>
+<span class="nx">onLoadPromise</span><span class="p">(</span><span class="nx">img</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span> <span class="nx">url</span> <span class="o">=&gt;</span> 
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="err">`</span><span class="nx">Image</span> <span class="nx">$</span><span class="p">{</span><span class="nx">url</span><span class="p">}</span> <span class="nx">loaded</span><span class="err">`</span><span class="p">)</span> 
+<span class="p">);</span></code></pre></div>
+</div>
+        
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">onLoadFuture</span><span class="o">(</span><span class="n">img</span><span class="k">:</span> <span class="kt">HTMLImageElement</span><span class="o">)</span> <span class="k">=</span> <span class="o">{</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">img</span><span class="o">.</span><span class="n">complete</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Future</span><span class="o">.</span><span class="n">successful</span><span class="o">(</span><span class="n">img</span><span class="o">.</span><span class="n">src</span><span class="o">)</span>
+  <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">p</span> <span class="k">=</span> <span class="nc">Promise</span><span class="o">[</span><span class="kt">String</span><span class="o">]()</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">onload</span> <span class="k">=</span> <span class="o">(</span><span class="n">e</span><span class="k">:</span> <span class="kt">Event</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+      <span class="n">p</span><span class="o">.</span><span class="n">success</span><span class="o">(</span><span class="n">img</span><span class="o">.</span><span class="n">src</span><span class="o">)</span>
+    <span class="o">}</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">future</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="k">val</span> <span class="n">img</span> <span class="k">=</span> <span class="n">dom</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">querySelector</span><span class="o">(</span><span class="s">&quot;#mapimage&quot;</span><span class="o">)</span>
+  <span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">HTMLImageElement</span><span class="o">]</span>
+<span class="n">onLoadFuture</span><span class="o">(</span><span class="n">img</span><span class="o">).</span><span class="n">foreach</span> <span class="o">{</span> <span class="n">url</span> <span class="k">=&gt;</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Image $url loaded&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>Because image might have already loaded when we create the promise, we must check for that separately and just return a
+completed future in that case.</p>
+
+<p>Next we’ll add an <code>onloadF</code> extension method to the <code>HTMLImageElement</code> class, to make it really easy to use the
+futurized version.</p>
+
+<div class="row">
+<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">implicit</span> <span class="k">class</span> <span class="nc">HTMLImageElementOps</span><span class="o">(</span><span class="k">val</span> <span class="n">img</span><span class="k">:</span> <span class="kt">HTMLImageElement</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">AnyVal</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">onloadF</span> <span class="k">=</span> <span class="n">onLoadFuture</span><span class="o">(</span><span class="n">img</span><span class="o">)</span>
+<span class="o">}</span>
+
+<span class="k">val</span> <span class="n">img</span> <span class="k">=</span> <span class="n">dom</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">querySelector</span><span class="o">(</span><span class="s">&quot;#mapimage&quot;</span><span class="o">).</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">HTMLImageElement</span><span class="o">]</span>
+<span class="n">img</span><span class="o">.</span><span class="n">onloadF</span><span class="o">.</span><span class="n">foreach</span> <span class="o">{</span> <span class="n">url</span> <span class="k">=&gt;</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;Image $url loaded&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>While we are playing with DOM images, let’s create a future that completes once all the images on the page have
+completed loading.</p>
+
+<div class="row">
+<div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">images</span> <span class="k">=</span> <span class="n">dom</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">querySelectorAll</span><span class="o">(</span><span class="s">&quot;img&quot;</span><span class="o">).</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">NodeListOf</span><span class="o">[</span><span class="kt">HTMLImageElement</span><span class="o">]]</span>
+<span class="k">val</span> <span class="n">loaders</span> <span class="k">=</span> <span class="n">images</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">i</span> <span class="k">=&gt;</span> <span class="n">i</span><span class="o">.</span><span class="n">onloadF</span><span class="o">)</span>
+
+<span class="nc">Future</span><span class="o">.</span><span class="n">sequence</span><span class="o">(</span><span class="n">loaders</span><span class="o">).</span><span class="n">foreach</span> <span class="o">{</span> <span class="n">urls</span> <span class="k">=&gt;</span>
+  <span class="n">println</span><span class="o">(</span><span class="n">s</span><span class="s">&quot;All ${urls.size} images loaded!&quot;</span><span class="o">)</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<hr />
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6>
