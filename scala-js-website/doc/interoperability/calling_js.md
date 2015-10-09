@@ -40,7 +40,7 @@ Alternatively, you can use anonymous classes extending `js.Object` or a [Scala.j
 Most JavaScript APIs work with interfaces that are defined structurally. In
 Scala.js, the corresponding concept are traits. To mark a trait as being a
 representative of a JavaScript API, it must inherit directly or indirectly
-from `js.Any` (usually from `js.Object`).
+from {% scalajsdoc js.Any js.Any %} (usually from `js.Object`).
 
 JS traits can contain `val`, `var` and `def` definitions, and the latter can
 be overloaded.

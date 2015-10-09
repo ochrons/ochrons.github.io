@@ -3,12 +3,13 @@ layout: doc
 title: "From ES6 to Scala: Collections"
 ---
 
-In JavaScript there are basically two kinds of collections you have used to store your data: the `Array` for sequential
-data and `Object` (aka dictionary or hash map) for storing key-value pairs. Furthermore both of these are mutable by
+In JavaScript there are basically two kinds of collections you have used to store your data: the {% jsdoc Array %} for sequential
+data and {% jsdoc Object %} (aka dictionary or hash map) for storing key-value pairs. Furthermore both of these are mutable by
 default, so if you pass them to a function, that function might go and modify them without your knowledge.
 
-ES6 extends your options with four new collection types `Map`, `Set`, `WeakMap` and `WeakSet`. Of these the `WeakMap`
-and `WeakSet` are for special purposes only, so in your application you would typically use only `Map` and `Set`.
+ES6 extends your options with four new collection types {% jsdoc Map %}, {% jsdoc Set %}, {% jsdoc WeakMap %} and 
+{% jsdoc WeakSet %}. Of these the `WeakMap` and `WeakSet` are for special purposes only, so in your application you
+would typically use only `Map` and `Set`.
 
 ## Scala collection hierarchy
 
@@ -20,15 +21,15 @@ interfaces. The high-level hierarchy for the abstract base classes and traits is
 
 Scala provides _immutable_ and _mutable_ implementations for all these collection types.
 
-<table class="table table-bordered">
+<table class="table table-bordered" markdown="1">
 <tr><th colspan="2"><h6>Common <i>immutable</i> collections</h6></th></tr>
-<tr><td>Seq</td><td>List, Vector, Stream, Range</td></tr>
-<tr><td>Map</td><td>HashMap, TreeMap</td></tr>
-<tr><td>Set</td><td>HashSet, TreeSet</td></tr>
+<tr><td>{% scaladoc collection.immutable.Seq %}</td><td>{% scaladoc collection.immutable.List %}, {% scaladoc collection.immutable.Vector %}, {% scaladoc collection.immutable.Stream %}, {% scaladoc collection.immutable.Range %}</td></tr>
+<tr><td>{% scaladoc collection.immutable.Map %}</td><td>{% scaladoc collection.immutable.HashMap %}, {% scaladoc collection.immutable.TreeMap %}</td></tr>
+<tr><td>{% scaladoc collection.immutable.Set %}</td><td>{% scaladoc collection.immutable.HashSet %}, {% scaladoc collection.immutable.TreeSet %}</td></tr>
 <tr><th colspan="2"><h6>Common <i>mutable</i> collections</h6></th></tr>
-<tr><td>Seq</td><td>Buffer, LinkedList, Queue</td></tr>
-<tr><td>Map</td><td>HashMap, LinkedHashMap</td></tr>
-<tr><td>Set</td><td>HashSet</td></tr>
+<tr><td>{% scaladoc collection.mutable.Seq %}</td><td>{% scaladoc collection.mutable.Buffer %}, {% scaladoc collection.mutable.LinkedList %}, {% scaladoc collection.mutable.Queue %}</td></tr>
+<tr><td>{% scaladoc collection.mutable.Map %}</td><td>{% scaladoc collection.mutable.HashMap %}, {% scaladoc collection.mutable.LinkedHashMap %}</td></tr>
+<tr><td>{% scaladoc collection.mutable.Set %}</td><td>{% scaladoc collection.mutable.HashSet %}</td></tr>
 </table>
 
 ## Comparing to JavaScript

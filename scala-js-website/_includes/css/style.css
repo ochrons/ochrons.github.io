@@ -583,3 +583,7 @@ a.anchor{
 pre {
     background: #f0f0f0;
 }
+
+a code {
+    color: {{ site.colors.link }};
+}

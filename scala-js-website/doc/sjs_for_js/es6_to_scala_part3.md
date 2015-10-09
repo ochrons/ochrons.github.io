@@ -333,6 +333,12 @@ to the other methods.
 
 ![Extension method in IDE]({{site.baseurl}}/assets/img/implicitIDE.png)
 
+Implicit extension methods are safe and easy to refactor. If you, say, rename or remove a method, the compiler will
+immediately give errors in places where you use that method. IDEs provide great tools for automatically renaming all
+instances when you make the change, keeping your code base operational. You can even do complex changes like add new
+method parameters or reorder them and the IDE can take care of the refactoring for you, safely and automatically, thanks
+to strict typing.
+
 Finally we'll make DOM's `NodeList` behave like a regular Scala collection to make it easier to work with them. Or to be
 more accurate, we are extending `DOMList[T]` which provides a type for the nodes. `NodeList` is actually just a
 `DOMList[Node]`.
@@ -519,7 +525,8 @@ img.onloadF.foreach { url =>
 {% endcolumns %}
 
 While we are playing with DOM images, let's create a future that completes once all the images on the page have
-completed loading.
+completed loading. Here we'll take advantage of the `NodeListSeq` extension class to provide us with the `map` method
+on the `NodeList` returned from `querySelectorAll`.
 
 {% columns %}
 {% column 12 Scala %}

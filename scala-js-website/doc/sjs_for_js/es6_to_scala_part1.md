@@ -115,7 +115,7 @@ val b: Byte = z.toByte // Ok!
 {% endcolumn %}
 {% endcolumns %}
 
-Actually the integer types `Int`, `Short`, `Byte` and `Float` also exist in JavaScript if you use [_typed
+Actually the numeric types `Int`, `Short`, `Byte` and `Float` also exist in JavaScript if you use [_typed
 arrays_](https://developer.mozilla.org/en/docs/Web/JavaScript/Typed_arrays). These are not commonly used in regular
 JavaScript code, but for some specific purposes, like WebGL, they are required.
 
@@ -200,22 +200,20 @@ const v = vec({x: 8, z: 42}); // Vec(8, 0, 42)
 {% column 6 Scala %}
 {% highlight scala %}            
 // default value
-def mult(x: Double, y: Double = 42.0): Double = {
+def mult(x: Double, y: Double = 42.0): Double =
   x * y
-}
+
 
 // variable number of parameters
-def sum(first: Double, rest: Double*): Double = {
+def sum(first: Double, rest: Double*): Double =
   first + rest.foldLeft(0.0)((a, b) => a + b) 
-}
 
 val s = sum(5, 4, 3, 2, 1) // == 15
 
 // named parameters (works directly)
-def vec(x: Int = 0, y: Int = 0, z: Int = 0): Vec = {
+def vec(x: Int = 0, y: Int = 0, z: Int = 0): Vec =
   new Vec(x, y, z)
-}
-
+  
 val v = vec(8, z = 42) // Vec(8, 0, 42)
 {% endhighlight %}
 {% endcolumn %}
@@ -285,9 +283,8 @@ you can even filter using `if` expressions. In Scala a _for-comprehension_ is ju
 function findPairs(n, sum) {
   for (let i = 0; i < n; i++) {
     for (let j = i; j < n; j++) {
-      if (i + j == sum) {
+      if (i + j == sum)
         console.log(`Found pair ${i}, ${j}`);
-      }
     }
   }
 };
@@ -298,10 +295,10 @@ findPairs(20, 31);
 {% column 6 Scala %}
 {% highlight scala %}
 def findPairs(n: Int, sum: Int): Unit = {
-  for (i <- 0 until n;
-       j <- i until n if i + j == sum) {
-         println(s"Found pair $i, $j")
-  }
+  for { 
+    i <- 0 until n
+    j <- i until n if i + j == sum 
+  } println(s"Found pair $i, $j")
 }
 findPairs(20, 31)
 {% endhighlight %}
@@ -654,9 +651,9 @@ allowing you to drop function parameters or leave variables undefined. But then 
 you write extra code to check for `undefined`. Quite often `undefined` is used to make a distinction between an
 existing value (of any type) and a missing value.
 
-Scala doesn't have `undefined` (it does have `null` but its use is discouraged), but instead it has an `Option` trait
-for representing optional values. In Scala.js the `undefined` type exists to support interoperability with JS libraries,
-but even there it is recommended to use `Option` whenever possible.
+Scala doesn't have `undefined` (it does have `null` but its use is discouraged), but instead it has an 
+{% scaladoc Option %} trait for representing optional values. In Scala.js the `undefined` type exists to support
+interoperability with JS libraries, but even there it is recommended to use `Option` whenever possible.
 
 `Option[A]` is a container for an optional value of type `A`. If the value of type `A` is present, the `Option[A]` is an
 instance of `Some[A]`, containing the present value of type `A`. If the value is absent, the `Option[A]` is the object
