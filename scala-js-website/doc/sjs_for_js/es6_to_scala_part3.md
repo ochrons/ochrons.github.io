@@ -181,8 +181,8 @@ ageSum(persons, "Bond") == 77
 {% endcolumns %}
 
 We could've implemented the Scala function using a `filter` and `foldLeft`, but it is more understandable using
-`collect` and pattern matching. It would be read as "Collect every person with a last name equaling `family` and extract
-the age of those persons. Then sum up the ages."
+{% scaladoc collect collection.Seq@collect[B](pf:PartialFunction[A,B]):Seq[B] %} and pattern matching. It would be read
+as "Collect every person with a last name equaling `family` and extract the age of those persons. Then sum up the ages."
 
 Another good use case for pattern matching is regular expressions (also in ES6!). Let's extract a date in different
 formats.
@@ -250,16 +250,16 @@ convertToDate("10 Nov 2015") // exception
 {% endcolumns %}
 
 Here we use triple-quoted strings that allow us to write regex without escaping special characters. The string is
-converted into a `Regex` object with the `.r` method. Because regex extracts strings, we need to convert matched groups
-to integers ourselves.
+converted into a {% scaladoc util.matching.Regex %} object with the `.r` method. Because regex extracts strings, we need
+to convert matched groups to integers ourselves.
 
 ## Implicits
 
 Being type safe is great in Scala, but sometimes the type system can be a bit prohibitive when you want to do something
 else, like add methods to existing classes. To allow you to do this in a type safe manner, Scala provides _implicits_.
 You can think of implicits as something that's available in the scope when you need it, and the compiler can
-automatically provide it. For example we can provide a function to automatically convert a JavaScript `Date` into a
-Scala/Java `Date`
+automatically provide it. For example we can provide a function to automatically convert a JavaScript {% jsdoc Date %}
+into a Scala/Java `Date`.
 
 {% columns %}
 {% column 9 Scala %}
@@ -385,13 +385,13 @@ images.sortBy(i => -i.width).take(10).foreach { i =>
 
 Writing asynchronous JavaScript code used to be painful due to the number of callbacks required to handle chained
 asynchronous calls. This is affectionately known as _callback hell_. Then came the various Promise libraries that
-alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the `Promise` interface so
-that all implementations (ES6's own included) can happily coexist.
+alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the {% jsdoc Promise %}
+interface so that all implementations (ES6's own included) can happily coexist.
 
-In Scala a similar concept is the `Future`. On the JVM, futures can be used for both parallel and asynchronous
-processing, but under Scala.js only the latter is possible. Like the `Promise` a `Future` is a placeholder object for a
-value that may not yet exist. Both `Promise` and `Future` can complete successfully, providing a value, or fail with an
-error/exception. Let's look at a typical use case of fetching data from server using Ajax.
+In Scala a similar concept is the {% scaladoc concurrent.Future %}. On the JVM, futures can be used for both parallel
+and asynchronous processing, but under Scala.js only the latter is possible. Like the `Promise` a `Future` is a
+placeholder object for a value that may not yet exist. Both `Promise` and `Future` can complete successfully, providing
+a value, or fail with an error/exception. Let's look at a typical use case of fetching data from server using Ajax.
 
 {% columns %}
 {% column 6 ES6 %}
@@ -425,9 +425,9 @@ available in the Scala.js DOM library.
 
 Comparison between Scala `Future` and JavaScript `Promise` methods.
 
-<table class="table table-bordered">
+<table class="table table-bordered" markdown="1">
   <thead>
-    <tr><th>Future</th><th>Promise</th><th>Notes</th></tr>
+    <tr><th>{% scaladoc concurrent.Future %}</th><th>{% jsdoc Promise %}</th><th>Notes</th></tr>
   </thead>
   <tbody>
     <tr><td><code>foreach(func)</code></td><td><code>then(func)</code></td><td>Does not return a new promise.</td></tr>
@@ -506,8 +506,8 @@ onLoadFuture(img).foreach { url =>
 Because image might have already loaded when we create the promise, we must check for that separately and just return a
 completed future in that case. 
 
-Next we'll add an `onloadF` extension method to the `HTMLImageElement` class, to make it really easy to use the
-futurized version.
+Next we'll add an `onloadF` extension method to the {% domdoc raw.HTMLImageElement %} class, to make it really easy to
+use the futurized version.
 
 {% columns %}
 {% column 12 Scala %}
@@ -526,7 +526,7 @@ img.onloadF.foreach { url =>
 
 While we are playing with DOM images, let's create a future that completes once all the images on the page have
 completed loading. Here we'll take advantage of the `NodeListSeq` extension class to provide us with the `map` method
-on the `NodeList` returned from `querySelectorAll`.
+on the {% domdoc raw.NodeList %} returned from {% domdoc querySelectorAll raw.Document@querySelectorAll(selectors:String):org.scalajs.dom.raw.NodeList %}.
 
 {% columns %}
 {% column 12 Scala %}

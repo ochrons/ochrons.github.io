@@ -100,7 +100,7 @@ as long as it behaves like a `Seq` or a `Map`.
 
 #### Tuple
 
-You may have noticed that `Tuple` is not shown in the collection hierarchy above, because it's a very specific
+You may have noticed that {% scaladoc Tuple Tuple2 %} is not shown in the collection hierarchy above, because it's a very specific
 collection type of its own. Scala tuple combines a fixed number of items together so that they can be passed around as a
 whole. A tuple is immutable and can hold different types, so it's quite close to an anonymous case class in that sense.
 Tuples are used in situations where you need to group items together, like key and value in a map, or to return multiple
@@ -170,8 +170,9 @@ val (sum, product) = sumProduct(Seq(1, 2, 3))
 #### Seq
 
 `Seq` is an ordered sequence. Typical implementations include `List`, `Vector`, `Buffer` and `Range`. Although Scala
-`Array` is not a `Seq`, it can be wrapped into a `WrappedArray` to enable all `Seq` operations on arrays. In Scala this
-is done automatically through an implicit conversion, allowing you to write code like following.
+`Array` is not a `Seq`, it can be wrapped into a {% scaladoc collection.mutable.WrappedArray %} to enable all `Seq`
+operations on arrays. In Scala this is done automatically through an implicit conversion, allowing you to write code
+like following.
 
 {% columns %}
 {% column 9 Scala %}
@@ -182,9 +183,11 @@ val product = ar.foldLeft(1)((a, x) => a * x) // foldLeft comes from WrappedArra
 {% endcolumn %}
 {% endcolumns %}
 
-The `Seq` trait exposes many methods familiar to the users of JavaScript arrays, including `foreach`, `map`, `filter`,
-`slice` and `reverse`. In addition to these, there are several more useful methods shown with examples in the
-code block below.
+The `Seq` trait exposes many methods familiar to the users of JavaScript arrays, including 
+{% scaladoc foreach collection.Seq@foreach(f:A=>Unit):Unit %}, {% scaladoc map collection.Seq@map[B](f:A=>B):Seq[B] %}, 
+{% scaladoc filter collection.Seq@filter(p:A=>Boolean):Repr %}, {% scaladoc slice collection.Seq@slice(from:Int,until:Int):Repr %} 
+and {% scaladoc reverse collection.Seq@reverse:Repr %}. In addition to these, there are several more useful methods
+shown with examples in the code block below.
 
 {% columns %}
 {% column 9 Scala %}
@@ -211,10 +214,11 @@ seq ++ Seq(6, 7) == Seq(1, 2, 3, 4, 5, 6, 7) // JS Array.concat()
 {% endcolumn %}
 {% endcolumns %}
 
-JavaScript `Array.reduce` functionality is covered by separate `reduceLeft` and `foldLeft` methods. The difference is
-that in `foldLeft` you provide an initial ("zero") value (which is optional parameter to `Array.reduce`) and in 
-`reduceLeft` you don't. Also note that in `foldLeft` the type of the accumulator can be something else, for example a
-tuple, but in `reduceLeft` it must always be a supertype of the value. 
+JavaScript {% jsdoc Array.reduce Array.reduce %} functionality is covered by separate {% scaladoc reduceLeft collection.Seq@reduceLeft[B>:A](op:(B,A)=>B):B %}
+and {% scaladoc foldLeft collection.Seq@foldLeft[B](z:B)(op:(B,A)=>B):B %} methods. The difference is that in `foldLeft`
+you provide an initial ("zero") value (which is optional parameter to `Array.reduce`) and in  `reduceLeft` you don't.
+Also note that in `foldLeft` the type of the accumulator can be something else, for example a tuple, but in `reduceLeft`
+it must always be a supertype of the value. 
 
 {% columns %}
 {% column 6 ES6 %}
@@ -243,15 +247,16 @@ def sumProduct(s: Seq[Int]):(Int, Int) = {
 
 ## Map
 
-A `Map` consists of pairs of keys and values. Both keys and values can be of any valid Scala type, unlike in JavaScript
-where an `Object` may only contain `string` keys (the new ES6 `Map` allows using other types as keys, but supports only
+A {% scaladoc collection.Map %} consists of pairs of keys and values. Both keys and values can be of any valid Scala type, unlike in JavaScript
+where an `Object` may only contain `string` keys (the new ES6 {% jsdoc Map %} allows using other types as keys, but supports only
 referential equality for comparing keys). As keys must be unique, a `Map` is a great way to store information you need
 to look up later.
 
 JavaScript `Object` doesn't really have methods for using it as a map, although you can iterate over the keys
-with `Object.keys`. When using `Object` as a map, most developers use utility libraries like
+with {% jsdoc Object.keys Object.keys %}. When using `Object` as a map, most developers use utility libraries like
 [lodash](https://lodash.com/docs#mapValues) to get access to suitable functionality. The ES6 `Map` object contains
-`keys`, `values` and `forEach` methods for accessing its contents, but all transformation methods are missing.
+{% jsdoc Map.keys %}, {% jsdoc Map.values %} and {% jsdoc Map.forEach %} methods for accessing its contents, but all
+transformation methods are missing.
 
 You can build a map directly or from a sequence of key-value pairs.
 
@@ -315,7 +320,8 @@ val person = (for {
 
 In the previous example `m.get("first")` returns an `Option[String]` indicating whether the key is present in the map
 or not. By using for comprehension we can easily extract three separate values from the map and use them to build the
-result. The result from `for {} yield` is also an `Option[String]` so we can use `getOrElse` to provide a default value.
+result. The result from `for {} yield` is also an `Option[String]` so we can use {% scaladoc getOrElse Option@getOrElse[B>:A](default:=>B):B %}
+to provide a default value.
 
 Let's try something more complicated. Say we need to maintain a collection of players and all their game scores. This
 could be represented by a `Map[String, Seq[Int]]`
@@ -403,22 +409,25 @@ collections in Scala use structural sharing to minimize copying and to provide g
 the data is immutable!
 
 The best score is found by first flattening the whole structure into a sequence of (player, score) pairs. Then we use
-the `maxBy` method to find the maximum score by looking at the second value in the tuple.
+the {% scaladoc maxBy collection.Seq@maxBy[B](f:A=>B):A %} method to find the maximum score by looking at the second
+value in the tuple.
 
 Average is calculated simply by flattening all scores into a single sequence and then calculating its sum and divide by
 count.
 
 ## Set
 
-A `Set` is like a `Map` without values, just the distinct keys. In JavaScript it's typical to emulate a Set by storing
-the values as keys into an `Object`. This of course means that the values must be converted to strings. In ES6 there is
-a new `Set` type that works with all kinds of value types, but like with `Map`, it's based on reference equality making
-it less useful when dealing with complex value types.
+A {% scaladoc collection.Set %} is like a `Map` without values, just the distinct keys. In JavaScript it's typical to
+emulate a Set by storing the values as keys into an `Object`. This of course means that the values must be converted to
+strings. In ES6 there is a new {% jsdoc Set %} type that works with all kinds of value types, but like with `Map`, it's
+based on reference equality making it less useful when dealing with complex value types.
 
 In Scala sets are quite often used when you need to have distinct values with no duplicates. Adding values to a set
 automatically guarantees that all duplicate values are eliminated. They are also useful when you just need to check if
-something exists, without storing its value. Set operations like `diff`, `intersect` and `union` allow you to build new
-sets out of other sets to check, for example, what has changed.
+something exists, without storing its value. Set operations like {% scaladoc diff collection.Set@diff(that:scala.collection.GenSet[A]):This %},
+{% scaladoc intersect collection.Set@intersect(that:scala.collection.GenSet[A]):Repr %} and 
+{% scaladoc union collection.Set@union(that:scala.collection.GenSet[A]):This %} allow you to build new sets out of other
+sets to check, for example, what has changed.
 
 {% columns %}
 {% column 9 Scala %}
