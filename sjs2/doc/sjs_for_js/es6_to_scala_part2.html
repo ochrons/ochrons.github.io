@@ -17,7 +17,7 @@
     <!-- Custom styles for this template -->
     <link href="/sjs2/assets/css/style.css" rel="stylesheet">
     <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
-    
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -59,12 +59,13 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>In JavaScript there are basically two kinds of collections you have used to store your data: the <code>Array</code> for sequential
-data and <code>Object</code> (aka dictionary or hash map) for storing key-value pairs. Furthermore both of these are mutable by
+            <p>In JavaScript there are basically two kinds of collections you have used to store your data: the <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array"><code>Array</code></a> for sequential
+data and <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object"><code>Object</code></a> (aka dictionary or hash map) for storing key-value pairs. Furthermore both of these are mutable by
 default, so if you pass them to a function, that function might go and modify them without your knowledge.</p>
 
-<p>ES6 extends your options with four new collection types <code>Map</code>, <code>Set</code>, <code>WeakMap</code> and <code>WeakSet</code>. Of these the <code>WeakMap</code>
-and <code>WeakSet</code> are for special purposes only, so in your application you would typically use only <code>Map</code> and <code>Set</code>.</p>
+<p>ES6 extends your options with four new collection types <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a>, <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set"><code>Set</code></a>, <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap"><code>WeakMap</code></a> and 
+<a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet"><code>WeakSet</code></a>. Of these the <code>WeakMap</code> and <code>WeakSet</code> are for special purposes only, so in your application you
+would typically use only <code>Map</code> and <code>Set</code>.</p>
 
 <h2 id="scala-collection-hierarchy">Scala collection hierarchy</h2>
 
@@ -78,13 +79,13 @@ interfaces. The high-level hierarchy for the abstract base classes and traits is
 
 <table class="table table-bordered">
 <tr><th colspan="2"><h6>Common <i>immutable</i> collections</h6></th></tr>
-<tr><td>Seq</td><td>List, Vector, Stream, Range</td></tr>
-<tr><td>Map</td><td>HashMap, TreeMap</td></tr>
-<tr><td>Set</td><td>HashSet, TreeSet</td></tr>
+<tr><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.Seq"><code>Seq</code></a></td><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.List"><code>List</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.Vector"><code>Vector</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.Stream"><code>Stream</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.Range"><code>Range</code></a></td></tr>
+<tr><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.Map"><code>Map</code></a></td><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.HashMap"><code>HashMap</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.TreeMap"><code>TreeMap</code></a></td></tr>
+<tr><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.Set"><code>Set</code></a></td><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.HashSet"><code>HashSet</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.immutable.TreeSet"><code>TreeSet</code></a></td></tr>
 <tr><th colspan="2"><h6>Common <i>mutable</i> collections</h6></th></tr>
-<tr><td>Seq</td><td>Buffer, LinkedList, Queue</td></tr>
-<tr><td>Map</td><td>HashMap, LinkedHashMap</td></tr>
-<tr><td>Set</td><td>HashSet</td></tr>
+<tr><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.Seq"><code>Seq</code></a></td><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.Buffer"><code>Buffer</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.LinkedList"><code>LinkedList</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.Queue"><code>Queue</code></a></td></tr>
+<tr><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.Map"><code>Map</code></a></td><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.HashMap"><code>HashMap</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.LinkedHashMap"><code>LinkedHashMap</code></a></td></tr>
+<tr><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.Set"><code>Set</code></a></td><td><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.HashSet"><code>HashSet</code></a></td></tr>
 </table>
 
 <h2 id="comparing-to-javascript">Comparing to JavaScript</h2>
@@ -141,7 +142,7 @@ as long as it behaves like a <code>Seq</code> or a <code>Map</code>.</p>
 
 <h4 id="tuple">Tuple</h4>
 
-<p>You may have noticed that <code>Tuple</code> is not shown in the collection hierarchy above, because it’s a very specific
+<p>You may have noticed that <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.Tuple2"><code>Tuple</code></a> is not shown in the collection hierarchy above, because it’s a very specific
 collection type of its own. Scala tuple combines a fixed number of items together so that they can be passed around as a
 whole. A tuple is immutable and can hold different types, so it’s quite close to an anonymous case class in that sense.
 Tuples are used in situations where you need to group items together, like key and value in a map, or to return multiple
@@ -199,8 +200,9 @@ values. In JavaScript you can use a fixed size array to represent a tuple.</p>
 <h4 id="seq">Seq</h4>
 
 <p><code>Seq</code> is an ordered sequence. Typical implementations include <code>List</code>, <code>Vector</code>, <code>Buffer</code> and <code>Range</code>. Although Scala
-<code>Array</code> is not a <code>Seq</code>, it can be wrapped into a <code>WrappedArray</code> to enable all <code>Seq</code> operations on arrays. In Scala this
-is done automatically through an implicit conversion, allowing you to write code like following.</p>
+<code>Array</code> is not a <code>Seq</code>, it can be wrapped into a <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.mutable.WrappedArray"><code>WrappedArray</code></a> to enable all <code>Seq</code>
+operations on arrays. In Scala this is done automatically through an implicit conversion, allowing you to write code
+like following.</p>
 
 <div class="row">
 <div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">ar</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
@@ -208,9 +210,11 @@ is done automatically through an implicit conversion, allowing you to write code
 </div>
 </div>
 
-<p>The <code>Seq</code> trait exposes many methods familiar to the users of JavaScript arrays, including <code>foreach</code>, <code>map</code>, <code>filter</code>,
-<code>slice</code> and <code>reverse</code>. In addition to these, there are several more useful methods shown with examples in the
-code block below.</p>
+<p>The <code>Seq</code> trait exposes many methods familiar to the users of JavaScript arrays, including 
+<a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@foreach(f:A=&gt;Unit):Unit"><code>foreach</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@map[B](f:A=&gt;B):Seq[B]"><code>map</code></a>, 
+<a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@filter(p:A=&gt;Boolean):Repr"><code>filter</code></a>, <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@slice(from:Int,until:Int):Repr"><code>slice</code></a> 
+and <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@reverse:Repr"><code>reverse</code></a>. In addition to these, there are several more useful methods
+shown with examples in the code block below.</p>
 
 <div class="row">
 <div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">seq</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
@@ -234,10 +238,11 @@ code block below.</p>
 </div>
 </div>
 
-<p>JavaScript <code>Array.reduce</code> functionality is covered by separate <code>reduceLeft</code> and <code>foldLeft</code> methods. The difference is
-that in <code>foldLeft</code> you provide an initial (“zero”) value (which is optional parameter to <code>Array.reduce</code>) and in 
-<code>reduceLeft</code> you don’t. Also note that in <code>foldLeft</code> the type of the accumulator can be something else, for example a
-tuple, but in <code>reduceLeft</code> it must always be a supertype of the value.</p>
+<p>JavaScript <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce"><code>Array.reduce</code></a> functionality is covered by separate <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@reduceLeft[B&gt;:A](op:(B,A)=&gt;B):B"><code>reduceLeft</code></a>
+and <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@foldLeft[B](z:B)(op:(B,A)=&gt;B):B"><code>foldLeft</code></a> methods. The difference is that in <code>foldLeft</code>
+you provide an initial (“zero”) value (which is optional parameter to <code>Array.reduce</code>) and in  <code>reduceLeft</code> you don’t.
+Also note that in <code>foldLeft</code> the type of the accumulator can be something else, for example a tuple, but in <code>reduceLeft</code>
+it must always be a supertype of the value.</p>
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">sumProduct</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
@@ -259,15 +264,16 @@ tuple, but in <code>reduceLeft</code> it must always be a supertype of the value
 
 <h2 id="map">Map</h2>
 
-<p>A <code>Map</code> consists of pairs of keys and values. Both keys and values can be of any valid Scala type, unlike in JavaScript
-where an <code>Object</code> may only contain <code>string</code> keys (the new ES6 <code>Map</code> allows using other types as keys, but supports only
+<p>A <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Map"><code>Map</code></a> consists of pairs of keys and values. Both keys and values can be of any valid Scala type, unlike in JavaScript
+where an <code>Object</code> may only contain <code>string</code> keys (the new ES6 <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map"><code>Map</code></a> allows using other types as keys, but supports only
 referential equality for comparing keys). As keys must be unique, a <code>Map</code> is a great way to store information you need
 to look up later.</p>
 
 <p>JavaScript <code>Object</code> doesn’t really have methods for using it as a map, although you can iterate over the keys
-with <code>Object.keys</code>. When using <code>Object</code> as a map, most developers use utility libraries like
+with <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys"><code>Object.keys</code></a>. When using <code>Object</code> as a map, most developers use utility libraries like
 <a href="https://lodash.com/docs#mapValues">lodash</a> to get access to suitable functionality. The ES6 <code>Map</code> object contains
-<code>keys</code>, <code>values</code> and <code>forEach</code> methods for accessing its contents, but all transformation methods are missing.</p>
+<a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/keys"><code>keys</code></a>, <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values"><code>values</code></a> and <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach"><code>forEach</code></a> methods for accessing its contents, but all
+transformation methods are missing.</p>
 
 <p>You can build a map directly or from a sequence of key-value pairs.</p>
 
@@ -319,7 +325,8 @@ sequence with the <code>seq:_*</code> syntax.</p>
 
 <p>In the previous example <code>m.get("first")</code> returns an <code>Option[String]</code> indicating whether the key is present in the map
 or not. By using for comprehension we can easily extract three separate values from the map and use them to build the
-result. The result from <code>for {} yield</code> is also an <code>Option[String]</code> so we can use <code>getOrElse</code> to provide a default value.</p>
+result. The result from <code>for {} yield</code> is also an <code>Option[String]</code> so we can use <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.Option@getOrElse[B&gt;:A](default:=&gt;B):B"><code>getOrElse</code></a>
+to provide a default value.</p>
 
 <p>Let’s try something more complicated. Say we need to maintain a collection of players and all their game scores. This
 could be represented by a <code>Map[String, Seq[Int]]</code></p>
@@ -401,22 +408,25 @@ collections in Scala use structural sharing to minimize copying and to provide g
 the data is immutable!</p>
 
 <p>The best score is found by first flattening the whole structure into a sequence of (player, score) pairs. Then we use
-the <code>maxBy</code> method to find the maximum score by looking at the second value in the tuple.</p>
+the <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@maxBy[B](f:A=&gt;B):A"><code>maxBy</code></a> method to find the maximum score by looking at the second
+value in the tuple.</p>
 
 <p>Average is calculated simply by flattening all scores into a single sequence and then calculating its sum and divide by
 count.</p>
 
 <h2 id="set">Set</h2>
 
-<p>A <code>Set</code> is like a <code>Map</code> without values, just the distinct keys. In JavaScript it’s typical to emulate a Set by storing
-the values as keys into an <code>Object</code>. This of course means that the values must be converted to strings. In ES6 there is
-a new <code>Set</code> type that works with all kinds of value types, but like with <code>Map</code>, it’s based on reference equality making
-it less useful when dealing with complex value types.</p>
+<p>A <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Set"><code>Set</code></a> is like a <code>Map</code> without values, just the distinct keys. In JavaScript it’s typical to
+emulate a Set by storing the values as keys into an <code>Object</code>. This of course means that the values must be converted to
+strings. In ES6 there is a new <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set"><code>Set</code></a> type that works with all kinds of value types, but like with <code>Map</code>, it’s
+based on reference equality making it less useful when dealing with complex value types.</p>
 
 <p>In Scala sets are quite often used when you need to have distinct values with no duplicates. Adding values to a set
 automatically guarantees that all duplicate values are eliminated. They are also useful when you just need to check if
-something exists, without storing its value. Set operations like <code>diff</code>, <code>intersect</code> and <code>union</code> allow you to build new
-sets out of other sets to check, for example, what has changed.</p>
+something exists, without storing its value. Set operations like <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Set@diff(that:scala.collection.GenSet[A]):This"><code>diff</code></a>,
+<a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Set@intersect(that:scala.collection.GenSet[A]):Repr"><code>intersect</code></a> and 
+<a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Set@union(that:scala.collection.GenSet[A]):This"><code>union</code></a> allow you to build new sets out of other
+sets to check, for example, what has changed.</p>
 
 <div class="row">
 <div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">set1</span> <span class="k">=</span> <span class="nc">Set</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>

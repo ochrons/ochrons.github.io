@@ -587,3 +587,11 @@ pre {
 a code {
     color: {{ site.colors.link }};
 }
+
+.clippy {
+    position: relative;
+}
+
+.div-clipboard {
+    white-space:nowrap;
+}

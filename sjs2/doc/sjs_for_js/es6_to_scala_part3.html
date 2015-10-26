@@ -17,7 +17,7 @@
     <!-- Custom styles for this template -->
     <link href="/sjs2/assets/css/style.css" rel="stylesheet">
     <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
-    
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -213,8 +213,8 @@ values in destructuring.</p>
 </div>
 
 <p>We could’ve implemented the Scala function using a <code>filter</code> and <code>foldLeft</code>, but it is more understandable using
-<code>collect</code> and pattern matching. It would be read as “Collect every person with a last name equaling <code>family</code> and extract
-the age of those persons. Then sum up the ages.”</p>
+<a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.collection.Seq@collect[B](pf:PartialFunction[A,B]):Seq[B]"><code>collect</code></a> and pattern matching. It would be read
+as “Collect every person with a last name equaling <code>family</code> and extract the age of those persons. Then sum up the ages.”</p>
 
 <p>Another good use case for pattern matching is regular expressions (also in ES6!). Let’s extract a date in different
 formats.</p>
@@ -276,16 +276,16 @@ formats.</p>
 </div>
 
 <p>Here we use triple-quoted strings that allow us to write regex without escaping special characters. The string is
-converted into a <code>Regex</code> object with the <code>.r</code> method. Because regex extracts strings, we need to convert matched groups
-to integers ourselves.</p>
+converted into a <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.util.matching.Regex"><code>Regex</code></a> object with the <code>.r</code> method. Because regex extracts strings, we need
+to convert matched groups to integers ourselves.</p>
 
 <h2 id="implicits">Implicits</h2>
 
 <p>Being type safe is great in Scala, but sometimes the type system can be a bit prohibitive when you want to do something
 else, like add methods to existing classes. To allow you to do this in a type safe manner, Scala provides <em>implicits</em>.
 You can think of implicits as something that’s available in the scope when you need it, and the compiler can
-automatically provide it. For example we can provide a function to automatically convert a JavaScript <code>Date</code> into a
-Scala/Java <code>Date</code></p>
+automatically provide it. For example we can provide a function to automatically convert a JavaScript <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date"><code>Date</code></a>
+into a Scala/Java <code>Date</code>.</p>
 
 <div class="row">
 <div class="col-md-9"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scalajs.js</span>
@@ -350,6 +350,12 @@ to the other methods.</p>
 
 <p><img src="/sjs2/assets/img/implicitIDE.png" alt="Extension method in IDE" /></p>
 
+<p>Implicit extension methods are safe and easy to refactor. If you, say, rename or remove a method, the compiler will
+immediately give errors in places where you use that method. IDEs provide great tools for automatically renaming all
+instances when you make the change, keeping your code base operational. You can even do complex changes like add new
+method parameters or reorder them and the IDE can take care of the refactoring for you, safely and automatically, thanks
+to strict typing.</p>
+
 <p>Finally we’ll make DOM’s <code>NodeList</code> behave like a regular Scala collection to make it easier to work with them. Or to be
 more accurate, we are extending <code>DOMList[T]</code> which provides a type for the nodes. <code>NodeList</code> is actually just a
 <code>DOMList[Node]</code>.</p>
@@ -390,13 +396,13 @@ use of Scala generics, providing implementation for all types that extend <code>
 
 <p>Writing asynchronous JavaScript code used to be painful due to the number of callbacks required to handle chained
 asynchronous calls. This is affectionately known as <em>callback hell</em>. Then came the various Promise libraries that
-alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the <code>Promise</code> interface so
-that all implementations (ES6’s own included) can happily coexist.</p>
+alleviated this issue a lot, but were not fully compatible with each other. ES6 standardizes the <a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a>
+interface so that all implementations (ES6’s own included) can happily coexist.</p>
 
-<p>In Scala a similar concept is the <code>Future</code>. On the JVM, futures can be used for both parallel and asynchronous
-processing, but under Scala.js only the latter is possible. Like the <code>Promise</code> a <code>Future</code> is a placeholder object for a
-value that may not yet exist. Both <code>Promise</code> and <code>Future</code> can complete successfully, providing a value, or fail with an
-error/exception. Let’s look at a typical use case of fetching data from server using Ajax.</p>
+<p>In Scala a similar concept is the <a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.concurrent.Future"><code>Future</code></a>. On the JVM, futures can be used for both parallel
+and asynchronous processing, but under Scala.js only the latter is possible. Like the <code>Promise</code> a <code>Future</code> is a
+placeholder object for a value that may not yet exist. Both <code>Promise</code> and <code>Future</code> can complete successfully, providing
+a value, or fail with an error/exception. Let’s look at a typical use case of fetching data from server using Ajax.</p>
 
 <div class="row">
 <div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="c1">// using jQuery</span>
@@ -426,7 +432,7 @@ available in the Scala.js DOM library.</p>
 
 <table class="table table-bordered">
   <thead>
-    <tr><th>Future</th><th>Promise</th><th>Notes</th></tr>
+    <tr><th><a target="scaladoc" href="http://www.scala-lang.org/api/current/#scala.concurrent.Future"><code>Future</code></a></th><th><a target="jsdoc" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise"><code>Promise</code></a></th><th>Notes</th></tr>
   </thead>
   <tbody>
     <tr><td><code>foreach(func)</code></td><td><code>then(func)</code></td><td>Does not return a new promise.</td></tr>
@@ -498,8 +504,8 @@ callbacks. To convert a callback into a <code>Future</code> in Scala you need to
 <p>Because image might have already loaded when we create the promise, we must check for that separately and just return a
 completed future in that case.</p>
 
-<p>Next we’ll add an <code>onloadF</code> extension method to the <code>HTMLImageElement</code> class, to make it really easy to use the
-futurized version.</p>
+<p>Next we’ll add an <code>onloadF</code> extension method to the <a target="scaladoc" href="http://www.scala-js.org/api/scalajs-dom/0.8/#org.scalajs.dom.raw.HTMLImageElement"><code>HTMLImageElement</code></a> class, to make it really easy to
+use the futurized version.</p>
 
 <div class="row">
 <div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">implicit</span> <span class="k">class</span> <span class="nc">HTMLImageElementOps</span><span class="o">(</span><span class="k">val</span> <span class="n">img</span><span class="k">:</span> <span class="kt">HTMLImageElement</span><span class="o">)</span> <span class="k">extends</span> <span class="nc">AnyVal</span> <span class="o">{</span>
@@ -514,7 +520,8 @@ futurized version.</p>
 </div>
 
 <p>While we are playing with DOM images, let’s create a future that completes once all the images on the page have
-completed loading.</p>
+completed loading. Here we’ll take advantage of the <code>NodeListSeq</code> extension class to provide us with the <code>map</code> method
+on the <a target="scaladoc" href="http://www.scala-js.org/api/scalajs-dom/0.8/#org.scalajs.dom.raw.NodeList"><code>NodeList</code></a> returned from <a target="scaladoc" href="http://www.scala-js.org/api/scalajs-dom/0.8/#org.scalajs.dom.raw.Document@querySelectorAll(selectors:String):org.scalajs.dom.raw.NodeList"><code>querySelectorAll</code></a>.</p>
 
 <div class="row">
 <div class="col-md-12"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">images</span> <span class="k">=</span> <span class="n">dom</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">querySelectorAll</span><span class="o">(</span><span class="s">&quot;img&quot;</span><span class="o">).</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">NodeListOf</span><span class="o">[</span><span class="kt">HTMLImageElement</span><span class="o">]]</span>

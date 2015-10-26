@@ -583,3 +583,15 @@ a.anchor{
 pre {
     background: #f0f0f0;
 }
+
+a code {
+    color: #428bca;
+}
+
+.clippy {
+    position: relative;
+}
+
+.div-clipboard {
+    white-space:nowrap;
+}
