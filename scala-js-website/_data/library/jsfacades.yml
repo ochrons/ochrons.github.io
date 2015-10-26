@@ -48,6 +48,40 @@
       url: https://github.com/mathieuleclaire/scaladget
       desc: Static types for [D3.js](http://d3js.org), [Ace](http://ace.c9.io), [Tooltipster](http://iamceege.github.io/tooltipster/),  [Bootstrap.js](http://getbootstrap.com/) (and an API for the latter)
       dep: '"fr.iscpif" %%% "scaladget" % "0.7.0"'
+    - name: Paths.scala.js
+      url: https://github.com/andreaferretti/paths-scala-js
+      desc: A library to generate SVG charts and shapes (wrapper over [Paths.js](https://github.com/andreaferretti/paths-js))
+      dep: '"eu.unicredit" %%% "paths-scala-js" % "0.3.2"'
+- topic: UI frameworks
+  libraries:
+    - name: scalajs-react
+      url: https://github.com/japgolly/scalajs-react
+      desc: Type-safe and Scala-friendly library over Facebook's [React](http://facebook.github.io/react/).
+      dep: '"com.github.japgolly.scalajs-react" %%% "core" % "0.10.0"'
+    - name: scala-js-binding
+      url: https://github.com/antonkulaga/scala-js-binding
+      desc: An all-Scala.js HTML binding library
+      dep: '"org.denigma" %%% "binding" % "0.8.0-M6"'
+    - name: scalajs-angular
+      url: https://github.com/greencatsoft/scalajs-angular) with [TodoMvc example](https://github.com/greencatsoft/scalajs-angular-todomvc
+      desc: static types and complementary API for AngularJS
+      dep: '"com.greencatsoft" %%% "scalajs-angular" % "0.5"'
+    - name: scalajs-angulate
+      url: https://github.com/jokade/scalajs-angulate
+      desc: another binding to AngularJS with enhancements
+      dep: '"biz.enef" %%% "scalajs-angulate" % "0.2.2"'
+    - name: Widok
+      url: https://widok.github.io/
+      desc: Reactive web framework for the JVM and Scala.js
+      dep: '"io.github.widok" %%% "widok" % "0.2.2"'
+    - name: scalajs-vue
+      url: https://github.com/fancellu/scalajs-vue
+      desc: Scala.js bindings for [Vue.js](http://vuejs.org/) and an example application
+      dep: ''
+    - name: scalajs-ractive
+      url: https://github.com/fancellu/scalajs-ractive
+      desc: Scala.js bindings for [Ractive.js](http://www.ractivejs.org/) and an example application
+      dep: ''
 - topic: Other libraries
   libraries:
     - name: scala-js-vaadin-components
@@ -57,4 +91,8 @@
     - name: scala-js-chrome
       url: https://github.com/lucidd/scala-js-chrome
       desc: Static types for Chrome [App](https://developer.chrome.com/apps/api_index) and [Extension](https://developer.chrome.com/extensions/api_index) APIs
+      dep: ''
+    - name: scalajs-velocity
+      url: https://github.com/fancellu/scalajs-velocity
+      desc: Scala.js bindings for [Velocity.js](http://julian.com/research/velocity/) animation library and example applications
       dep: ''
