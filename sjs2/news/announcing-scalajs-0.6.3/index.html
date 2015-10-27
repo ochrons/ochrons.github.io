@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.6.3</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>News</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/announcing-scalajs-0.6.3"><h3 class="ctitle">Announcing Scala.js 0.6.3</h3></a>
+
+            <p>
+                <span class="small">May 12, 2015.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.6.3!</p>
+
+<p>A lot has happened in this release, probably because we dragged it for a longer amount of time than usual (2 months since the last release!).
+Besides the usual bag of bug fixes, there are three highlights:</p>
+
+<ul>
+  <li>Support for <code>BigInteger</code> and <code>BigDecimal</code>, thanks to an incredible amount of work by <a href="https://github.com/InTheNow">@InTheNow</a>.</li>
+  <li>Extension of <code>jsDependencies</code> to specify minified versions of the JS libraries.</li>
+  <li><em>Experimental</em> output modes to target ECMAScript 6, as well as <a href="https://developers.google.com/v8/experiments">Strong Mode</a>.</li>
+</ul>
+
+<p>We also welcome Nicolas Stucki aka <a href="https://github.com/nicolasstucki">@nicolasstucki</a> to the core team at EPFL.
+<!--more--></p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>If you are new to Scala.js, head over to
+<a href="/doc/tutorial.html">the tutorial</a>.</p>
+
+<h2 id="release-notes">Release notes</h2>
+
+<p>For changes in the 0.6.x series compared to 0.5.x, read <a href="/news/2015/02/05/announcing-scalajs-0.6.0/">the announcement of 0.6.0</a>.</p>
+
+<p>As a minor release, 0.6.3 is backward source and binary compatible with previous releases in the 0.6.x series.
+Libraries compiled with earlier versions can be used with 0.6.3 without change.
+However, it is not forward compatible: libraries compiled with 0.6.3 cannot be used by projects using 0.6.{0-2}.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="improvements">Improvements</h2>
+
+<h3 id="big-numbers-are-here">Big numbers are here!</h3>
+
+<p>Thanks to <a href="https://github.com/InTheNow">@InTheNow</a>, <code>java.math.BigInteger</code> and <code>java.math.BigDecimal</code> are finally supported by Scala.js.
+Consequently, so are <code>scala.math.BigInt</code> and <code>scala.math.BigDecimal</code>, as well as ranges of <code>Double</code>s.</p>
+
+<h3 id="minified-versions-of-js-dependencies">Minified versions of JS dependencies</h3>
+
+<p>The new <code>minified</code> modifier to <code>jsDependencies</code> allows to specify minified alternatives of JS libraries.
+Use it like this:</p>
+
+<pre><code>jsDependencies +=
+  "org.webjars" % "immutable" % "3.4.0" / "immutable.js" minified "immutable.min.js"
+</code></pre>
+
+<p>Minified dependencies are packaged with <code>packageMinifiedJSDependencies</code>, which is automatically called when <code>fullOptJS</code> is invoked.
+The result is put in a file <code>-jsdeps.min.js</code> next to <code>-jsdeps.js</code>.</p>
+
+<p>Obviously, for JS dependencies that do not specify a minified version, their non-minified version is used instead.</p>
+
+<h3 id="opt-in-silent-fail-for-jsexportdescendentclassesobjects">Opt-in silent fail for <code>@JSExportDescendent{Classes,Objects}</code></h3>
+
+<p>Only public top-level classes and objects can be <code>@JSExport</code>ed.
+Trying to export a non-public or inner entity does not compile.
+For directly applied <code>@JSExport</code>, this is the expected behavior.
+For <code>@JSExportDescendentClasses</code> and <code>@JSExportDescendentObjects</code>, however, it can prevent certain useful patterns.
+In some cases it is preferable to simply ignore descendent classes and objects that cannot be exported, rather than failing with a compile error.</p>
+
+<p>These two annotations now take an additional, optional parameter <code>ignoreInvalidDescendants</code> of type <code>Boolean</code>.
+If <code>true</code>, invalid descendent classes and objects will be ignored for exports.</p>
+
+<p>For example, this does not compile:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSExportDescendentClasses</span>
+<span class="k">trait</span> <span class="nc">Foo</span>
+
+<span class="k">object</span> <span class="nc">Bar</span> <span class="o">{</span>
+  <span class="k">class</span> <span class="nc">InvalidExport</span> <span class="k">extends</span> <span class="nc">Foo</span>
+<span class="o">}</span></code></pre></div>
+
+<p>If we change the definition of <code>Foo</code> to</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSExportDescendentClasses</span><span class="o">(</span><span class="n">ignoreInvalidDescendants</span> <span class="k">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="k">trait</span> <span class="nc">Foo</span></code></pre></div>
+
+<p>then it will compile and <code>InvalidExport</code> will be silently ignored.</p>
+
+<h3 id="emit-ecmascript-6">Emit ECMAScript 6</h3>
+
+<p>Now that ECMAScript 6 has reached the status of Release Candidate, it is time for Scala.js to offer the possibility to emit JavaScript code taking full advantage of its features.
+You can do so with the following sbt setting:</p>
+
+<pre><code>scalaJSOutputMode := org.scalajs.core.tools.javascript.OutputMode.ECMAScript6
+</code></pre>
+
+<p>This will cause the <code>fastOptJS</code> task (after a <code>clean</code>) to emit ES6-style code.
+Among others, the following features are used:</p>
+
+<ul>
+  <li>Classes</li>
+  <li><code>let</code> and <code>const</code></li>
+  <li><code>...rest</code> parameters</li>
+</ul>
+
+<p>Currently, very few runtimes support enough of ECMAScript 6 to be able to run the Scala.js output.
+To the best of our knowledge, V8 4.2.71 minimum is required, with the feature flag <code>--harmony-rest-parameters</code>.
+This runtime is available in <a href="https://iojs.org/">iojs</a> &gt;= 2.0.0, as well as in <a href="https://www.google.fr/chrome/browser/canary.html">Chrome Canary</a>.</p>
+
+<p>You can use io.js with the <code>run</code> and <code>test</code> commands of sbt with the following sbt settings:</p>
+
+<pre><code>postLinkJSEnv := NodeJSEnv(executable = "iojs", args = Seq("--harmony-rest-parameters")).value
+scalaJSStage := FastOptStage
+</code></pre>
+
+<p><strong>Caveats:</strong></p>
+
+<ul>
+  <li>Only <code>fastOpt</code> works. <code>fullOpt</code> will break with crashes or obscure errors, do not use it.</li>
+  <li>Runtime performance is <em>awful</em>. Benchmarks have shown degradations up to 10x slower than the normal output.</li>
+</ul>
+
+<p><strong>Consequence:</strong> This is currently a toy, an experiment, and should not be used in production.</p>
+
+<h3 id="ecmascript-6-strong-mode">ECMAScript 6 Strong Mode</h3>
+
+<p><a href="https://developers.google.com/v8/experiments">Strong Mode</a> is an experiment conducted by the V8 team.
+Their website will explain better than we can, but basically it is an extension to JS’ strict mode, which further restricts what programs are valid.
+It is meant to define a subset of JavaScript that can be optimized more predictably by runtimes, and which also causes less surprises to developers.
+Contrary to <a href="http://asmjs.org/">asm.js</a>, it is still meant to be written by hand.</p>
+
+<p>Early experiments show that Strong Mode can be an excellent target for Scala.js, because their semantics and restrictions align in many ways.
+We have therefore invested time in providing a Strong Mode-compliant output to Scala.js.
+Similarly to the ECMAScript 6 output, it can be activated with an sbt setting:</p>
+
+<pre><code>scalaJSOutputMode := org.scalajs.core.tools.javascript.OutputMode.ECMAScript6StrongMode
+</code></pre>
+
+<p>Since Strong Mode is a subset of ECMAScript 6, any runtime which supports ES6 can also run Strong Mode code.
+But to enable the additional checks, you have to use the <code>--strong-mode</code> argument to V8.
+Using io.js, this can be done with:</p>
+
+<pre><code>postLinkJSEnv := NodeJSEnv(executable = "iojs", args = Seq("--harmony-rest-parameters", "--strong-mode")).value
+scalaJSStage := FastOptStage
+</code></pre>
+
+<p>The same caveats as the ES6 mode apply.</p>
+
+<p>Scala.js is an excellent platform for experimenting with Strong Mode, as we can easily generate huge amounts of Strong Mode-compliant code just by recompiling applications in this mode.
+Since Strong Mode is still in flux, we are discussing with the V8 team to make it as good as it can be, for JavaScript developers at large as well as for Scala.js and compiler writers specifically.</p>
+
+<h2 id="bug-fixes">Bug fixes</h2>
+
+<p>Among others, the following bugs have been fixed:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1490">#1490</a> JVM style module initialization under semantic flag</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1512">#1512</a> Atomic write of <code>-fastopt.js</code> and <code>-opt.js</code></li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1556">#1556</a> Test adapter provisions slaves too aggressively</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1560">#1560</a> <code>java.io.StringReader.read(c:Array[Char],offset:Int,len:Int)</code> returns 0 at eof, instead of -1</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1564">#1564</a> Allow overriding path prefixes</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1569">#1569</a> AssertionError when crossProject is used as a ProjectRef in another project</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1578">#1578</a> Report the full stack trace for exceptions thrown in Futures</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1582">#1582</a> Parsing hexadecimal Long that has 0x80000000 bit set fails</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1589">#1589</a> Switch statement with <code>if</code> causes compiler to fail</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1556">#1556</a> Test adapter provisions slaves too aggressively</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1625">#1625</a> Emit warning if <code>js.Dynamic.literal</code> has duplicate keys (and <a href="https://github.com/scala-js/scala-js/issues/1595">#1595</a> not emit illegal JS in that situation)</li>
+</ul>
+
+<p>You can find the full list <a href="https://github.com/scala-js/scala-js/issues?q=is%3Aissue+milestone%3Av0.6.3+is%3Aclosed">on GitHub</a>.</p>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/announcing-scalajs-0.6.2"
+                                            title="Announcing Scala.js 0.6.2">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/announcing-scalajs-0.6.4"
+                                        title="Announcing Scala.js 0.6.4">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-twitter-square"></i>
+                <i class="fa fa-google-plus-square"></i>
+                <i class="fa fa-linkedin-square"></i>
+            </div>
+        </div>
+        <! --/row -->
+    </div>
+    <! --/container -->
+</div><! --/footerwrap -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+<script>
+hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>

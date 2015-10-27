@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
 
-    <title>Scala.js - Blog</title>
+    <title>Scala.js - Announcing Scala.js 0.5.2</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -41,7 +41,7 @@
         <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
         <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
         <li ><a href="/sjs2/community">COMMUNITY</a></li>
-        <li ><a href="/sjs2/news">NEWS</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -51,73 +51,82 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>Blog</h3>
+            <h3>News</h3>
         </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /blue -->
 
 <div class="container mtb">
     <div class="row">
+        <! -- SINGLE POST -->
         <div class="col-md-12">
-            <div class="container mtb">
-    <div class="row">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/announcing-scalajs-0.5.2"><h3 class="ctitle">Announcing Scala.js 0.5.2</h3></a>
 
-        <! -- BLOG POSTS LIST -->
-        <div class="col-lg-8">
+            <p>
+                <span class="small">Jul 9, 2014.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.5.2!
+<!--more--></p>
 
-            
+<p>Scala.js 0.5.2 is backward binary compatible with older versions of the 0.5.x branch. However, it is <em>not</em> forward binary compatible. This means:</p>
 
-        </div><! --/col-lg-8 -->
+<ul>
+  <li>You don’t need to re-publish libraries</li>
+  <li>You must upgrade to Scala.js 0.5.2 if any library you depend on uses Scala.js 0.5.2</li>
+</ul>
 
-        <div class="col-lg-4">
-   <!--  <h4>Search</h4>
-    <div class="hline"></div>
-        <p>
-            <br/>
-            <input type="text" class="form-control" placeholder="Search something">
-        </p>
-    <div class="spacing"></div> -->
-    <h4>Subscribe</h4>
-    <div class="hline"></div>
-        <p>
-            <p class="rss-subscribe">Subscribe to this blog <a href="/sjs2/feed.xml">via RSS</a>.</p>
-        </p>
-    <div class="spacing"></div>
-    <h4>Categories</h4>
-    <div class="hline"></div>
-    
-        <p>
-            <a href="/sjs2/category/#news"><i class="fa fa-angle-right"></i> News</a>
-            <span class="badge badge-theme pull-right">18</span>
-        </p>
-    
+<p>If you choose to re-publish a library, make sure to bump its version.</p>
 
-    <div class="spacing"></div>
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
 
-    <h4>Recent Posts</h4>
-    <div class="hline"></div>
-        <ul class="popular-posts">
-             
-        </ul>
+<h2 id="improvements-in-the-052-release">Improvements in the 0.5.2 release</h2>
 
-    <div class="spacing"></div>
+<p>For changes introduced in 0.5.0, how to upgrade, getting started etc. have a look at the <a href="/news/2014/06/13/announcing-scalajs-0.5.0/">0.5.0 announcement</a> (and maybe the <a href="/news/2014/06/30/announcing-scalajs-0.5.1/">0.5.1 announcement</a>).</p>
 
-    <h4>Popular Tags</h4>
-    <div class="hline"></div>
-    <p>
-    
-            <a class="btn btn-theme" href="/sjs2/category/#news" role="button">News (18)</a>	         
-        
-    </p>
-</div>
+<h4 id="typedarrays">TypedArrays</h4>
 
-    </div><! --/row -->
-</div><! --/container -->
+<p>The new package <code>scala.scalajs.js.typedarray</code> contains facade types
+for JavaScript TypedArrays. It introduces compiler support to convert
+<code>scala.Array</code>s to their TypedArray equivalent and vice versa.</p>
+
+<p>Note that TypedArrays are <strong>not</strong> part of the ECMAScript 5
+specification. You need to make sure your target platform supports
+TypedArrays in addition to ECMAScript 5, if you decide to use them. Scala.js’
+<a href="https://github.com/scala-js/scala-js/tree/v0.5.2/test-suite/src/test/scala/scala/scalajs/test/typedarray">TypedArray test suite</a>
+covers the full typed API and should be sufficient to verify whether a
+given JavaScript runtime supports TypedArrays.</p>
+
+<h4 id="bugfixes">Bugfixes</h4>
+
+<p>The following bugs have been fixed in 0.5.2:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/789">#789</a> <code>fastOptStage::run</code> fails with Node.js</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/791">#791</a> Default arguments in the constructor of facade classes fail if the companion object doesn’t extend <code>js.Any</code></li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/796">#796</a> Extending <code>js.Any</code> directly gives strange error messages</li>
+</ul>
+
+<h4 id="changes-to-the-ir">Changes to the IR</h4>
+
+<p>Some minor changes have been made to the IR to better accommodate the incremental optimizer in the pipeline for 0.5.3. This is the reason for the lack of forward binary compatibility.</p>
+
             <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/announcing-scalajs-0.5.1"
+                                            title="Announcing Scala.js 0.5.1">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/announcing-scalajs-0.5.3"
+                                        title="Announcing Scala.js 0.5.3">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
-
 </div>
 </div>
 <div id="footerwrap">

@@ -10,6 +10,11 @@ url: "http://yourdomain.com"
 exclude: ["*.iml"]
 production_url : http://www.scala-js.org
 
+# News
+paginate: 6
+paginate_path: "/news/page:num"
+excerpt_separator: "<!--more-->"
+
 # Build settings
 markdown: kramdown
 permalink: /:categories/:title

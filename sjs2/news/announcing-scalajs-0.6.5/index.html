@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.6.5</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>News</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/announcing-scalajs-0.6.5"><h3 class="ctitle">Announcing Scala.js 0.6.5</h3></a>
+
+            <p>
+                <span class="small">Aug 31, 2015.</span>
+            </p>
+            <p>We are thrilled to announce the release of Scala.js 0.6.5!</p>
+
+<p>This is probably <em>the most important release since Scala.js 0.5.0</em>!
+It brings significant advances to interoperability with JavaScript:</p>
+
+<ul>
+  <li>You can now implement subclasses of JavaScript classes and traits in Scala.js!</li>
+  <li>Using the same semantics, you can now define object literals with <code>new js.Object { val x = 5 }</code></li>
+  <li>There is a new unboxed pseudo-union type <code>A | B</code> to more accurately type your JavaScript facades</li>
+  <li>You can statically typecheck that the <code>@JSExport</code>s of a Scala class comply with a JavaScript facade trait with <code>js.use(x).as[T]</code>
+<!--more--></li>
+</ul>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>If you are new to Scala.js, head over to
+<a href="/doc/tutorial.html">the tutorial</a>.</p>
+
+<h2 id="release-notes">Release notes</h2>
+
+<p>For changes in the 0.6.x series compared to 0.5.x, read <a href="/news/2015/02/05/announcing-scalajs-0.6.0/">the announcement of 0.6.0</a>.</p>
+
+<p>As a minor release, 0.6.5 is backward source and binary compatible with previous releases in the 0.6.x series.
+Libraries compiled with earlier versions can be used with 0.6.5 without change.
+However, it is not forward compatible: libraries compiled with 0.6.5 cannot be used by projects using 0.6.{0-4}.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="important-new-warnings">Important new warnings</h2>
+
+<p>When upgrading from 0.6.{0-4}, you will get new warnings on the declarations of your facade types, i.e., traits, classes and objects extending <code>js.Any</code>.
+For example:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="k">class</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">bar</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></div>
+
+<p>will have the following warning:</p>
+
+<pre><code>Foo.scala:3: warning: Classes, traits and objects inheriting from js.Any should be annotated
+  with @js.native, unless they have @ScalaJSDefined.
+  The default will switch to Scala.js-defined in the next major version of Scala.js.
+class Foo extends js.Object
+      ^
+</code></pre>
+
+<p>As the text says, you should simply add the <code>@js.native</code> annotation to the declaration of <code>Foo</code> to silence the warning:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">class</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">bar</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></div>
+
+<p>Addressing these warnings is important to make your source code forward compatible with the next major version of Scala.js.
+An unannotated declaration extending <code>js.Any</code> will by default be Scala.js-defined (see next section) in the next version.</p>
+
+<h2 id="improvements">Improvements</h2>
+
+<h3 id="scalajs-defined-js-classes-objects-and-traits">Scala.js-defined JS classes, objects, and traits</h3>
+
+<p>Scala.js 0.6.5 introduces a major language improvement: the ability to define, in Scala.js, a subclass of a native JavaScript class (or implementing a JavaScript trait/interface).
+We call such classes <em>Scala.js-defined JS classes</em>, because they are effectively JavaScript classes, but written in Scala.js; whereas classes that you typically write are Scala classes, not JavaScript classes.</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+<span class="k">import</span> <span class="nn">scala.scalajs.js.annotation._</span>
+
+<span class="nd">@ScalaJSDefined</span>
+<span class="k">class</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">bar</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="o">}</span></code></pre></div>
+
+<p>Note that the body of <code>bar()</code> is implemented in Scala.js, instead of being <code>= js.native</code>.</p>
+
+<p>A Scala.js-defined JS class is not a facade type to a JavaScript library.
+Instead, it is fully implemented in Scala.js.
+Unlike Scala classes, which require exports, all members of Scala.js-defined JS classes are automatically visible from JavaScript code.
+The class itself is not automatically visible; if you want it to be, you can <code>@JSExport</code> it.
+You can also use <a href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.js.package@constructorOf[T&lt;:scala.scalajs.js.Any]:scala.scalajs.js.Dynamic"><code>js.constructorOf[C]</code></a> to obtain the JS constructor function and pass it to a JavaScript library.</p>
+
+<p>Scala.js-defined JS classes have JavaScript semantics instead of Scala semantics.
+You can read more about that in <a href="/doc/sjs-defined-js-classes.html">the documentation</a>.
+Most importantly, that means overloading dispatch is done at run-time instead of compile-time.</p>
+
+<p>You can also declare Scala.js-defined JS <code>object</code>s as singletons, just like <code>object</code>s in Scala.</p>
+
+<h4 id="traits">Traits</h4>
+
+<p>Scala.js-defined JS traits are restricted: they cannot declare any concrete term member, i.e., all their <code>val</code>s, <code>var</code>s and <code>def</code>s must be abstract.</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+<span class="k">import</span> <span class="nn">scala.scalajs.js.annotation._</span>
+
+<span class="nd">@ScalaJSDefined</span>
+<span class="k">trait</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span>     <span class="c1">// ok</span>
+  <span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1">// illegal</span>
+
+  <span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span>         <span class="c1">// ok</span>
+  <span class="k">def</span> <span class="n">bar</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">// illegal</span>
+<span class="o">}</span></code></pre></div>
+
+<p>Scala.js-defined JS classes, objects and traits cannot directly extend native JS traits (i.e., non-Scala.js-defined JS traits).</p>
+
+<h4 id="anonymous-classes-and-object-literals">Anonymous classes and object literals</h4>
+
+<p>Anonymous classes extending a JS class and/or trait are automatically Scala.js-defined.
+Combined with Scala.js-defined JS traits, this is very useful to write typechecked object literals with Scala syntax:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+<span class="k">import</span> <span class="nn">scala.scalajs.js.annotation._</span>
+
+<span class="nd">@ScalaJSDefined</span>
+<span class="k">trait</span> <span class="nc">Position</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span>
+  <span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span>
+<span class="o">}</span>
+
+<span class="k">val</span> <span class="n">obj</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Position</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">5</span>
+  <span class="k">val</span> <span class="n">y</span> <span class="k">=</span> <span class="mi">10</span>
+<span class="o">}</span></code></pre></div>
+
+<p>In previous versions, <code>obj</code> would have been written with a non-typechecked <code>js.Dynamic.literal</code>:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="k">val</span> <span class="n">obj</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Dynamic</span><span class="o">.</span><span class="n">literal</span><span class="o">(</span>
+    <span class="n">x</span> <span class="k">=</span> <span class="mi">5</span><span class="o">,</span>
+    <span class="n">y</span> <span class="k">=</span> <span class="mi">10</span>
+<span class="o">).</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">Position</span><span class="o">]</span></code></pre></div>
+
+<h3 id="pseudo-union-type-a--b">Pseudo-union type <code>A | B</code></h3>
+
+<p>Many JavaScript libraries have APIs with parameters or values that accept different types of values.
+To be able to accurately type those libraries, Scala.js 0.6.5 features an unboxed, facade-friendly pseudo-union type <a href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.js.$bar"><code>A | B</code></a>.
+Here are a couple of examples of what it can do:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js.</span><span class="o">|</span>
+
+<span class="k">val</span> <span class="n">a</span><span class="k">:</span> <span class="kt">Int</span> <span class="kt">|</span> <span class="kt">String</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">val</span> <span class="n">b</span><span class="k">:</span> <span class="kt">Int</span> <span class="kt">|</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span>
+<span class="k">val</span> <span class="n">c</span><span class="k">:</span> <span class="kt">String</span> <span class="kt">|</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">a</span>
+<span class="k">val</span> <span class="n">d</span><span class="k">:</span> <span class="kt">Int</span> <span class="kt">|</span> <span class="kt">Boolean</span> <span class="kt">|</span> <span class="kt">String</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="k">val</span> <span class="n">e</span><span class="k">:</span> <span class="kt">Int</span> <span class="kt">|</span> <span class="kt">Boolean</span> <span class="kt">|</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">c</span>
+<span class="k">val</span> <span class="n">f</span><span class="k">:</span> <span class="kt">AnyVal</span> <span class="kt">|</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">e</span>
+<span class="k">val</span> <span class="n">g</span><span class="k">:</span> <span class="kt">Any</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">merge</span>
+
+<span class="c1">// the following examples do not compile</span>
+<span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="kt">|</span> <span class="kt">String</span> <span class="o">=</span> <span class="mf">3.4</span>
+<span class="k">val</span> <span class="n">y</span><span class="k">:</span> <span class="kt">Int</span> <span class="kt">|</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">d</span></code></pre></div>
+
+<p>See <a href="https://github.com/scala-js/scala-js/tree/v0.6.5/test-suite/src/test/scala/org/scalajs/testsuite/library/UnionTypeTest.scala">the complete test cases</a> to get the complete picture.</p>
+
+<h3 id="jsusexast-statically-typecheck-your-exports"><code>js.use(x).as[T]</code>: statically typecheck your exports</h3>
+
+<p>Sometimes, you <code>@JSExport</code> members of your Scala classes so that they comply with some JavaScript interface, for example to pass it to a JavaScript library expecting some fields and methods on your object.
+In 0.6.4 and before, you needed to take care yourself of exporting everything that was required, and then probably do a hard-cast:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js</span>
+
+<span class="k">trait</span> <span class="nc">SomeInterface</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+  <span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">SomeLibrary</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">doSomething</span><span class="o">(</span><span class="n">obj</span><span class="k">:</span> <span class="kt">SomeInterface</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span>
+
+<span class="k">class</span> <span class="nc">InterfaceImpl</span> <span class="o">{</span>
+  <span class="nd">@JSExport</span> <span class="k">val</span> <span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">4</span>
+  <span class="nd">@JSExport</span> <span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="o">}</span>
+
+<span class="nc">SomeLibrary</span><span class="o">.</span><span class="n">doSomething</span><span class="o">(</span><span class="k">new</span> <span class="nc">InterfaceImpl</span><span class="o">().</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">SomeInterface</span><span class="o">])</span></code></pre></div>
+
+<p>If you mess up your exports, you will have trouble at run-time.</p>
+
+<p>In 0.6.5, you can write the following instead:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">SomeLibrary</span><span class="o">.</span><span class="n">doSomething</span><span class="o">(</span><span class="n">js</span><span class="o">.</span><span class="n">use</span><span class="o">(</span><span class="k">new</span> <span class="nc">InterfaceImpl</span><span class="o">()).</span><span class="n">as</span><span class="o">[</span><span class="kt">SomeInterface</span><span class="o">])</span></code></pre></div>
+
+<p>Unlike <code>x.asInstanceOf[T]</code>, the <code>js.use(x).as[T]</code> idiom <em>statically typechecks</em> that you have all the exports required to comply to the JavaScript interface.</p>
+
+<h3 id="java-library-additions">Java library additions</h3>
+
+<ul>
+  <li>The complete set of <code>Character.isXYZ</code> methods (to test Unicode properties of characters)</li>
+  <li><code>java.lang.Math.rint(Double)</code></li>
+  <li><code>java.util.concurrent.ThreadLocalRandom</code></li>
+  <li><code>java.util.TreeSet</code> and <code>java.util.NavigableSet</code></li>
+</ul>
+
+<h2 id="bug-fixes">Bug fixes</h2>
+
+<p>Among others, the following bugs have been fixed:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1818">#1818</a> Performance bottleneck in one of the steps of the linker (fast- and fullOptJS)</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1759">#1759</a> <code>new Int8Array(n).toArray</code> throws <code>TypeError</code> (second run)</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1790">#1790</a> Compiler crash with a dash in a parameter of a lambda</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1799">#1799</a> <code>java.lang.Iterable</code> is incorrectly in <code>java.util</code></li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1819">#1819</a> <code>Double</code> doesn’t match <code>Float</code> even with non-strict floats</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1836">#1836</a> <code>BigInteger.ONE.gcd(x)</code> loops forever</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1857">#1857</a> <code>j.l.Math.{abs,min,max}</code> do not handle correctly <code>-0.0</code></li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1777">#1777</a> Bug with <code>java.util.LinkedList.size</code> when larger than <code>Int.MaxValue</code>.</li>
+</ul>
+
+<p>You can find the full list <a href="https://github.com/scala-js/scala-js/issues?q=is%3Aissue+milestone%3Av0.6.5+is%3Aclosed">on GitHub</a>.</p>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/announcing-scalajs-0.6.4"
+                                            title="Announcing Scala.js 0.6.4">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next disabled"><a>Next &rarr;</a>
+                        
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-twitter-square"></i>
+                <i class="fa fa-google-plus-square"></i>
+                <i class="fa fa-linkedin-square"></i>
+            </div>
+        </div>
+        <! --/row -->
+    </div>
+    <! --/container -->
+</div><! --/footerwrap -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+<script>
+hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>

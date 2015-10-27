@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.5.0</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>News</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/announcing-scalajs-0.5.0"><h3 class="ctitle">Announcing Scala.js 0.5.0</h3></a>
+
+            <p>
+                <span class="small">Jun 13, 2014.</span>
+            </p>
+            <p>We are very excited to announce the final release of Scala.js 0.5.0!
+This version is a major milestone towards the maturity of Scala.js, probably
+the most important release since its very first prototype.</p>
+
+<p>Scala.js is a compiler from Scala to JavaScript. It allows you to write your
+entire web application in Scala and simply compile to JavaScript!
+<!--more--></p>
+
+<ul>
+  <li><a href="/doc/tutorial.html">Tutorial</a>,
+for newcomers to Scala.js</li>
+  <li><a href="./#upgrading">Upgrading from Scala.js 0.4.x</a></li>
+  <li>Try Scala.js right in your browser with
+<a href="http://www.scala-js-fiddle.com/">Scala.jsFiddle</a>
+(currently using Scala.js 0.4.4)</li>
+</ul>
+
+<h2 id="new-features-in-the-05x-series">New features in the 0.5.x series</h2>
+
+<p>Scala.js 0.5.0 introduces new features, improvements and bug fixes in many
+areas, ranging from compiler correctness to usability to emitted code size and
+speed.</p>
+
+<h3 id="language-changes">Language changes</h3>
+
+<ul>
+  <li>Scala semantics for integer and character types (i.e., wrapping semantics)
+    <ul>
+      <li><code>Int</code>, <code>Byte</code>, <code>Short</code>, and <code>Char</code> now behave the same way as on the
+JVM with respect to wrapping around their range, e.g., <code>Int</code> is truly
+a signed 32-bit integer.</li>
+      <li>Exception: division by 0 is still unspecified.</li>
+      <li><code>Long</code> continues to behave as a proper signed 64-bit integer, as it
+did for a long time</li>
+      <li><code>Float</code> still behaves just like <code>Double</code>, as it always did.</li>
+      <li><a href="/doc/semantics.html">Full details</a></li>
+    </ul>
+  </li>
+  <li>Improved interoperability with JavaScript
+    <ul>
+      <li>Normal Scala primitive types can be used instead of <code>js.Number</code>,
+<code>js.Boolean</code>, <code>js.String</code> and <code>js.Undefined</code> for interoperability with
+JavaScript, because they are guaranteed to always be represented as
+primitive JavaScript values (<code>Char</code> and <code>Long</code> are still opaque to
+JavaScript, because they do not have a corresponding type in JavaScript).
+See <a href="/doc/js-interoperability.html#type-correspondance">the documentation on type correspondance</a>
+for more details.</li>
+      <li>Introduced the type <code>js.UndefOr[+A]</code>
+(<a href="http://www.scala-js.org/api/scalajs-library/0.5.0/#scala.scalajs.js.UndefOr">API</a>),
+which represents a value of type <code>A</code> <em>or</em> <code>undefined</code>, and offers an
+<code>Option</code>-like interface where <code>undefined</code> takes the role of <code>None</code>.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="improvements-to-the-generated-code">Improvements to the generated code</h3>
+
+<ul>
+  <li>Smaller. For a non-trivial application, we have
+    <ul>
+      <li>~1.3 MB for fast-optimized code (for iterative development)</li>
+      <li>~180 KB for full-optimized code (for production)</li>
+    </ul>
+  </li>
+  <li>Faster.
+    <ul>
+      <li>Values of primitive types, excluding <code>Char</code>, are not boxed anymore when
+assigned to <code>Any</code> or generic types</li>
+      <li>We don’t have precise benchmarks, but we received reports of noticeable
+improvements.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="sbt-plugin-changes">sbt plugin changes</h3>
+
+<ul>
+  <li><code>preoptimizeJS</code> and <code>optimizeJS</code> have been renamed <code>fastOptJS</code> and
+<code>fullOptJS</code>, respectively, to better represent their intent.
+<code>fastOptJS</code> is <em>really</em> fast (less than 1/2 second in addition to the
+normal <code>compile</code> of scalac), and is now the recommended default for
+iterative development.</li>
+  <li>Running and testing with <a href="http://nodejs.org/">Node.js</a> and
+<a href="http://phantomjs.org/">PhantomJS</a>
+    <ul>
+      <li>With <code>fastOptStage::run</code> or <code>fastOptStage::test</code>, run your code using
+a native-speed interpreter on the result of fast-optimization.</li>
+      <li>By default, Node.js is used, unless the setting <code>requiresDOM := true</code>
+is set, in which case PhantomJS is used</li>
+      <li>Replace <code>fastOptStage</code> by <code>fullOptStage</code> to execute the full-optimized
+version of your code.</li>
+      <li>Node.js and/or PhantomJS must be installed separately for this to work.
+The basic <code>run</code> and <code>test</code> still use Rhino and work out-of-the-box.</li>
+    </ul>
+  </li>
+  <li>Auto-discovery of objects extending the <code>js.JSApp</code> trait
+(<a href="http://www.scala-js.org/api/scalajs-library/0.5.0/#scala.scalajs.js.JSApp">API</a>)
+    <ul>
+      <li>Can be run directly with the <code>run</code> task</li>
+      <li>With <code>persistLauncher := true</code>, sbt will emit a tiny JavaScript entry
+point that calls the <code>main</code> method.</li>
+      <li>To support this the best we could, we have dropped auto-discovery of
+objects defining a <code>def main(args: Array[String])</code> method.</li>
+      <li><a href="/doc/tutorial.html#optimizing">More information in the tutorial</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="binary-compatibility-and-dependency-management">Binary compatibility and dependency management</h3>
+
+<ul>
+  <li>Backward binary compatibility across minor releases
+    <ul>
+      <li>Similarly to Scala, except it is only <em>backward</em>.</li>
+      <li>For example, libraries compiled with Scala.js 0.5.0 will be usable with
+Scala.js 0.5.1, but not (necessarily) the other way around.</li>
+      <li>The sbt plugin encodes the Scala.js binary version in artifact names
+in addition to the Scala binary version.
+For example, the artifacts for a library “foo” compiled with
+Scala 2.11.1 and Scala.js 0.5.0 will be named <code>foo_sjs0.5_2.11</code>.</li>
+      <li>To depend on the doubly-cross compiled version of a Scala.js library,
+use <code>%%%</code> instead of <code>%%</code> in your <code>libraryDependencies</code>. For example,
+<code>"org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6"</code></li>
+    </ul>
+  </li>
+  <li>Managing your dependencies on JavaScript libraries
+    <ul>
+      <li>In addition to depending on other Scala.js libraries, Scala.js now
+supports depending on JavaScript libraries through
+<a href="http://www.webjars.org/">WebJars</a>, that will be resolved automatically.</li>
+      <li>You can ask the sbt plugin to package all your JavaScript dependencies
+in a single <code>.js</code> file if you so wish, but this is not mandatory.</li>
+      <li>See the <a href="/doc/tutorial.html#using-jquery">tutorial</a> for more information.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="command-line-interface-cli">Command line interface (CLI)</h3>
+
+<ul>
+  <li>Following a request by some of our users, we added a
+<a href="/downloads.html">stand-alone distribution</a> that allows to
+use Scala.js without sbt (but with Scala).
+    <ul>
+      <li><code>scalajsc</code> is a front-end to <code>scalac</code> setting up correctly the Scala.js
+compiler plugin and library on the classpath</li>
+      <li><code>scalajsld</code> performs linking and optimizations (the equivalent of
+<code>fastOptJS</code> and <code>fullOptJS</code> in sbt)</li>
+      <li><code>scalajsp</code> prints the content of <code>.sjsir</code> files (the intermediate files
+produced by <code>scalajsc</code> and consumed by <code>scalajsld</code>) in a human-readable
+form.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="a-nameupgradinga-upgrading-from-scalajs-04x"><a name="upgrading"></a> Upgrading from Scala.js 0.4.x</h2>
+
+<p>Source code written for Scala.js 0.4.x should mostly compile without change
+for Scala.js 0.5.0. Due to the ability to type JavaScript APIs more precisely,
+in particular using <code>scala.Int</code>s and <code>js.UndefOr</code>, it is possible that code
+interacting with, for example, the statically typed DOM API will need some
+minor changes.</p>
+
+<p>However, build files and HTML files surrounding Scala.js source code will need
+important adaptations. The easiest is to reproduce the changes of
+<a href="https://github.com/sjrd/scala-js-example-app/commit/45de74a6a029eb9d11579f667a622a8393a7b143">this commit</a>
+of the bootstrapping skeleton.</p>
+
+<p>You may also wish to take advantage of the new <code>persistLauncher</code> setting to
+automatically generate a launcher script based on the discovered <code>JSApp</code>, in
+which case you can also apply the changes of
+<a href="https://github.com/sjrd/scala-js-example-app/commit/b4cf28f7e6d5447fde248369a6f62d718c3f8aca">this other commit</a>.</p>
+
+<h2 id="known-issues">Known issues</h2>
+
+<p>This release suffers from a few known issues, which we decided to postpone to
+a later (binary-compatible) release. The most important ones are:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/727">#727</a> -
+Source mapping does not work with our Rhino interpreter (with <code>run</code> and
+<code>test</code>)
+    <ul>
+      <li>Prefer <code>fastOptStage::run</code> and <code>fastOptStage::test</code> to run with Node.js:
+it is faster and you will get stack traces from your <code>.scala</code> source
+files.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/608">#608</a> -
+Ordering issues with the test reporter, which can mix results of tests
+ran in parallel.
+    <ul>
+      <li>When a test fails, consider using <code>fastOptStage::testQuick</code> or
+<code>fastOptStage::testOnly</code> to rerun only the failing test, which will
+mitigate this issue.</li>
+    </ul>
+  </li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/706">#706</a> -
+JS libraries that act “too” smartly in Node.js.
+    <ul>
+      <li>Work around: force usage of PhantomJS instead of Node.js, on which this
+issue does not seem to manifest.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>You can find the complete list of known issues (and report new issues)
+<a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous disabled"><a>&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/announcing-scalajs-0.5.1"
+                                        title="Announcing Scala.js 0.5.1">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-twitter-square"></i>
+                <i class="fa fa-google-plus-square"></i>
+                <i class="fa fa-linkedin-square"></i>
+            </div>
+        </div>
+        <! --/row -->
+    </div>
+    <! --/container -->
+</div><! --/footerwrap -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+<script>
+hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>

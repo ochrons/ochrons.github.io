@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
 
-    <title>Scala.js - Blog</title>
+    <title>Scala.js - Announcing Scala.js 0.6.2</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -41,7 +41,7 @@
         <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
         <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
         <li ><a href="/sjs2/community">COMMUNITY</a></li>
-        <li ><a href="/sjs2/news">NEWS</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -51,73 +51,78 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>Blog</h3>
+            <h3>News</h3>
         </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /blue -->
 
 <div class="container mtb">
     <div class="row">
+        <! -- SINGLE POST -->
         <div class="col-md-12">
-            <div class="container mtb">
-    <div class="row">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/announcing-scalajs-0.6.2"><h3 class="ctitle">Announcing Scala.js 0.6.2</h3></a>
 
-        <! -- BLOG POSTS LIST -->
-        <div class="col-lg-8">
+            <p>
+                <span class="small">Mar 16, 2015.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.6.2!</p>
 
-            
+<p>This release mostly contains bug fixes, among which the lack of support of <code>java.net.URI</code> for Unicode characters.
+It also brings code size reduction and performance improvements to fastOpt code (although nothing changes in fullOpt).</p>
 
-        </div><! --/col-lg-8 -->
+<p>We are also happy to share that Scala.js is now part of <a href="https://github.com/scala/community-builds">Scala’s community build</a>.
+<!--more--></p>
 
-        <div class="col-lg-4">
-   <!--  <h4>Search</h4>
-    <div class="hline"></div>
-        <p>
-            <br/>
-            <input type="text" class="form-control" placeholder="Search something">
-        </p>
-    <div class="spacing"></div> -->
-    <h4>Subscribe</h4>
-    <div class="hline"></div>
-        <p>
-            <p class="rss-subscribe">Subscribe to this blog <a href="/sjs2/feed.xml">via RSS</a>.</p>
-        </p>
-    <div class="spacing"></div>
-    <h4>Categories</h4>
-    <div class="hline"></div>
-    
-        <p>
-            <a href="/sjs2/category/#news"><i class="fa fa-angle-right"></i> News</a>
-            <span class="badge badge-theme pull-right">18</span>
-        </p>
-    
+<h2 id="getting-started">Getting started</h2>
 
-    <div class="spacing"></div>
+<p>If you are new to Scala.js, head over to
+<a href="/doc/tutorial.html">the tutorial</a>.</p>
 
-    <h4>Recent Posts</h4>
-    <div class="hline"></div>
-        <ul class="popular-posts">
-             
-        </ul>
+<h2 id="release-notes">Release notes</h2>
 
-    <div class="spacing"></div>
+<p>For changes in the 0.6.x series compared to 0.5.x, read <a href="/news/2015/02/05/announcing-scalajs-0.6.0/">the announcement of 0.6.0</a>.</p>
 
-    <h4>Popular Tags</h4>
-    <div class="hline"></div>
-    <p>
-    
-            <a class="btn btn-theme" href="/sjs2/category/#news" role="button">News (18)</a>	         
-        
-    </p>
-</div>
+<p>As a minor release, 0.6.2 is backward source and binary compatible with previous releases in the 0.6.x series.
+Libraries compiled with earlier versions can be used with 0.6.2 without change.</p>
 
-    </div><! --/row -->
-</div><! --/container -->
+<p>We would like to remind you that libraries compiled with 0.6.0 will suffer from <a href="https://github.com/scala-js/scala-js/issues/1506">bug #1506</a>, which will cause <code>fastOptJS</code> in dependent projects to perform more work than necessary.
+It is therefore recommended for library authors to upgrade to Scala.js &gt;= 0.6.1 and publish new versions of their libraries, if they haven’t done so yet.
+Scala.js 0.6.0 can read binaries compiled with 0.6.1 and 0.6.2, so you need not be afraid to force an upgrade of all the users of your libraries.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="improvements">Improvements</h2>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/pull/1535">A better translation to JavaScript</a> reduces the size of the <code>-fastopt.js</code> files by a few percent, and speeds up their execution.</li>
+</ul>
+
+<h2 id="bug-fixes">Bug fixes</h2>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1520">#1520</a> <code>java.net.URI</code> does not support Unicode</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1521">#1521</a> <code>new java.net.URI("#foo").getSchemeSpecificPart()</code> should return the empty String</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1532">#1532</a> <code>TypedArrayByteBuffer.asDoubleBuffer</code> results in a “RangeError: Invalid typed array length”</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1546">#1546</a> Error “Node.js isn’t connected” when running on Travis (tentative fix)</li>
+</ul>
+
             <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/announcing-scalajs-0.6.1"
+                                            title="Announcing Scala.js 0.6.1">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/announcing-scalajs-0.6.3"
+                                        title="Announcing Scala.js 0.6.3">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
         </div>
     </div>
 </div>
-
 </div>
 </div>
 <div id="footerwrap">

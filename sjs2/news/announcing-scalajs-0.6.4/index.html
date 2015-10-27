@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.6.4</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>News</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/announcing-scalajs-0.6.4"><h3 class="ctitle">Announcing Scala.js 0.6.4</h3></a>
+
+            <p>
+                <span class="small">Jul 3, 2015.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.6.4!</p>
+
+<p>This release brings support for Scala 2.11.7 and 2.12.0-M1, as well as a significant part of the Java collections library in <code>java.util</code>, thanks to <a href="https://github.com/andreaTP">@andreaTP</a> and <a href="https://github.com/nicolasstucki">@nicolasstucki</a>.
+It also fixes numerous bugs.
+<!--more--></p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>If you are new to Scala.js, head over to
+<a href="/doc/tutorial.html">the tutorial</a>.</p>
+
+<h2 id="release-notes">Release notes</h2>
+
+<p>For changes in the 0.6.x series compared to 0.5.x, read <a href="/news/2015/02/05/announcing-scalajs-0.6.0/">the announcement of 0.6.0</a>.</p>
+
+<p>As a minor release, 0.6.4 is backward source and binary compatible with previous releases in the 0.6.x series.
+Libraries compiled with earlier versions can be used with 0.6.4 without change.
+However, it is not forward compatible: libraries compiled with 0.6.4 cannot be used by projects using 0.6.{0-3}.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="potential-breaking-changes">Potential breaking changes</h2>
+
+<p>The bug fix for <a href="https://github.com/scala-js/scala-js/issues/1705">#1705</a> in this release is potentially a breaking change that might affect your code silently.
+If you had something like this in a facade type:</p>
+
+<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">object</span> <span class="nc">JS</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="nd">@JSName</span><span class="o">(</span><span class="s">&quot;b_=&quot;</span><span class="o">)</span>
+  <span class="k">def</span> <span class="n">a_=</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span>
+
+<span class="nc">JS</span><span class="o">.</span><span class="n">a</span> <span class="k">=</span> <span class="mi">1</span></code></pre></div>
+
+<p>the last line would previously (erroneously) translate to</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">JS</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span></code></pre></div>
+
+<p>This releases fixes the compiler to instead translate to</p>
+
+<div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="nx">JS</span><span class="p">[</span><span class="s2">&quot;b_=&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span></code></pre></div>
+
+<p>If you relied on the former code to be emitted, you should change the <code>@JSName</code> annotation as <code>@JSName("b")</code>.</p>
+
+<p>There is no deprecation period because there was no way to, at the same time, warn against problems, and still allow correct new code to be warning-free, unfortunately.</p>
+
+<h2 id="improvements">Improvements</h2>
+
+<h3 id="java-collections-api">Java Collections API</h3>
+
+<p>Some Scala libraries use the collections of Java in some cases.
+To help port these libraries to Scala.js, a number of collection types have been ported.
+At the moment, the following data structures are supported:</p>
+
+<ul>
+  <li><code>List</code>: <code>ArrayList</code>, <code>LinkedList</code>, <code>CopyOnWriteArrayList</code></li>
+  <li><code>Set</code>: <code>HashSet</code>, <code>LinkedHashSet</code>, <code>ConcurrentSkipListSet</code></li>
+  <li><code>Map</code>: <code>HashMap</code>, <code>LinkedHashMap</code>, <code>ConcurrentHashMap</code></li>
+  <li><code>Queue</code>: <code>LinkedList</code>, <code>ConcurrentLinkedQueue</code></li>
+</ul>
+
+<p>as well as the helper classes <code>Arrays</code> and <code>Collections</code>.</p>
+
+<h3 id="better-and-earlier-diagnostics-for-illegal-jsexports-and-facade-types">Better and earlier diagnostics for illegal <code>@JSExport</code>s and facade types</h3>
+
+<p>There were a number of illegal usages of <code>@JSExport</code> and facade types that were not detected by the compiler.
+Using those would previously result in crashes of the linker or production of completely wrong .js code.
+See tickets <a href="https://github.com/scala-js/scala-js/issues/1647">#1647</a>, <a href="https://github.com/scala-js/scala-js/issues/1664">#1664</a>, <a href="https://github.com/scala-js/scala-js/issues/1704">#1704</a>, <a href="https://github.com/scala-js/scala-js/issues/1706">#1706</a>, <a href="https://github.com/scala-js/scala-js/issues/1707">#1707</a> and <a href="https://github.com/scala-js/scala-js/issues/1717">#1717</a> for details.</p>
+
+<h3 id="running-with-rhino-also-reports-linking-errors">Running with Rhino also reports linking errors</h3>
+
+<p>Until 0.6.3, running with Rhino (the default) would not truly link, and therefore would not report linking errors.
+This caused confusions in several occasions, because code that appeared to work on Rhino refused to link and therefore <code>fastOptJS</code> would not work.
+As of 0.6.4, even running with Rhino will report linking errors.</p>
+
+<h2 id="bug-fixes">Bug fixes</h2>
+
+<p>Among others, the following bugs have been fixed:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1646">#1646</a> <code>Char#isUpper</code> behavior diverges between Scala.js/Scala-JVM</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1664">#1664</a> <code>@JSName(variable)</code> annotation does not fail on objects and classes</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1671">#1671</a> <code>Double.toInt</code> and <code>Float.toInt</code> are broken</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1718">#1718</a> <code>Pattern.compile</code> doesn’t validate regex</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1722">#1722</a> Rhino crash with Scalatest</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1733">#1733</a> <code>@JSName</code> does not work for <code>val</code>s and <code>var</code>s</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1734">#1734</a> Charset decoding fails with read-only byte buffers</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1743">#1743</a> <code>js.Dynamic.literal.applyDynamic("apply")(map.toSeq: _*)</code> causes optimizer to crash</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1748">#1748</a> Source root not found for shared project error (<code>CrossProject</code> friendlier to Scoverage)</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1759">#1759</a> <code>new Int8Array(n).toArray</code> throws TypeError</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1764">#1764</a> <code>BigInteger.modInverse</code> always throws an exception</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1774">#1774</a> <code>ClassCastException</code>: <code>org.mozilla.javascript.UniqueTag</code> running Scala.js project</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1781">#1781</a> When the optimizer crashes, it is left in an inconsistent state</li>
+</ul>
+
+<p>You can find the full list <a href="https://github.com/scala-js/scala-js/issues?q=is%3Aissue+milestone%3Av0.6.4+is%3Aclosed">on GitHub</a>.</p>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/announcing-scalajs-0.6.3"
+                                            title="Announcing Scala.js 0.6.3">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/announcing-scalajs-0.6.5"
+                                        title="Announcing Scala.js 0.6.5">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-facebook-square"></i>
+                <i class="fa fa-twitter-square"></i>
+                <i class="fa fa-google-plus-square"></i>
+                <i class="fa fa-linkedin-square"></i>
+            </div>
+        </div>
+        <! --/row -->
+    </div>
+    <! --/container -->
+</div><! --/footerwrap -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+<script>
+hljs.initHighlightingOnLoad();
+</script>
+
+</body>
+</html>
