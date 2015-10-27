@@ -70,10 +70,6 @@
       url: https://github.com/jokade/scalajs-angulate
       desc: another binding to AngularJS with enhancements
       dep: '"biz.enef" %%% "scalajs-angulate" % "0.2.2"'
-    - name: Widok
-      url: https://widok.github.io/
-      desc: Reactive web framework for the JVM and Scala.js
-      dep: '"io.github.widok" %%% "widok" % "0.2.2"'
     - name: scalajs-vue
       url: https://github.com/fancellu/scalajs-vue
       desc: Scala.js bindings for [Vue.js](http://vuejs.org/) and an example application

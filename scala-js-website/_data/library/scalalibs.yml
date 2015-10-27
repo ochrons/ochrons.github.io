@@ -24,12 +24,16 @@
       url: https://github.com/unicredit/akka.js
       desc: Toolkit and runtime for building concurrent, distributed applications
       dep: ''
-- topic: HTML/DOM libraries
+- topic: Web libraries/frameworks
   libraries:
     - name: Scalatags
       url: https://github.com/lihaoyi/scalatags
       desc: HTML templating library/DSL that works on both Scala/JVM and Scala.js
       dep: '"com.lihaoyi" %% "scalatags" % "0.5.3"'
+    - name: Widok
+      url: https://widok.github.io/
+      desc: Reactive web framework for the JVM and Scala.js
+      dep: '"io.github.widok" %%% "widok" % "0.2.2"'
 - topic: Serialization/pickling libraries
   libraries:
     - name: uPickle
