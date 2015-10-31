@@ -12,7 +12,8 @@ relevant SBT dependency definition.
 
 {% include library.html lib=site.data.library.jsfacades %}
 
+-------
 
-
-
-
+<small markdown="1">Additions and corrections to this section may be reported through
+[GitHub issues](https://github.com/scala-js/scala-js-website/issues). Please include Name, Url, Description and
+Dependency</small>

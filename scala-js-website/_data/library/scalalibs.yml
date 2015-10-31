@@ -20,7 +20,7 @@
       url: https://github.com/japgolly/Monocle
       desc: Optics library strongly inspired by Haskell [Lens](https://github.com/ekmett/lens).
       dep: '"com.github.japgolly.fork.monocle" %%% "monocle-core" % "1.1.1"'
-    - name: Akka
+    - name: Akka (Scala.js port)
       url: https://github.com/unicredit/akka.js
       desc: Toolkit and runtime for building concurrent, distributed applications
       dep: ''
@@ -29,25 +29,37 @@
     - name: Scalatags
       url: https://github.com/lihaoyi/scalatags
       desc: HTML templating library/DSL that works on both Scala/JVM and Scala.js
-      dep: '"com.lihaoyi" %% "scalatags" % "0.5.3"'
+      dep: '"com.lihaoyi" %%% "scalatags" % "0.5.3"'
     - name: Widok
       url: https://widok.github.io/
       desc: Reactive web framework for the JVM and Scala.js
       dep: '"io.github.widok" %%% "widok" % "0.2.2"'
+    - name: ScalaJS Binding
+      url: https://github.com/antonkulaga/scala-js-binding
+      desc: Scala.js HYML binding library
+      dep: '"org.denigma" %%% "binding" % "0.8.0-M6"'
 - topic: Serialization/pickling libraries
   libraries:
     - name: uPickle
       url: https://github.com/lihaoyi/upickle
       desc: Statically-typed pickling (via typeclasses/macros) for both Scala and Scala.js
-      dep: '"com.lihaoyi" %% "upickle" % "0.3.6"'
-    - name: Prickle
-      url: https://github.com/benhutchison/prickle
-      desc: Statically-typed pickling library with support for pickling object graphs containing shared objects and cycles
-      dep: '"com.github.benhutchison" %%% "prickle" % "1.1.9"'
+      dep: '"com.lihaoyi" %%% "upickle" % "0.3.6"'
     - name: BooPickle
       url: https://github.com/ochrons/boopickle
       desc: Highly efficient binary serialization for both Scala and Scala.js
       dep: '"me.chrons" %%% "boopickle" % "1.1.0"'
+    - name: Prickle
+      url: https://github.com/benhutchison/prickle
+      desc: Statically-typed pickling library with support for pickling object graphs containing shared objects and cycles
+      dep: '"com.github.benhutchison" %%% "prickle" % "1.1.9"'
+    - name: Pushka
+      url: https://github.com/fomkin/pushka
+      desc: Pure Scala pickler with annotations
+      dep: '"com.github.fomkin" %%% "pushka-json" % "0.3.0"'
+    - name: Circe
+      url: https://github.com/travisbrown/circe
+      desc: Yet another JSON library for Scala (built with Cats and Shapeless)
+      dep: '"io.circe" %%% "circe-core" % "0.2.0", "io.circe" %%% "circe-parse" % "0.2.0", "io.circe" %%% "circe-generic" % "0.2.0"'
     - name: Scala.js Pickling
       url: https://github.com/scala-js/scala-js-pickling
       desc: Pickling library based on explicit registration of picklers
