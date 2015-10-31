@@ -36,7 +36,7 @@
       dep: '"io.github.widok" %%% "widok" % "0.2.2"'
     - name: ScalaJS Binding
       url: https://github.com/antonkulaga/scala-js-binding
-      desc: Scala.js HYML binding library
+      desc: Scala.js HTML binding library
       dep: '"org.denigma" %%% "binding" % "0.8.0-M6"'
 - topic: Serialization/pickling libraries
   libraries:

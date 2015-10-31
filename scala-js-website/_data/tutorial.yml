@@ -1,8 +1,8 @@
 - text: Tutorials
   url: /tutorial/
-- text: Baby steps
-  url: /tutorial/babysteps/
-- text: First application
-  url: /tutorial/firstapp/
-- text: Getting a boost
-  url: /tutorial/boost/
+- text: Basic tutorial
+  url: /tutorial/basic/
+# - text: First application
+#   url: /tutorial/firstapp/
+# - text: Getting a boost
+#   url: /tutorial/boost/

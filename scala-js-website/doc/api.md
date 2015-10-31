@@ -13,7 +13,6 @@ Generated Scaladocs are available here:
 
 * [scalajs-library]({{ site.production_url }}/api/scalajs-library/latest/#scala.scalajs.js.package)
 * [sbt-scalajs]({{ site.production_url }}/api/sbt-scalajs/latest/#org.scalajs.sbtplugin.package)
-
 * [scalajs-test-interface]({{ site.production_url }}/api/scalajs-test-interface/latest/)
 * [scalajs-stubs]({{ site.production_url }}/api/scalajs-stubs/latest/)
 * [scalajs-ir]({{ site.production_url }}/api/scalajs-ir/latest/#org.scalajs.core.ir.package)

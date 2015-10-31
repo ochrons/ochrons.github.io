@@ -26,11 +26,11 @@ and tutorial projects manually.
 
 # Hello World in Scala.js
 
-Go to your command line shell and switch to the directory where you keep your development projects. Run `activator` (which
-should be on your `PATH` now) with the following command line to create a new Scala.js project from a template.
+Go to your command line shell and switch to the directory where you keep your development projects. Run `activator`
+(which should be on your `PATH` now) with the following command line to create a new Scala.js project from a template.
 
 {% highlight bash %}
-activator new hello_scalajs scalajs_hello_world
+activator new hello-scalajs scalajs_hello_world
 {% endhighlight %}
 
 Change into the project directory and run the application.
@@ -40,8 +40,8 @@ cd hello_scalajs
 activator run
 {% endhighlight %}
 
-Note that this will take a while on the first time as `activator` downloads all required packages including the Scala compiler.
-The next time you run the application, it will start *much* faster!
+Note that this will take a while on the first time as `activator` downloads all required packages including the Scala
+compiler. The next time you run the application, it will start *much* faster!
 
 Once all packages have been download and the project compiled, you can navigate in your browser to <http://localhost:12345>
 to access the application. You should now see a welcome screen in your browser
@@ -50,5 +50,5 @@ to access the application. You should now see a welcome screen in your browser
 
 ## Making edits
 
-While the application is running, you can edit the source code and it will be automatically recompiled and refreshed in your
-browser.
+While the application is running, you can edit the source code and it will be automatically recompiled and refreshed in
+your browser.
