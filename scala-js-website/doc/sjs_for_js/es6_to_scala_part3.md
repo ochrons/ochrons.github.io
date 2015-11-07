@@ -197,18 +197,23 @@ function convertToDate(d) {
   {
     const [, year, month, day] = YMD.exec(d) || [];
     if (year !== undefined)
-      return {year: year, month: month, day: day};
+      return {year: parseInt(year), 
+              month: parseInt(month), 
+              day: parseInt(day)};
     else {
       const [, month, day, year] = 
         MDY.exec(d) || [];
       if (year !== undefined)
-        return {year: year, month: month, day: day};
+        return {year: parseInt(year), 
+                month: parseInt(month), 
+                day: parseInt(day)};
       else {
         const [, day, month, year] = 
           DMY.exec(d) || [];
         if (year !== undefined)
-          return {year: year, month: month, 
-            day: day};
+          return {year: parseInt(year), 
+                  month: parseInt(month), 
+                  day: parseInt(day)};
       }
     }
   }
@@ -305,7 +310,7 @@ class_.
 String.prototype.toDate = function() {
   return convertToDate(this);
 }
-"2015-10-09".toDate; // = Date(2015,10,9)
+"2015-10-09".toDate; // = {year:2015,month:10,day:9}
 {% endhighlight %}
 {% endcolumn %}
         
@@ -537,21 +542,6 @@ val loaders = images.map(i => i.onloadF)
 Future.sequence(loaders).foreach { urls =>
   println(s"All ${urls.size} images loaded!")
 }
-{% endhighlight %}
-{% endcolumn %}
-{% endcolumns %}
-
-----------------
-
-
-{% columns %}
-{% column 6 ES6 %}
-{% highlight javascript %}
-{% endhighlight %}
-{% endcolumn %}
-        
-{% column 6 Scala %}
-{% highlight scala %}
 {% endhighlight %}
 {% endcolumn %}
 {% endcolumns %}

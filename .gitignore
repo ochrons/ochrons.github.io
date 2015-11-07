@@ -3,3 +3,5 @@ _site/
 .idea
 /scala-js-website/*.sc
 *.sc
+
+target

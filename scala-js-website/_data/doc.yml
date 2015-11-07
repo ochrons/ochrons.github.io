@@ -13,8 +13,8 @@
       url: /doc/sjs_for_js/es6_to_scala_part2.html
     - text: "From ES6 to Scala: Advanced"
       url: /doc/sjs_for_js/es6_to_scala_part3.html
-- text: Scala.js for Scala developers
-  url: /doc/scalajs_for_scaladevs.html
+#- text: Scala.js for Scala developers
+#  url: /doc/scalajs_for_scaladevs.html
 - text: Project setup
   url: /doc/project/
   subitems:
@@ -48,4 +48,3 @@
       url: /doc/internals/compile-opt-pipeline.html
 - text: FAQ
   url: /doc/faq.html
-

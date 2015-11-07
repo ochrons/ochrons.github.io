@@ -10,16 +10,16 @@ This Quick Start will help you set up your system for developing with Scala.js a
 
 All you need to get started is 
 
-* recent version of Java JDK [(download)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html){:target="_blank"}
-* Typesafe Activator(*) [(download)](https://www.typesafe.com/activator/download){:target="_blank"}
+* recent version of Java JDK [(download)](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+* Typesafe Activator(*) [(download)](https://www.typesafe.com/activator/download)
 
 Once you have extracted Activator into a suitable folder, add the folder to your `PATH` to access it from the command line.
 
 For editing Scala.js projects you'll probably want to install one of the IDEs that support Scala.js, but you can do this
 also later. IDE is not required for compiling/running any of the tutorial projects.
  
-* [Scala IDE](http://scala-ide.org/){:target="_blank"} (the official IDE for Scala, based on Eclipse)
-* [IntelliJ IDEA](https://www.jetbrains.com/idea/download/){:target="_blank"} (a famous Java IDE with good support for Scala via a plugin)
+* [Scala IDE](http://scala-ide.org/) (the official IDE for Scala, based on Eclipse)
+* [IntelliJ IDEA](https://www.jetbrains.com/idea/download/) (a famous Java IDE with good support for Scala via a plugin)
 
 (*) if you already have SBT installed, you can use that instead of Activator, but then you'll need to download examples
 and tutorial projects manually.

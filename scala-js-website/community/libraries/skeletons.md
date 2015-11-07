@@ -22,5 +22,3 @@ Proof of concept to determine if Scala.js could be leveraged to make a Node.js m
 A ready to work Client/Server application built with [scalatra](http://scalatra.org/),
 [scala.rx](https://github.com/lihaoyi/scala.rx), [autowire](https://github.com/lihaoyi/autowire). An example using the
 D3.js lib.
-
-

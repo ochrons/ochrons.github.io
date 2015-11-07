@@ -55,7 +55,7 @@ actually used.
 Fast optimizing is a task that identifies all the classes and methods reachable
 from a given set of entry points, and removes everything else.
 Entry points are classes and methods that are
-[exported to JavaScript]({{ BASE_PATH }}/doc/export-to-javascript.html).
+[exported to JavaScript](../interoperability/export_to_js.html).
 
 The fast optimizer uses information stored by the compilation step in .sjsir
 to derive a reachability graph from the entry points.
@@ -67,7 +67,7 @@ In sbt, the fast optimizing task is called `fastOptJS`. The result of
 fast optimization is typically between 1.5 MB and 2.5 MB.
 
 The fast optimizer can also be called programmatically using the class
-[ScalaJSOptimizer](https://github.com/scala-js/scala-js/blob/master/tools/src/main/scala/scala/scalajs/tools/optimizer/ScalaJSOptimizer.scala)
+[ScalaJSOptimizer](https://github.com/scala-js/scala-js/blob/master/tools/shared/src/main/scala/org/scalajs/core/tools/optimizer/ScalaJSOptimizer.scala)
 in the Scala.js toolbox.
 
 ## Packaging
@@ -129,5 +129,5 @@ of `fastOptJS`. The result optimization is typically between
 150 KB and a few hundreds of KB.
 
 The optimizer can also be called programmatically using the class
-[ScalaJSClosureOptimizer](https://github.com/scala-js/scala-js/blob/master/tools/src/main/scala/scala/scalajs/tools/optimizer/ScalaJSClosureOptimizer.scala)
+[ScalaJSClosureOptimizer](https://github.com/scala-js/scala-js/blob/master/tools/jvm/src/main/scala/org/scalajs/core/tools/optimizer/ScalaJSClosureOptimizer.scala)
 in the Scala.js toolbox.
