@@ -5,8 +5,9 @@
             <div class="item">
                 <blockquote><p>{{ item.text }}</p></blockquote>
                 <div class="carousel-info">
-                    <img alt="" src="{{ item.img }}" class="pull-left">
-
+                    {% if item.img != nil && item.img != "" %}
+                    <img src="{{ item.img }}" class="pull-left">
+                    {% endif %}
                     <div class="pull-left">
                         <span class="testimonials-name">{{ item.author }}</span>
                         <span class="testimonials-post">{{ item.position }}</span>

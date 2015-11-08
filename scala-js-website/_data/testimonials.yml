@@ -13,5 +13,12 @@
     computation libraries that have been ported to a shared module and can be used on both the front-end and the backend,
     which in and of themselves have made investment worthwhile.
   author: Erik LaBianca
-  position: WiserTogether, Inc
+  position: Seventh Sense
   img: https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/2/000/220/0f3/212e7e9.jpg
+- text: Scala's type safety is essential to manage the complexity of these business rules. Scala.js gives us Scala's
+    technical advantages and let us make a pleasingly responsive interface for our users.
+  author: Gabriel Bezerra
+  position:
+  img:
+
+

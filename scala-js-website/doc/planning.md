@@ -9,6 +9,7 @@ title: Planning
 - hello-scalajs Activator template
 - hello-scalajs screenshot and link
 - add `latest` API mirror links  
+- front page icons for Correctness, Speed and Interoperability
 
 ## Done
 - Scala.js for Scala developers, to be hidden for now

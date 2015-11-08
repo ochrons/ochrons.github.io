@@ -43,10 +43,14 @@ xhr.onload = (e: Event) => {
 
 Even though Scala language comes from a very different background than JavaScript, typical Scala code is quite understandable
 for JavaScript developers. This section will walk you through the differences and show you how to write basic Scala code. If you
-have fallen in love with new features in ES6 like _arrow functions_ or _destructuring_, you can find them all in Scala as well!
+have fallen in love with the new features in ES6 like _arrow functions_ or _destructuring_, you can find them all in Scala as well!
 
-The walk-through has been split into three parts: [basics](es6_to_scala_part1.html), [collections](es6_to_scala_part2.html) and
-[advanced](es6_to_scala_part3.html). Each part has a lot of code examples comparing
-ES6 code to corresponding Scala code.
+The walk-through has been split into three parts: 
+
+- [basics](es6_to_scala_part1.html)
+- [collections](es6_to_scala_part2.html)
+- [advanced](es6_to_scala_part3.html) 
+
+Each part has a lot of code examples comparing ES6 code to corresponding Scala code.
 
 You may also find some of the [presentation videos](../../community/presentations.html) a nice way to familiarize yourself with Scala.

@@ -7,7 +7,7 @@ permalink: /
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <img src="{{ "/assets/img/scala-js-logo-128.png" | prepend: site.baseurl }}">
+                <img width="128" src="{{ '/assets/img/scala-js-logo.svg' | prepend: site.baseurl }}">
 
                 <div>
                     <h4>The most powerful server side programming language<br/> now available on the frontend!</h4>
@@ -29,7 +29,7 @@ permalink: /
             <div class="col-md-4">
                 <div class="center-align">
                     <i class="fa fa-flask"></i>
-                    <h4>Correctness</h4>
+                    <h4><a href="{{ site.baseurl }}/doc/why-scalajs.html">Correctness</a></h4>
                 </div>
                 Strong typing guarantees your code will run when it compiles. No more simple JavaScript mistakes due to
                 mistyped function or field names. No
@@ -39,19 +39,19 @@ permalink: /
             <div class="col-md-4">
                 <div class="center-align">
                     <i class="fa fa-bell"></i>
-                    <h4>Speed</h4>
+                    <h4>Performance</h4>
                 </div>
                 Scala.js compiles Scala code into highly efficient JavaScript utilizing an internal optimizer.
-                Incremental compilation guarantees
-                speedy turn-around times when your code changes.
+                Incremental compilation guarantees speedy turn-around times when your code changes. Produced JavaScript
+                is both fast and small, starting from 45kB gzipped for a full application.
             </div>
             <div class="col-md-4">
                 <div class="center-align">
                     <i class="fa fa-book"></i>
-                    <h4>Interoperability</h4>
+                    <h4><a href="{{ site.baseurl }}/doc/interoperability">Interoperability</a></h4>
                 </div>
                 Use jQuery or any HTML5 feature directly from your Scala.js code, either in a typed or untyped way. All
-                JavaScript libraries work with Scala.js
+                <a href="{{ site.baseurl }}/community/libraries/facades.html">JavaScript libraries</a> work with Scala.js
                 code.
             </div>
         </div>
@@ -62,20 +62,19 @@ permalink: /
 <div class="container mtb">
     <div class="row">
         <div class="col-md-7">
-            <h4>Build amazing applications fast!</h4>
+            <h4><a href="{{ site.baseurl }}/community">Build amazing applications fast!</a></h4>
 
             <p>
                 Your Scala.js application can utilize the full extent of <i>HTML5</i>, <i>CSS3</i> and all <i>existing
-                JavaScript
-                libraries</i>, including Angular and React.
+                JavaScript libraries</i>, including Angular and React.
                 Focus on writing clean and error-free code with the help of Scala's strong type system and you will be
-                delivering in no time! Less hassle,
-                more productivity with Scala's excellent libraries, fully at your disposal even on the browser.
+                delivering in no time! Less hassle, more productivity with Scala's excellent libraries, fully at your
+                disposal even on the browser.
             </p>
         </div>
 
         <div class="hidden-sm hidden-xs col-md-5">
-            <img class="img-responsive" src="{{ "/assets/img/web-logos.png" | prepend: site.baseurl }}">
+            <img class="img-responsive" src="{{ '/assets/img/web-logos.svg' | prepend: site.baseurl }}">
         </div>
 
     </div>
@@ -95,12 +94,12 @@ permalink: /
 
         </div>
         <div class="col-md-5">
-            <img class="img-responsive" src="{{ "/assets/img/ide-screenshot.png" | prepend: site.baseurl }}">
+            <img class="img-responsive" src="{{ '/assets/img/ide-screenshot.png' | prepend: site.baseurl }}">
         </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <h4>Go beyond ES6, today</h4>
+            <h4><a href="{{ site.baseurl }}/doc/sjs_for_js">Go beyond ES6, today</a></h4>
 
             <p>
                 Scala language already has all the new features coming in ES6 and much more.
@@ -183,7 +182,7 @@ val names = for {
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Best replacement for JavaScript</h4>
+            <h4><a href="{{ site.baseurl }}/doc/sjs_for_js">Best replacement for JavaScript</a></h4>
 
             <p>Several alternatives to plain JavaScript (ES5) exist today, most notably ES6 and TypeScript.
                 Both of these add features to the JavaScript language but in the end they are mostly syntactic sugar on

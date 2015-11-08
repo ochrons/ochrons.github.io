@@ -7,22 +7,20 @@ import scalatags.JsDom.all._
 
 @JSExport
 object ScalaJSExample {
-
-  val lastWordPattern = """(.*)\s+(.*)""".r
-  def wordToPos(string: String): String = {
-    string match {
-      case lastWordPattern(_, word) => word
-      case _ => ""
-    }
-  }
-
   @JSExport
   def main(root: dom.html.Div): Unit = {
     val textBox = input(placeholder := "Country").render
     val result = div.render
 
     textBox.onkeyup = (e: Event) => {
-      result.textContent = wordToPos(textBox.value)
+      result.innerHTML = ""
+      result.appendChild(
+        ul(cls := "list-group",
+          countries.filter(c =>
+            c.toLowerCase.startsWith(textBox.value.toLowerCase)
+          ).map(t => li(cls := "list-group-item", t))
+        ).render
+      )
     }
     val content =
       div(cls := "container-fluid",
