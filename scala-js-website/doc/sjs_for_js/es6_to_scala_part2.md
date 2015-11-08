@@ -128,7 +128,7 @@ function sumProduct(s) {
 val t = ("James", "Bond", 42)
 val kv = "key" -> 42 // same as ("key", 42)
 
-def sumProduct(s: Seq[Int]):(Int, Int) = {
+def sumProduct(s: Seq[Int]): (Int, Int) = {
   var sum = 0
   var product = 1
   for(i <- s) {
@@ -234,7 +234,7 @@ function sumProduct(s) {
 {% endcolumn %}
 {% column 6 Scala %}
 {% highlight scala %}
-def sumProduct(s: Seq[Int]):(Int, Int) = {
+def sumProduct(s: Seq[Int]): (Int, Int) = {
   // use a tuple accumulator to hold sum and product
   s.foldLeft((0, 1)){ case ((sum, product), x) => 
     (sum + x, product * x) 
