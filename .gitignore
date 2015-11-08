@@ -2,7 +2,7 @@ _site/
 .sass-cache/
 .idea
 /scala-js-website/*.sc
-/scala-js-website/_site
+scala-js-website/_site/*
 *.sc
 
 target

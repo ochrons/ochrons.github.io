@@ -119,7 +119,7 @@
         </div>
 
         <div class="hidden-sm hidden-xs col-md-5">
-            <img class="img-responsive" src="/sjs2/assets/img/web-logos.svg">
+            <img class="img-responsive" style="max-height: 180px;" src="/sjs2/assets/img/web-logos.svg">
         </div>
 
     </div>
@@ -156,7 +156,7 @@
             <h5>Classes</h5>
         </div>
         <div class="col-md-6">
-            <h6 class="text-right">JavaScript</h6>
+            <h6 class="code-block-header">JavaScript</h6>
                     <pre><code class="javascript">var Person = function(firstName) {
     this.firstName = firstName;
 };
@@ -171,11 +171,11 @@ Person.prototype.sayHello = function(target) {
 };</code></pre>
         </div>
         <div class="col-md-6">
-            <h6 class="text-right">Scala.js</h6>
-                    <pre><code class="scala">class Person(firstName:String) {
+            <h6 class="code-block-header">Scala.js</h6>
+                    <pre><code class="scala">class Person(firstName: String) {
   def walk = println("I am walking!")
 
-  def sayHello(target:String) =
+  def sayHello(target: String) =
     println(s"Hello $target, I'm $firstName")
 }</code></pre>
         </div>
@@ -185,13 +185,13 @@ Person.prototype.sayHello = function(target) {
             <h5>Fat arrow functions</h5>
         </div>
         <div class="col-md-6">
-            <h6 class="text-right">JavaScript</h6>
+            <h6 class="code-block-header">JavaScript</h6>
                     <pre><code class="javascript">var names = persons.map(function(p) {
     return p.firstName
 });</code></pre>
         </div>
         <div class="col-md-6">
-            <h6 class="text-right">Scala.js</h6>
+            <h6 class="code-block-header">Scala.js</h6>
                     <pre><code class="scala">val names = persons.map(p => p.firstName)
 // or an even shorter version
 val names = persons.map(_.firstName)</code></pre>
@@ -202,23 +202,28 @@ val names = persons.map(_.firstName)</code></pre>
             <h5>Collections</h5>
         </div>
         <div class="col-md-6">
-            <h6 class="text-right">JavaScript</h6>
-                    <pre><code class="javascript">var personMap = {"10": new Person("Roger Moore"),
-    "20": new Person("James Bond")};
+            <h6 class="code-block-header">JavaScript</h6>
+                    <pre><code class="javascript">var personMap = {
+    "10": new Person("Roger Moore"),
+    "20": new Person("James Bond")
+};
 var names = [];
 for(var key in personMap) {
     if(Object.prototype.hasOwnProperty.call(names, key)) {
         if(parseInt(key) > 15) {
-            names.push(key +
-                " = " + personMap[key].firstName;
+            names.push(
+                key + " = " + personMap[key].firstName;
+            )
         }
     }
 }</code></pre>
         </div>
         <div class="col-md-6">
-            <h6 class="text-right">Scala.js</h6>
-                    <pre><code class="scala">val personMap = Map(10 -> new Person("Roger Moore"),
-  20 -> new Person("James Bond"));
+            <h6 class="code-block-header">Scala.js</h6>
+                    <pre><code class="scala">val personMap = Map(
+  10 -> new Person("Roger Moore"),
+  20 -> new Person("James Bond")
+);
 val names = for {
   (key, person) <- personMap
   if key > 15
@@ -351,6 +356,7 @@ val names = for {
     </div>
 </div>
 <! --/container -->
+
 
 
 </div>
