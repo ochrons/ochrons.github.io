@@ -5,11 +5,10 @@ title: Planning
 
 ## TODO for MVP
 
-- Documentation landing page, more content
 - hello-scalajs Activator template
 - hello-scalajs screenshot and link
 - add `latest` API mirror links  
-- front page icons for Correctness, Speed and Interoperability
+- add media section, with image downloads etc
 
 ## Done
 - Scala.js for Scala developers, to be hidden for now
@@ -18,6 +17,8 @@ title: Planning
 - libraries and skeleton index page content is missing
 - add "built with Scala.js" under community
 - add more intro text to community
+- front page icons for Correctness, Speed and Interoperability
+- Documentation landing page, more content
 
 ## Doc content/struture plan
 

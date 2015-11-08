@@ -42,9 +42,11 @@
 - text: Semantics of Scala.js
   url: /doc/semantics.html
 - text: Internals
-  url: /doc/internals
+  url: /doc/internals/
   subitems:
     - text: Compilation and optimization pipeline
       url: /doc/internals/compile-opt-pipeline.html
+    - text: Standalone distribution
+      url: /doc/internals/downloads.html
 - text: FAQ
   url: /doc/faq.html
