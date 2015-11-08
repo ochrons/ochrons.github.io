@@ -1,6 +1,6 @@
 ---
 layout: community
-title: Skeletons
+title: Project Skeletons
 ---
 
 These application skeletons get you started in no time!
