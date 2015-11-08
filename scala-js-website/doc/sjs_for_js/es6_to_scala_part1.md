@@ -408,12 +408,12 @@ const r = c.r; // == 42
 {% highlight scala %}
 // use var to make coordinates mutable
 abstract class Shape(var x: Int, var y: Int) {
-  def move(dx: Int, dy: Int) {
+  def move(dx: Int, dy: Int) = {
     x += dx
     y += dy
   }
   
-  def draw() {
+  def draw() = {
     println(s"Shape at $x, $y")
   }
 }
@@ -421,7 +421,7 @@ abstract class Shape(var x: Int, var y: Int) {
 // r is immutable but accessible outside class  
 class Circle(x: Int, y: Int, val r: Int) 
   extends Shape(x, y) {
-  override def draw() {
+  override def draw() = {
     println(s"Circle at $x, $y with radius $r")
   }
 }  
@@ -561,13 +561,13 @@ const r = RandomGen.getRandomNumber();
 import scala.util.Random
 
 object RandomGen {
-  private def privateMethod() {
+  private def privateMethod() = {
     println("I am private")
   }
   
   private val rnd = new Random()
   
-  def publicMethod() {
+  def publicMethod() = {
     println("The public can see me!")
     privateMethod()
   }
@@ -624,13 +624,13 @@ cc.onClick();
 {% highlight scala %}
 class Circle(x: Int, y: Int, val r: Int) 
   extends Shape(x, y) {
-  override def draw() {
+  override def draw() = {
     println(s"Circle at $x, $y with radius $r")
   }
 }  
 
 trait Clickable {
-  def onClick() { println("Clicked!") }
+  def onClick() = { println("Clicked!") }
 }
 
 class ClickableCircle(x: Int, y: Int, r: Int) 
