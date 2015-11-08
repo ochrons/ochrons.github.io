@@ -29,9 +29,9 @@ permalink: /
             <div class="col-md-4">
                 <div class="center-align">
                     <a href="{{ site.baseurl }}/doc/why-scalajs.html"><i class="fa fa-check-square"></i>
-                    <h4>Correctness</h4></a>
+                        <h4>Correctness</h4></a>
                 </div>
-                Strong typing guarantees your code is free of silly mistakes; no more 
+                Strong typing guarantees your code is free of silly mistakes; no more
                 mixing up strings or numbers, forgetting what keys an object has, or
                 worrying about typos in your method names. Scala.js takes care of all this
                 tedious book-keeping for you, letting you focus on the actual, more interesting
@@ -40,20 +40,21 @@ permalink: /
             <div class="col-md-4">
                 <div class="center-align">
                     <a href="{{ site.baseurl}}/doc/internals/compile-opt-pipeline.html"><i class="fa fa-rocket"></i>
-                    <h4>Performance</h4></a>
+                        <h4>Performance</h4></a>
                 </div>
                 Scala.js compiles Scala code into highly efficient JavaScript utilizing an internal optimizer.
-                Incremental compilation guarantees speedy (1-2s) turn-around times when your code changes. 
+                Incremental compilation guarantees speedy (1-2s) turn-around times when your code changes.
                 Generated JavaScript is both fast and small, starting from 45kB gzipped for a full application.
             </div>
             <div class="col-md-4">
                 <div class="center-align">
                     <a href="{{ site.baseurl }}/doc/interoperability"><i class="fa fa-cogs"></i>
-                    <h4>Interoperability</h4></a>
+                        <h4>Interoperability</h4></a>
                 </div>
                 Use jQuery or any HTML5 feature directly from your Scala.js code, either in a typed or untyped way. All
-                <a href="{{ site.baseurl }}/community/libraries/facades.html">JavaScript libraries</a> work with Scala.js
-                code. If you like React.js, or Angular.js, that's great! You can keep using them while getting the 
+                <a href="{{ site.baseurl }}/community/libraries/facades.html">JavaScript libraries</a> work with
+                Scala.js
+                code. If you like React.js, or Angular.js, that's great! You can keep using them while getting the
                 benefits of Scala.js
             </div>
         </div>
@@ -76,7 +77,8 @@ permalink: /
         </div>
 
         <div class="hidden-sm hidden-xs col-md-5">
-            <img class="img-responsive" style="max-height: 180px;" src="{{ '/assets/img/web-logos.svg' | prepend: site.baseurl }}">
+            <img class="img-responsive" style="max-height: 180px;"
+                 src="{{ '/assets/img/web-logos.svg' | prepend: site.baseurl }}">
         </div>
 
     </div>
@@ -186,34 +188,49 @@ val names = for {
   if key > 15
 } yield s"$key = ${person.firstName}"</code></pre>
         </div>
-    <p>
-        To find out more about what Scala.js looks like coming from Javascript, checkout 
-        out the <a href="{{ site.baseurl }}/doc/sjs_for_js">detailed comparisons</a>. If
-        you want to try it out yourself, check out the 
-        <a href={{ site.baseurl }}/tutorial>Tutorials!</a>
-    </p>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <p>
+                To find out more about what Scala.js looks like coming from Javascript, checkout
+                out the <a href="{{ site.baseurl }}/doc/sjs_for_js">detailed comparisons</a>. If
+                you want to try it out yourself, check out the
+                <a href="{{ site.baseurl }}/tutorial">Tutorials!</a>
+            </p>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">
             <h4><a href="{{ site.baseurl }}/doc/sjs_for_js">Safer, Better JavaScript</a></h4>
-
             <p>
                 Several variants of plain JavaScript (ES5) exist today, most notably ES6 and TypeScript.
-                If you're already going to compile something to Javascript, why not compile something nicer?
+                If you're already going to compile something to JavaScript, why not compile something nicer?
             </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h6 class="code-block-header">JavaScript</h6>
             <pre><code class="javascript">js> ["10", "10", "10", "10"].map(parseInt)
 [10, NaN, 2, 3] // WTF</code></pre>
+        </div>
+        <div class="col-md-6">
+            <h6 class="code-block-header">Scala</h6>
             <pre><code class="scala">scala> List("10", "10", "10", "10").map(parseInt)
 List(10, 10, 10, 10) // Yay!</code></pre>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <p>
-                While Typescript and ES6 make your code safer and more modern, they still leave
-                many of Javascript's [Gotcha](https://en.wikipedia.org/wiki/Gotcha_(programming))s 
-                wide-open for you to trip on. Scala.js provides all 
-                the same awesome things that Typescript or ES6/ES7 provide, but better: more 
-                modern than ES6, more safe than Typescript, on top of fixing many of the silly 
-                issues that makes programming in Javascript frustrating.
+                While TypeScript and ES6 make your code safer and more modern, they still leave
+                many of JavaScript's <a href="https://en.wikipedia.org/wiki/Gotcha_%28programming%29">Gotcha</a>s
+                wide-open for you to trip on. Scala.js provides all
+                the same awesome things that TypeScript or ES6/ES7 provide, but better: more
+                modern than ES6, more safe than TypeScript, on top of fixing many of the silly
+                issues that makes programming in JavaScript frustrating.
             </p>
-            
+
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
