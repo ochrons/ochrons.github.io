@@ -225,12 +225,18 @@ for(var key in personMap) {
                     <pre><code class="scala">val personMap = Map(
   10 -> new Person("Roger Moore"),
   20 -> new Person("James Bond")
-);
+)
 val names = for {
   (key, person) <- personMap
   if key > 15
 } yield s"$key = ${person.firstName}"</code></pre>
         </div>
+    <p>
+        To find out more about what Scala.js looks like coming from Javascript, checkout 
+        out the <a href="/sjs2/doc/sjs_for_js">detailed comparisons</a>. If
+        you want to try it out yourself, check out the 
+        <a href=/sjs2/tutorial>Tutorials!</a>
+    </p>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -240,14 +246,10 @@ val names = for {
                 Several variants of plain JavaScript (ES5) exist today, most notably ES6 and TypeScript.
                 If you're already going to compile something to Javascript, why not compile something nicer?
             </p>
-            <pre><code class="javascript">
-                js> ["10", "10", "10", "10"].map(parseInt)
-                [10, NaN, 2, 3] // WTF
-            </code></pre>
-            <pre><code class="scala">
-                scala> List("10", "10", "10", "10").map(parseInt)
-                List(10, 10, 10, 10) // Yay!
-            </code></pre>
+            <pre><code class="javascript">js> ["10", "10", "10", "10"].map(parseInt)
+[10, NaN, 2, 3] // WTF</code></pre>
+            <pre><code class="scala">scala> List("10", "10", "10", "10").map(parseInt)
+List(10, 10, 10, 10) // Yay!</code></pre>
             <p>
                 While Typescript and ES6 make your code safer and more modern, they still leave
                 many of Javascript's [Gotcha](https://en.wikipedia.org/wiki/Gotcha_(programming))s 
