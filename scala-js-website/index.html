@@ -28,7 +28,7 @@ permalink: /
         <div class="row centered">
             <div class="col-md-4">
                 <div class="center-align">
-                    <i class="fa fa-check-square"></i>
+                    <i class="fa fa-flask"></i>
                     <h4><a href="{{ site.baseurl }}/doc/why-scalajs.html">Correctness</a></h4>
                 </div>
                 Strong typing guarantees your code is free of silly mistakes; no more 
@@ -39,7 +39,7 @@ permalink: /
             </div>
             <div class="col-md-4">
                 <div class="center-align">
-                    <i class="fa fa-rocket"></i>
+                    <i class="fa fa-bell"></i>
                     <h4>Performance</h4>
                 </div>
                 Scala.js compiles Scala code into highly efficient JavaScript utilizing an internal optimizer.
@@ -48,7 +48,7 @@ permalink: /
             </div>
             <div class="col-md-4">
                 <div class="center-align">
-                    <i class="fa fa-cogs"></i>
+                    <i class="fa fa-book"></i>
                     <h4><a href="{{ site.baseurl }}/doc/interoperability">Interoperability</a></h4>
                 </div>
                 Use jQuery or any HTML5 feature directly from your Scala.js code, either in a typed or untyped way. All
@@ -169,8 +169,8 @@ for(var key in personMap) {
     if(Object.prototype.hasOwnProperty.call(names, key)) {
         if(parseInt(key) > 15) {
             names.push(
-                key + " = " + personMap[key].firstName
-            );
+                key + " = " + personMap[key].firstName;
+            )
         }
     }
 }</code></pre>
@@ -189,13 +189,29 @@ val names = for {
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h4><a href="{{ site.baseurl }}/doc/sjs_for_js">Best replacement for JavaScript</a></h4>
+            <h4><a href="{{ site.baseurl }}/doc/sjs_for_js">Safer, Better JavaScript</a></h4>
 
-            <p>Several alternatives to plain JavaScript (ES5) exist today, most notably ES6 and TypeScript.
-                Both of these add features to the JavaScript language but in the end they are mostly syntactic sugar on
-                top. Scala.js takes a different approach by utilizing a higher-order programming language with strong
-                support for both object oriented and functional programming. In the table below you can see how
-                Scala.js stacks up to other JavaScript alternatives.</p>
+            <p>
+                Several variants of plain JavaScript (ES5) exist today, most notably ES6 and TypeScript.
+                If you're already going to compile something to Javascript, why not compile something nicer?
+            </p>
+            <pre><code class="javascript">
+                js> ["10", "10", "10", "10"].map(parseInt)
+                [10, NaN, 2, 3] // WTF
+            </code></pre>
+            <pre><code class="scala">
+                scala> List("10", "10", "10", "10").map(parseInt)
+                List(10, 10, 10, 10) // Yay!
+            </code></pre>
+            <p>
+                While Typescript and ES6 make your code safer and more modern, they still leave
+                many of Javascript's [Gotcha](https://en.wikipedia.org/wiki/Gotcha_(programming))s 
+                wide-open for you to trip on. Scala.js provides all 
+                the same awesome things that Typescript or ES6/ES7 provide, but better: more 
+                modern than ES6, more safe than Typescript, on top of fixing many of the silly 
+                issues that makes programming in Javascript frustrating.
+            </p>
+            
             <table class="table table-striped table-condensed">
                 <thead>
                 <tr>
