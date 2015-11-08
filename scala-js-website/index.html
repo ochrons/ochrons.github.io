@@ -180,12 +180,18 @@ for(var key in personMap) {
                     <pre><code class="scala">val personMap = Map(
   10 -> new Person("Roger Moore"),
   20 -> new Person("James Bond")
-);
+)
 val names = for {
   (key, person) <- personMap
   if key > 15
 } yield s"$key = ${person.firstName}"</code></pre>
         </div>
+    <p>
+        To find out more about what Scala.js looks like coming from Javascript, checkout 
+        out the <a href="{{ site.baseurl }}/doc/sjs_for_js">detailed comparisons</a>. If
+        you want to try it out yourself, check out the 
+        <a href={{ site.baseurl }}/tutorial>Tutorials!</a>
+    </p>
     </div>
     <div class="row">
         <div class="col-md-12">
