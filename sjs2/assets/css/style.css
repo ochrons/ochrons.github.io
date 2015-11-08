@@ -6,15 +6,15 @@
     Project Name: SOLID - Bootstrap 3 Theme
     Version: 1.0
     URL: http://alvarez.is
-    
-################################################################# */ 
+
+################################################################# */
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,700,900);
 @import url(http://fonts.googleapis.com/css?family=Lato:400,900);
 
 /*    ################################################################
     1. GENERAL STRUCTURES
 ################################################################# */
-    * { 
+    * {
         margin: 0;
         padding: 0px;
     }
@@ -23,10 +23,10 @@ html,body
     height:100%;
 }
 
-body { 
-    background: #ffffff; 
-    margin: 0; 
-    height: 100%; 
+body {
+    background: #ffffff;
+    margin: 0;
+    height: 100%;
     color: #384452;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
@@ -41,15 +41,15 @@ h4 {
     font-size: 22px;
 }
 
-p { 
-    padding: 0; 
-    margin-bottom: 12px; 
+p {
+    padding: 0;
+    margin-bottom: 12px;
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 14px; 
+    font-size: 14px;
     line-height: 24px;
-    color: #384452; 
-    margin-top: 10px; 
+    color: #384452;
+    margin-top: 10px;
 }
 
 img {
@@ -67,11 +67,11 @@ ol {
     padding-left: 26px;
 }
 
-a { 
+a {
     color:#428bca;
     padding: 0;
     margin: 0;
-    text-decoration: none; 
+    text-decoration: none;
     -webkit-transition: background-color .4s linear, color .4s linear;
     -moz-transition: background-color .4s linear, color .4s linear;
     -o-transition: background-color .4s linear, color .4s linear;
@@ -356,7 +356,7 @@ a:focus {
     background-position: center center;
     min-height: 450px;
     width: 100%;
-    
+
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     -o-background-size: 100%;
@@ -508,7 +508,7 @@ csmall {
     background-position: center center;
     min-height: 400px;
     width: 100%;
-    
+
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
     -o-background-size: 100%;
@@ -521,27 +521,27 @@ csmall {
 }
 
 /* Blog Page */
-.popular-posts { 
+.popular-posts {
     margin: 0px;
     padding-left: 0px;
     }
-    
+
 .popular-posts li {
-    list-style: none; 
-    margin-bottom: 20px; 
+    list-style: none;
+    margin-bottom: 20px;
     min-height: 70px;
 }
-.popular-posts li a, 
+.popular-posts li a,
 .popular-posts li a:hover {
-    color:#2f2f2f; 
+    color:#2f2f2f;
     text-decoration: none;
     }
-    
+
 .popular-posts li img {
-    float: left; 
+    float: left;
     margin-right: 20px;
     }
-    
+
 .popular-posts li em {
     font-family: 'Lato', sans-serif;
     font-size: 12px;
@@ -551,7 +551,7 @@ csmall {
 .popular-posts p {
     line-height: normal;
     margin-bottom: auto;
-}    
+}
 
 .share i {
     padding-right: 15px;
@@ -559,9 +559,9 @@ csmall {
 }
 
 a.anchor{
-    display: block; 
-    position: relative; 
-    top: -80px; 
+    display: block;
+    position: relative;
+    top: -80px;
     visibility: hidden;
 }
 
@@ -594,4 +594,72 @@ a code {
 
 .div-clipboard {
     white-space:nowrap;
+}
+
+/* Testimonials */
+.testimonials blockquote {
+    background: #f8f8f8 none repeat scroll 0 0;
+    border: medium none;
+    color: #666;
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 15px;
+    position: relative;
+    font-style: italic;
+}
+.testimonials blockquote::before {
+    width: 0;
+    height: 0;
+	right: 0;
+	bottom: 0;
+	content: " ";
+	display: block;
+	position: absolute;
+    border-bottom: 20px solid #fff;
+	border-right: 0 solid transparent;
+	border-left: 15px solid transparent;
+	border-left-style: inset; /*FF fixes*/
+	border-bottom-style: inset; /*FF fixes*/
+}
+.testimonials blockquote::after {
+    width: 0;
+    height: 0;
+    right: 0;
+    bottom: 0;
+    content: " ";
+    display: block;
+    position: absolute;
+    border-style: solid;
+    border-width: 20px 20px 0 0;
+    border-color: #666666 transparent transparent transparent;
+}
+.testimonials .carousel-info img {
+    border: 1px solid #f5f5f5;
+    border-radius: 150px !important;
+    height: 75px;
+    padding: 3px;
+    width: 75px;
+}
+.testimonials .carousel-info {
+    overflow: hidden;
+}
+.testimonials .carousel-info img {
+    margin-right: 15px;
+}
+.testimonials .carousel-info span {
+    display: block;
+}
+.testimonials span.testimonials-name {
+    color: #404040;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 23px 0 7px;
+}
+.testimonials span.testimonials-post {
+    color: #656565;
+    font-size: 12px;
+}
+.testimonials .item {
+    margin-bottom: 20px;
 }

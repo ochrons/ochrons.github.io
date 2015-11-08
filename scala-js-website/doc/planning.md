@@ -8,15 +8,15 @@ title: Planning
 - Documentation landing page, more content
 - hello-scalajs Activator template
 - hello-scalajs screenshot and link
-- Scala.js for JavaScript developers, intro text
 - add `latest` API mirror links  
-- add more intro text to community
-- add "built with Scala.js" under community
-- libraries and skeleton index page content is missing
 
 ## Done
 - Scala.js for Scala developers, to be hidden for now
 - remove social media links from the template
+- Scala.js for JavaScript developers, intro text
+- libraries and skeleton index page content is missing
+- add "built with Scala.js" under community
+- add more intro text to community
 
 ## Doc content/struture plan
 

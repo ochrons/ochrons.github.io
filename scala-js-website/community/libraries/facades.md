@@ -12,6 +12,10 @@ relevant SBT dependency definition.
 
 {% include library.html lib=site.data.library.jsfacades %}
 
+If you didn't find a facade for the library you'd like to use, it's quite easy to do one yourself. Check out the
+[facade documentation](../../doc/interoperability/calling_js.html) and the
+[TypeScript conversion tool](https://github.com/sjrd/scala-js-ts-importer).
+
 -------
 
 <small markdown="1">Additions and corrections to this section may be reported through

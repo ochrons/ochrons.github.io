@@ -59,8 +59,47 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>To be written.</p>
+            <p>Below you can see the same functionality implemented in JavaScript ES6 and Scala.js. See any differences?</p>
 
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><div class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+ <span class="s2">&quot;https://api.twitter.com/1.1/search/&quot;</span> <span class="o">+</span>
+ <span class="s2">&quot;tweets.json?q=%23scalajs&quot;</span>
+<span class="p">);</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+   <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+   <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;#tweets&quot;</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">parseTweets</span><span class="p">(</span><span class="nx">r</span><span class="p">));</span>
+ <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+</div>
+
+<div class="col-md-6"><h6 class="code-block-header">Scala</h6><div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">var</span> <span class="n">xhr</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">()</span>
+
+<span class="n">xhr</span><span class="o">.</span><span class="n">open</span><span class="o">(</span><span class="s">&quot;GET&quot;</span><span class="o">,</span>
+ <span class="s">&quot;https://api.twitter.com/1.1/search/&quot;</span> <span class="o">+</span>
+ <span class="s">&quot;tweets.json?q=%23scalajs&quot;</span>
+<span class="o">)</span>
+<span class="n">xhr</span><span class="o">.</span><span class="n">onload</span> <span class="k">=</span> <span class="o">(</span><span class="n">e</span><span class="k">:</span> <span class="kt">Event</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="o">{</span>
+ <span class="k">if</span> <span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
+   <span class="k">var</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">JSON</span><span class="o">.</span><span class="n">parse</span><span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">responseText</span><span class="o">)</span>
+   <span class="n">$</span><span class="o">(</span><span class="s">&quot;#tweets&quot;</span><span class="o">).</span><span class="n">html</span><span class="o">(</span><span class="n">parseTweets</span><span class="o">(</span><span class="n">r</span><span class="o">))</span>
+ <span class="o">}</span>
+<span class="o">}</span></code></pre></div>
+</div>
+</div>
+
+<p>Even though Scala language comes from a very different background than JavaScript, typical Scala code is quite understandable
+for JavaScript developers. This section will walk you through the differences and show you how to write basic Scala code. If you
+have fallen in love with new features in ES6 like <em>arrow functions</em> or <em>destructuring</em>, you can find them all in Scala as well!</p>
+
+<p>The walk-through has been split into three parts: <a href="es6_to_scala_part1.html">basics</a>, <a href="es6_to_scala_part2.html">collections</a> and
+<a href="es6_to_scala_part3.html">advanced</a>. Each part has a lot of code examples comparing
+ES6 code to corresponding Scala code.</p>
+
+<p>You may also find some of the <a href="../../community/presentations.html">presentation videos</a> a nice way to familiarize yourself with Scala.</p>
 
             <div class="spacing"></div>
         </div>
@@ -136,15 +175,6 @@
     
 </ul>
 
-    
-    
-    <li>
-        <a href="/sjs2/doc/scalajs_for_scaladevs.html">
-            
-            Scala.js for Scala developers
-            
-        </a>
-    </li>
     
     
     <li>
@@ -230,23 +260,17 @@
                 <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
             </div>
             <div class="col-md-4">
-                <i class="fa fa-facebook-square"></i>
-                <i class="fa fa-twitter-square"></i>
-                <i class="fa fa-google-plus-square"></i>
-                <i class="fa fa-linkedin-square"></i>
             </div>
         </div>
-        <! --/row -->
     </div>
-    <! --/container -->
-</div><! --/footerwrap -->
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="/sjs2/assets/js/bootstrap.min.js"></script>
 <script src="/sjs2/assets/js/highlight.pack.js"></script>
 <script src="/sjs2/assets/js/custom.js"></script>
 <script>
-hljs.initHighlightingOnLoad();
 </script>
 
 </body>
