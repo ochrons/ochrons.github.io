@@ -10,20 +10,19 @@ enthusiastic developers writing libraries, facades for JS libs, tutorials and do
 
 Following web applications are built with Scala.js
 
-- [MF Metabolic Analyzer](www.metabolicanalyzer.com) is a system to help physicians interpret and draw conclusions from cardiopulmonary exercise tests.
+- [MF Metabolic Analyzer](https://www.metabolicanalyzer.com) is a system to help physicians interpret and draw conclusions from cardiopulmonary exercise tests.
 - [Insightware](https://insightware.com/), a next-generation A/B testing tool. All of the dashboard is built with Scaja.js.
 - [NetLogo Web](http://netlogoweb.org/launch), an agent-based simulation language. (only the NetLogo-to-JavaScript compiler is
   written in Scala, not the front end)
-- [Querki](http://www.querki.net/help/#Learning-Querki), a cloud-based system for small-scale data management
+- [Querki](https://www.querki.net/help/#Learning-Querki), a cloud-based system for small-scale data management
 - [MiniJava compiler](http://oxnrtr.de/mj) which originally targeted amd64, but received an AST interpreter to run in the browser.
 - [Stofftante](https://www.stofftante.ch), web store for fabrics
-- [Anduin Transactions](https://anduintransact.com/), streamlining financial transaction workflow
 
 ## Open Source Scala.js projects
 
 Use these Open Source projects to see how others have used Scala.js to build their applications.
 
-- [Querki](http://www.querki.net/help/#Learning-Querki), a cloud-based system for small-scale data management
+- [Querki](https://www.querki.net/help/#Learning-Querki), a cloud-based system for small-scale data management
 - [ICD](https://github.com/tmtsoftware/icd), for validating, storing, managing, searching and viewing APIs and ICDs (Interface Control Documents between TMT subsystems)
 - [Dashy](https://github.com/oomagnitude/dashy), extensible dashboard webapp written in scalajs
 - [Doctus](http://entelijan.net/art/doctus/), a library for the creation of visual art pieces, by

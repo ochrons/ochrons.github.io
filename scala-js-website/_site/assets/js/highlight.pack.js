@@ -814,7 +814,7 @@ hljs.registerLanguage("css", function (e) {
   }
 });
 hljs.registerLanguage("php", function (e) {
-  var c = {cN: "variable", b: "\\$+[a-zA-Z_-  ][a-zA-Z0-9_-  ]*"}, i = {
+  var c = {cN: "variable", b: "\\$+[a-zA-Z_-ÿ][a-zA-Z0-9_-ÿ]*"}, i = {
     cN: "preprocessor",
     b: /<\?(php)?|\?>/
   }, a = {
