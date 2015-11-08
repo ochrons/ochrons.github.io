@@ -419,7 +419,8 @@ abstract class Shape(var x: Int, var y: Int) {
 }
   
 // r is immutable but accessible outside class  
-class Circle(x: Int, y: Int, val r: Int) extends Shape(x, y) {
+class Circle(x: Int, y: Int, val r: Int) 
+  extends Shape(x, y) {
   override def draw() {
     println(s"Circle at $x, $y with radius $r")
   }
