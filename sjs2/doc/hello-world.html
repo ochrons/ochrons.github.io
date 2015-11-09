@@ -59,7 +59,8 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>This Quick Start will help you set up your system for developing with Scala.js.</p>
+            <p>This Quick Start will help you set up your system for developing with Scala.js and guide you through your
+ first Scala.js application.</p>
 
 <h1 id="installation">Installation</h1>
 
@@ -67,12 +68,50 @@
 
 <ul>
   <li>recent version of Java JDK <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">(download)</a></li>
-  <li>SBT <a href="http://www.scala-sbt.org/0.13/tutorial/Setup.html">(download)</a></li>
+  <li>Typesafe Activator(*) <a href="https://www.typesafe.com/activator/download">(download)</a></li>
 </ul>
+
+<p>Once you have extracted Activator into a suitable folder, add the folder to your <code>PATH</code> to access it from the command line.</p>
+
+<p>For editing Scala.js projects you’ll probably want to install one of the IDEs that support Scala.js, but you can do this
+also later. IDE is not required for compiling/running any of the tutorial projects.</p>
+
+<ul>
+  <li><a href="http://scala-ide.org/">Scala IDE</a> (the official IDE for Scala, based on Eclipse)</li>
+  <li><a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA</a> (a famous Java IDE with good support for Scala via a plugin)</li>
+</ul>
+
+<p>(*) if you already have SBT installed, you can use that instead of Activator, but then you’ll need to download examples
+and tutorial projects manually.</p>
+
+<h1 id="hello-world-in-scalajs">Hello World in Scala.js</h1>
+
+<p>Go to your command line shell and switch to the directory where you keep your development projects. Run <code>activator</code>
+(which should be on your <code>PATH</code> now) with the following command line to create a new Scala.js project from a template.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">activator new hello-scalajs scalajs_hello_world</code></pre></div>
+
+<p>Change into the project directory and run the application.</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd </span>hello_scalajs
+activator run</code></pre></div>
+
+<p>Note that this will take a while on the first time as <code>activator</code> downloads all required packages including the Scala
+compiler. The next time you run the application, it will start <em>much</em> faster!</p>
+
+<p>Once all packages have been download and the project compiled, you can navigate in your browser to <a href="http://localhost:12345">http://localhost:12345</a>
+to access the application. You should now see a welcome screen in your browser</p>
+
+<p>[ screenshot ]</p>
+
+<h2 id="making-edits">Making edits</h2>
+
+<p>While the application is running, you can edit the source code and it will be automatically recompiled and refreshed in
+your browser.</p>
 
 <h1 id="what-next">What next?</h1>
 
-<p>Check out one of the <a href="../tutorial">tutorials</a> to continue your journey!</p>
+<p>Check one of the <a href="../tutorial">tutorials</a> to continue your journey!</p>
 
             <div class="spacing"></div>
         </div>
