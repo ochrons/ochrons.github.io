@@ -13,7 +13,8 @@ To test how fast code the Scala.js compiler generates, we ported a [benchmark su
 from Dart and rewrote the benchmark code in idiomatic Scala. It has three separate benchmarks, testing various aspects
 of the compiler.
 
-The results below have been normalized against hand-written JavaScript and were executed using V8 engine in May, 2015.
+Tests were executed using V8 engine in May, 2015. The results below have been normalized against hand-written JavaScript.  
+A lower bar height means better performance. 
 
 ![Benchmarks]({{ site.baseurl }}/assets/img/benchmarks.png)
 
@@ -21,5 +22,5 @@ As you can see the use of Google Closure compiler sometimes degrades performance
 the size of produced JavaScript, not its speed. DeltaBlue benchmark has two variants; one using Scala native collections
 and another using `js.Array`, which gives a clear performance boost in this test.
 
-It is safe to say that Scala.js performance is very good, right there on the par with hand-written JavaScript in
-comparable cases.
+It is safe to say that Scala.js performance is very good, right there on par with hand-written JavaScript in comparable 
+cases.
