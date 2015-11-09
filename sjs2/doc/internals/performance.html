@@ -8,7 +8,7 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
 
-    <title>Scala.js - Scala.js internals</title>
+    <title>Scala.js - Performance</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -51,7 +51,7 @@
 <div id="blue">
     <div class="container">
         <div class="row">
-            <h3>Scala.js internals</h3>
+            <h3>Performance</h3>
         </div><!-- /row -->
     </div> <!-- /container -->
 </div><!-- /blue -->
@@ -59,12 +59,26 @@
 <div class="container mtb">
     <div class="row">
         <div class="col-md-9">
-            <p>Internal stuff about Scala.js.</p>
+            <p>Scala.js compiler optimizes the generated JavaScript very well, so the you, as a developer, do not have to worry about
+your application’s performance. It does things like inlining and rewriting iterators as while-loops to get good
+performance even with complex Scala code.</p>
 
-<ul>
-  <li><a href="./compile-opt-pipeline.html">Compilation and optimization pipeline</a></li>
-  <li><a href="./downloads.html">Standalon distribution</a></li>
-</ul>
+<h2 id="benchmarks">Benchmarks</h2>
+
+<p>To test how fast code the Scala.js compiler generates, we ported a <a href="https://github.com/sjrd/scalajs-benchmarks">benchmark suite</a> 
+from Dart and rewrote the benchmark code in idiomatic Scala. It has three separate benchmarks, testing various aspects
+of the compiler.</p>
+
+<p>The results below have been normalized against hand-written JavaScript and were executed using V8 engine in May, 2015.</p>
+
+<p><img src="/sjs2/assets/img/benchmarks.png" alt="Benchmarks" /></p>
+
+<p>As you can see the use of Google Closure compiler sometimes degrades performance, because GCC’s focus is optimizing
+the size of produced JavaScript, not its speed. DeltaBlue benchmark has two variants; one using Scala native collections
+and another using <code>js.Array</code>, which gives a clear performance boost in this test.</p>
+
+<p>It is safe to say that Scala.js performance is very good, right there on the par with hand-written JavaScript in
+comparable cases.</p>
 
             <div class="spacing"></div>
         </div>
@@ -139,7 +153,7 @@
     <li>
         <a href="/sjs2/doc/internals/">
             
-            <b>Internals</b>
+            Internals
             
         </a>
     </li>
@@ -150,7 +164,7 @@
     <li>
         <a href="/sjs2/doc/internals/performance.html">
             
-            Performance
+            <b>Performance</b>
             
         </a>
     </li>

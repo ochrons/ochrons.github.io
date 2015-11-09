@@ -44,8 +44,8 @@
 - text: Internals
   url: /doc/internals/
   subitems:
-    - text: Compilation and optimization pipeline
-      url: /doc/internals/compile-opt-pipeline.html
+    - text: Performance
+      url: /doc/internals/performance.html
     - text: Standalone distribution
       url: /doc/internals/downloads.html
 - text: FAQ
