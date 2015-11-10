@@ -8,6 +8,7 @@
 
     <title>{{ site.title }}{% if page.title %} - {{ page.title }}{% endif %}</title>
 
+    {% include ogp.html %}
     <!-- Bootstrap core CSS -->
     <link href="{{ "/assets/css/bootstrap.css" | prepend: site.baseurl }}" rel="stylesheet">
     <link href="{{ "/assets/css/highlight.css" | prepend: site.baseurl }}" type="text/css" rel="stylesheet" media="screen,projection"/>

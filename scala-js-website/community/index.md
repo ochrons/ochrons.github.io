@@ -34,6 +34,7 @@ Use these Open Source projects to see how others have used Scala.js to build the
 - [Papa-Carlo Incremental Parser Demo](http://lakhin.com/projects/papa-carlo/demo/), by Eliah-Lakhin
 - [Ray-Tracer](http://lihaoyi.github.io/workbench-example-app/raytracer.html), a ray-tracer written in Scala.js by Li Haoyi
 - [TodoMVC](http://lihaoyi.github.io/workbench-example-app/todo.html), an implementation of the [TodoMVC example application](http://todomvc.com/) using Scala.js, Scalatags, Scala.Rx and scala-js-dom, by Li Haoyi
+- [Port of the Dart benchmark harness](https://github.com/sjrd/scalajs-benchmarks)
 
 ## Testimonials
 

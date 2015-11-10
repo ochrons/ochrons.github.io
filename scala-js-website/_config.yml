@@ -6,7 +6,7 @@ description: "Write an awesome description for your new site here. You can edit 
 analytics: #Google analytics code in the format XX-nnnnnnnn-n
 # baseurl: ""
 baseurl: "/sjs2"
-url: "http://yourdomain.com"
+url: "http://scala-js.org"
 exclude: ["*.iml"]
 production_url : http://www.scala-js.org
 
