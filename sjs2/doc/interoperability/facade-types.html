@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Write facade types for JavaScript APIs</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Write facade types for JavaScript APIs" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/interoperability/facade-types" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li ><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Write facade types for JavaScript APIs</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <div class="col-md-9">
+            <p>When writing an application with Scala.js, it is expected that the main
+application logic be written in Scala.js, and that existing JavaScript libraries
+are leveraged. Calling JavaScript from Scala.js is therefore the most important
+direction of interoperability.</p>
+
+<p>Facade types are zero-overhead typed APIs for JavaScript libraries. They are
+similar in spirit to
+<a href="http://www.typescriptlang.org/Handbook#modules-working-with-other-javascript-libraries">TypeScript type definitions</a>.</p>
+
+<h2 id="defining-javascript-interfaces-with-traits">Defining JavaScript interfaces with traits</h2>
+
+<p>Most JavaScript APIs work with interfaces that are defined structurally. In
+Scala.js, the corresponding concept are traits. To mark a trait as being a
+representative of a JavaScript API, it must inherit directly or indirectly
+from <a target="scaladoc" href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.js.Any"><code>js.Any</code></a> (usually from <code>js.Object</code>).</p>
+
+<p>JS traits can contain <code>val</code>, <code>var</code> and <code>def</code> definitions, and the latter can
+be overloaded.</p>
+
+<p>By default, types extending <code>js.Any</code> are native JS types.
+There also exist <a href="./sjs-defined-js-classes.html">Scala.js-defined JS types</a>.
+Native JS types should be annotated with <code>@js.native</code> for forward source compatibility with Scala.js 1.0.0.</p>
+
+<p><strong>Pre 0.6.5 note</strong>: Before Scala.js 0.6.5, the <code>@js.native</code> annotation did not exist, so you will find old code that does not yet use it to annotate native JS types.</p>
+
+<p>In native JS types, all concrete definitions must have <code>= js.native</code> as body.
+Any other body will be handled as if it were <code>= js.native</code>, and a warning will be emitted.
+(In Scala.js 1.0.0, this will become an error.)</p>
+
+<p><strong>0.5.x note</strong>: In Scala.js 0.5.x, <code>= js.native</code> did not exist either. The recommended
+best practice was to put <code>???</code> as body, but this was not enforced by the
+compiler. This has been changed to improve intuition and remove warts.</p>
+
+<p>Here is an example giving types to a small portion of the API of <code>Window</code>
+objects in browsers.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">trait</span> <span class="nc">Window</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">document</span><span class="k">:</span> <span class="kt">HTMLDocument</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+  <span class="k">var</span> <span class="n">location</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+
+  <span class="k">def</span> <span class="n">innerWidth</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+  <span class="k">def</span> <span class="n">innerHeight</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+
+  <span class="k">def</span> <span class="n">alert</span><span class="o">(</span><span class="n">message</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+
+  <span class="k">def</span> <span class="n">open</span><span class="o">(</span><span class="n">url</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="n">target</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span>
+      <span class="n">features</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span><span class="o">)</span><span class="k">:</span> <span class="kt">Window</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+  <span class="k">def</span> <span class="n">close</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></figure>
+
+<h3 id="remarks">Remarks</h3>
+
+<p><code>var</code>, <code>val</code> and <code>def</code> definitions without parentheses all map to field access
+in JavaScript, whereas <code>def</code> definitions with parentheses (even empty) map
+to method calls in JavaScript.</p>
+
+<p>The difference between a <code>val</code> and a <code>def</code> without parentheses is that the
+result of the former is <em>stable</em> (in Scala semantics). Pragmatically, use <code>val</code>
+if the result will always be the same (e.g., <code>document</code>), and <code>def</code> when
+subsequent accesses to the field might return a different value (e.g.,
+<code>innerWidth</code>).</p>
+
+<p>Calls to the <code>apply</code> method of an object <code>x</code> map to calling <code>x</code>, i.e., <code>x(...)</code>
+instead of <code>x.apply(...)</code>.</p>
+
+<p>Methods can have parameters with default values, to mark them as optional.
+However, the actual value is irrelevant and never used. Instead, the parameter
+is omitted entirely (or set to <code>undefined</code>). The value is only indicative, as
+implicit documentation.</p>
+
+<p>Fields, parameters, or result types that can have different, unrelated types, can be accurately typed with the 
+<a href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.js.$bar">pseudo-union type <code>A | B</code></a>.</p>
+
+<p>Methods can be overloaded. This is useful to type accurately some APIs that
+behave differently depending on the number or types of arguments.</p>
+
+<p>JS traits and their methods can have type parameters, abstract type members
+and type aliases, without restriction compared to Scala’s type system.</p>
+
+<p>However, inner traits, classes and objects don’t make sense and are forbidden.
+It is however allowed to declare a JS trait in a top-level object.</p>
+
+<p>Methods can have varargs, denoted by <code>*</code> like in regular Scala. They map to
+JavaScript varargs, i.e., the method is called with more arguments.</p>
+
+<p><code>isInstanceOf[T]</code> is not supported for any trait <code>T</code> inheriting from <code>js.Any</code>.
+Consequently, pattern matching for such types is not supported either.</p>
+
+<p><code>asInstanceOf[T]</code> is completely erased for any <code>T</code> inheriting from <code>js.Any</code>,
+meaning that it does not perform any runtime check.
+It is always valid to cast anything to such a trait.</p>
+
+<h2 id="javascript-fieldmethod-names-and-their-scala-counterpart">JavaScript field/method names and their Scala counterpart</h2>
+
+<p>Sometimes, a JavaScript API defines fields and/or methods with names that do
+not feel right in Scala. For example, jQuery objects feature a method named
+<code>val()</code>, which, obviously, is a keyword in Scala.</p>
+
+<p>They can be defined in Scala in two ways. The trivial one is simply to use
+backquotes to escape them in Scala:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">`val`</span><span class="o">()</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">def</span> <span class="n">`val`</span><span class="o">(</span><span class="n">v</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">this.</span><span class="k">type</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span></code></pre></figure>
+
+<p>However, it becomes annoying very quickly. An often better solution is to use
+the <code>scala.js.annotation.JSName</code> annotation to specify the JavaScript name to
+use, which can be different from the Scala name:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSName</span><span class="o">(</span><span class="s">"val"</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">value</span><span class="o">()</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="nd">@JSName</span><span class="o">(</span><span class="s">"val"</span><span class="o">)</span>
+<span class="k">def</span> <span class="n">value</span><span class="o">(</span><span class="n">v</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">this.</span><span class="k">type</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span></code></pre></figure>
+
+<p>If necessary, several overloads of a method with the same name can have different
+<code>@JSName</code>’s. Conversely, several methods with different names in Scala can have
+the same <code>@JSName</code>.</p>
+
+<h2 id="scala-methods-representing-bracket-access-objx">Scala methods representing bracket access (<code>obj[x]</code>)</h2>
+
+<p>The annotation <code>scala.js.annotation.JSBracketAccess</code> can be used on methods to
+mark them as representing bracket access on an object. The target method must
+either have one parameter and a non-Unit result type (in which case it
+represents read access) or two parameters and a Unit result type (in which case
+it represents write access).</p>
+
+<p>A typical example can be found in the <code>js.Array[A]</code> class itself, of course:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSBracketAccess</span>
+<span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">index</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">A</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="nd">@JSBracketAccess</span>
+<span class="k">def</span> <span class="n">update</span><span class="o">(</span><span class="n">index</span><span class="k">:</span> <span class="kt">Int</span><span class="o">,</span> <span class="n">v</span><span class="k">:</span> <span class="kt">A</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span></code></pre></figure>
+
+<p>The Scala method names are irrelevant for the translation to JavaScript. The
+duo <code>apply</code>/<code>update</code> is often a sensible choice, because it gives array-like
+access on Scala’s side as well, but it is not required to use these names.</p>
+
+<h2 id="native-javascript-classes">Native JavaScript classes</h2>
+
+<p>It is also possible to define native JavaScript <em>classes</em> as Scala classes inheriting,
+directly or indirectly, from <code>js.Any</code> (like traits, usually from <code>js.Object</code>).
+The main difference compared to traits is that classes have constructors, hence
+they also provide instantiation of objects with the <code>new</code> keyword.</p>
+
+<p>The call <code>new js.RegExp("[ab]*")</code> will map to the obvious in JavaScript, i.e.,
+<code>new RegExp("[ab]*")</code>, meaning that the identifier <code>RegExp</code> will be looked up
+in the global scope.</p>
+
+<p>If it is impractical or inconvenient to declare the Scala class with the
+same name as the JavaScript class (e.g., because it is defined in a namespace,
+like <code>THREE.Scene</code>), the annotation <code>scala.js.annotation.JSName</code> can be used
+to specify the JavaScript name:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSName</span><span class="o">(</span><span class="s">"THREE.Scene"</span><span class="o">)</span>
+<span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">class</span> <span class="nc">Scene</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span></code></pre></figure>
+
+<h3 id="remarks-1">Remarks</h3>
+
+<p>If the class does not have any constructor without argument, and it has to be
+subclassed, you may either decide to add a fake protected no-arg constructor,
+or call an inherited constructor with <code>???</code>s as parameters.</p>
+
+<p><code>isInstanceOf[C]</code> is supported for classes inheriting from <code>js.Any</code>.
+It is implemented with an <code>instanceof</code> test.
+Pattern matching, including <code>ClassTag</code>-based matching, work accordingly.</p>
+
+<p>As is the case for traits, <code>asInstanceOf[C]</code> is completely erased for any class
+<code>C</code> inheriting from <code>js.Any</code>, meaning that it does not perform any runtime
+check.
+It is always valid to cast anything to such a class.</p>
+
+<h2 id="top-level-javascript-objects">Top-level JavaScript objects</h2>
+
+<p>JavaScript APIs often expose top-level objects with methods and fields.
+For example, the <code>JSON</code> object provides methods for parsing and emitting JSON
+strings.
+These can be declared in Scala.js with <code>object</code>’s inheriting directly or
+indirectly from <code>js.Any</code> (again, often <code>js.Object</code>).</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">object</span> <span class="nc">JSON</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">parse</span><span class="o">(</span><span class="n">text</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">js.Any</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+
+  <span class="k">def</span> <span class="n">stringify</span><span class="o">(</span><span class="n">value</span><span class="k">:</span> <span class="kt">js.Any</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>An call like <code>JSON.parse(text)</code> will map in JavaScript to the obvious, i.e.,
+<code>JSON.parse(text)</code>, meaning that the identifier <code>JSON</code> will be looked up in the
+global scope.</p>
+
+<p>Similarly to classes, the JavaScript name can be specified with <code>@JSName</code>, e.g.,</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSName</span><span class="o">(</span><span class="s">"jQuery"</span><span class="o">)</span>
+<span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">object</span> <span class="nc">JQuery</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">apply</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">JQuery</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Unlike classes and traits, native JS objects can have inner native JS classes, traits and objects.
+Inner classes and objects will be looked up as fields of the enclosing JS object.</p>
+
+<h2 id="variables-and-functions-in-the-global-scope">Variables and functions in the global scope</h2>
+
+<p>Besides object-like top-level definitions, JavaScript also defines variables
+and functions in the global scope. Scala does not have top-level variables and
+functions. Instead, in Scala.js, top-level objects inheriting directly or
+indirectly from <code>js.GlobalScope</code> (which itself extends <code>js.Object</code>) are
+considered to represent the global scope.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">object</span> <span class="nc">DOMGlobalScope</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">GlobalScope</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">document</span><span class="k">:</span> <span class="kt">HTMLDocument</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+
+  <span class="k">def</span> <span class="n">alert</span><span class="o">(</span><span class="n">message</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Note that this rule applies to package objects as well. It is often sensible
+to use package objects for this purpose, e.g.,</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">org.scalajs</span>
+
+<span class="k">package</span> <span class="nn">object</span> <span class="n">dom</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">GlobalScope</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">document</span><span class="k">:</span> <span class="kt">HTMLDocument</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+
+  <span class="k">def</span> <span class="n">alert</span><span class="o">(</span><span class="n">message</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="monkey-patching">Monkey patching</h2>
+
+<p>In JavaScript, monkey patching is a common pattern, where some top-level
+object or class’ prototype is meant to be extended by third-party code. This
+pattern is easily encoded in Scala.js’ type system with <code>implicit</code> conversions.</p>
+
+<p>For example, in jQuery, <code>$.fn</code> can be extended with new methods that will be
+available to so-called jQuery objects, of type <code>JQuery</code>. Such a plugin can be
+declared in Scala.js with a separate trait, say <code>JQueryGreenify</code>, and an
+implicit conversions from <code>JQuery</code> to <code>JQueryGreenify</code>.
+The implicit conversion is implemented with a hard cast, since in effect we
+just want to extend the API, not actually change the value.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@js</span><span class="o">.</span><span class="n">native</span>
+<span class="k">trait</span> <span class="nc">JQueryGreenify</span> <span class="k">extends</span> <span class="nc">JQuery</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">greenify</span><span class="o">()</span><span class="k">:</span> <span class="kt">this.</span><span class="k">type</span> <span class="o">=</span> <span class="o">???</span>
+<span class="o">}</span>
+
+<span class="k">object</span> <span class="nc">JQueryGreenify</span> <span class="o">{</span>
+  <span class="k">implicit</span> <span class="k">def</span> <span class="n">jq2greenify</span><span class="o">(</span><span class="n">jq</span><span class="k">:</span> <span class="kt">JQuery</span><span class="o">)</span><span class="k">:</span> <span class="kt">JQueryGreenify</span> <span class="o">=</span>
+    <span class="n">jq</span><span class="o">.</span><span class="n">asInstanceOf</span><span class="o">[</span><span class="kt">JQueryGreenify</span><span class="o">]</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Recall that <code>jq.asInstanceOf[JQueryGreenify]</code> will be erased when mapping to
+JavaScript because <code>JQueryGreenify</code> is a JS trait.
+The implicit conversion is therefore a no-op and can be inlined away, which
+means that this pattern does not have any runtime overhead.</p>
+
+<h2 id="reflective-calls">Reflective calls</h2>
+
+<p>Scala.js does not support reflective calls on any subtype of
+<code>js.Any</code>. This is mainly due to the <code>@JSName</code> annotation. Since we
+cannot statically enforce this restriction, reflective calls on
+subtypes of <code>js.Any</code> <em>will fail at runtime</em>. Therefore, we recommend
+to avoid reflective calls altogether.</p>
+
+<h3 id="what-is-a-reflective-call">What is a reflective call?</h3>
+
+<p>Calling a method on a structural type in Scala creates a so-called
+reflective call. A reflective call is a type-safe method call that
+uses Java reflection at runtime. The following is an example of a
+reflective call:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="c1">// A structural type
+</span><span class="k">type</span> <span class="kt">T</span> <span class="o">=</span> <span class="o">{</span> <span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="o">}</span>
+<span class="k">def</span> <span class="n">print</span><span class="o">(</span><span class="n">obj</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span> <span class="k">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">foo</span><span class="o">(</span><span class="mi">100</span><span class="o">)</span>
+<span class="o">//</span>                      <span class="o">^</span> <span class="k">this</span> <span class="n">is</span> <span class="n">a</span> <span class="n">reflective</span> <span class="n">call</span></code></pre></figure>
+
+<p>Any object conforming structurally to <code>T</code> can now be passed to
+<code>print</code>:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">class</span> <span class="nc">A</span> <span class="o">{</span> <span class="k">def</span> <span class="n">foo</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">=</span> <span class="n">s</span><span class="s">"Input: $x"</span> <span class="o">}</span>
+<span class="n">print</span><span class="o">(</span><span class="k">new</span> <span class="n">A</span><span class="o">())</span></code></pre></figure>
+
+<p>Note that <code>A</code> does <em>not</em> extend <code>T</code> but only conforms structurally
+(i.e., it has a method <code>foo</code> with a matching signature).</p>
+
+<p>The Scala compiler issues a warning for every reflective call, unless
+the <code>scala.language.reflectiveCalls</code> is imported.</p>
+
+<h3 id="why-do-reflective-calls-not-work-on-jsany">Why do reflective calls not work on <code>js.Any</code>?</h3>
+
+<p>Since JavaScript is dynamic by nature, a reflective method lookup as
+in Java is not required for reflective calls. However, in order to
+generate the right method call, the call-site needs to know the exact
+function name in JavaScript. The Scala.js compiler generates proxy
+methods for that specific purpose.</p>
+
+<p>However, we are unable to generate these forwarder methods on <code>js.Any</code>
+types without leaking prototype members on non-Scala.js objects. This
+is something which – in our opinion – we must avoid at all
+cost. Lack of forwarder methods combined with the fact that a
+JavaScript method can be arbitrarily renamed using <code>@JSName</code>, makes it
+impossible to know the method name to be called at the call-site. The
+reflective call can therefore not be generated.</p>
+
+<h1 id="calling-javascript-from-scalajs-with-dynamic-types">Calling JavaScript from Scala.js with dynamic types</h1>
+
+<p>Because JavaScript is dynamically typed, it is not often practical, sometimes
+impossible, to give sensible type definitions for JavaScript APIs.</p>
+
+<p>Scala.js lets you call JavaScript in a dynamically typed fashion if you
+want to. The basic entry point is to grab a dynamically typed reference to the
+global scope, with <code>js.Dynamic.global</code>, which is of type <code>js.Dynamic</code>.</p>
+
+<p>You can read and write any field of a <code>js.Dynamic</code>, as well as call any method
+with any number of arguments. All input types are assumed to be of type
+<code>js.Any</code>, and all output types are assumed to be of type <code>js.Dynamic</code>. This
+means that you can assign a <code>js.Array[A]</code> (or even an <code>Int</code>, through implicit
+conversion) to a field of a <code>js.Dynamic</code>. And when you receive something, you
+can chain any kind of call and/or field access.</p>
+
+<p>For example, this snippet taken from the Hello World example uses the
+dynamically typed interface to manipulate the DOM model.</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">document</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Dynamic</span><span class="o">.</span><span class="n">global</span><span class="o">.</span><span class="n">document</span>
+<span class="k">val</span> <span class="n">playground</span> <span class="k">=</span> <span class="n">document</span><span class="o">.</span><span class="n">getElementById</span><span class="o">(</span><span class="s">"playground"</span><span class="o">)</span>
+
+<span class="k">val</span> <span class="n">newP</span> <span class="k">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="o">(</span><span class="s">"p"</span><span class="o">)</span>
+<span class="n">newP</span><span class="o">.</span><span class="n">innerHTML</span> <span class="k">=</span> <span class="s">"Hello world! &lt;i&gt;-- DOM&lt;/i&gt;"</span>
+<span class="n">playground</span><span class="o">.</span><span class="n">appendChild</span><span class="o">(</span><span class="n">newP</span><span class="o">)</span></code></pre></figure>
+
+<p>In this example, <code>document</code>, <code>playground</code> and <code>newP</code> are all inferred to be of
+type <code>js.Dynamic</code>. When calling <code>getElementById</code> or assigning to the field
+<code>innerHTML</code>, the <code>String</code> is implicitly converted to <code>js.Any</code>.</p>
+
+<p>And since <code>js.Dynamic</code> inherits from <code>js.Any</code>, it is also valid to pass <code>newP</code>
+as a parameter to <code>appendChild</code>.</p>
+
+<h2 id="remarks-2">Remarks</h2>
+
+<p>Calling a <code>js.Dynamic</code>, like in <code>x(a)</code> will be treated as calling <code>x</code> in
+JavaScript, just like calling the <code>apply</code> method with the statically typed
+interface. Parameters are assumed to be of type <code>js.Any</code> and the result type
+is <code>js.Dynamic</code>, as for any other method.</p>
+
+<p>All the JavaScript operators can be applied to <code>js.Dynamic</code> values.</p>
+
+<p>To instantiate an object of a class with the dynamic interface, you need to
+obtain a <code>js.Dynamic</code> reference to the class value, and call the
+<code>js.Dynamic.newInstance</code> method like this:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">today</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Dynamic</span><span class="o">.</span><span class="n">newInstance</span><span class="o">(</span><span class="n">js</span><span class="o">.</span><span class="nc">Dynamic</span><span class="o">.</span><span class="n">global</span><span class="o">.</span><span class="nc">Date</span><span class="o">)()</span></code></pre></figure>
+
+<p>If you use the dynamic interface a lot, it is convenient to import
+<code>js.Dynamic.global</code> and/or <code>newInstance</code> under simple names, e.g.,</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">js.Dynamic.</span><span class="o">{</span> <span class="n">global</span> <span class="k">=&gt;</span> <span class="n">g</span><span class="o">,</span> <span class="n">newInstance</span> <span class="k">=&gt;</span> <span class="n">jsnew</span> <span class="o">}</span>
+
+<span class="k">val</span> <span class="n">today</span> <span class="k">=</span> <span class="n">jsnew</span><span class="o">(</span><span class="n">g</span><span class="o">.</span><span class="nc">Date</span><span class="o">)()</span></code></pre></figure>
+
+<p>When using <code>js.Dynamic</code>, you are very close to writing raw JavaScript within
+Scala.js, with all the warts of the language coming to haunt you.
+However, to get the full extent of JavaScriptish code, you can import the
+implicit conversions in
+<a href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.js.DynamicImplicits$">js.DynamicImplicts</a>.
+Use at your own risk!</p>
+
+            <div class="spacing"></div>
+        </div>
+        <div class="col-md-3">
+            <nav class="toc" role="navigation">
+                
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/">
+            
+            Introduction
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/sjs-for-js/">
+            
+            Scala.js for JavaScript developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/">
+            
+            Project setup
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/">
+            
+            JavaScript interoperability
+            
+        </a>
+    </li>
+    
+      
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/types.html">
+            
+            JavaScript types
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/calling-javascript.html">
+            
+            Call JavaScript APIs
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/export-to-javascript.html">
+            
+            Export Scala.js APIs
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/sjs-defined-js-classes.html">
+            
+            Write JavaScript classes in Scala.js
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+    
+    
+    <li>
+        <a href="/sjs2/doc/api.html">
+            
+            Scala.js API
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/semantics.html">
+            
+            Semantics of Scala.js
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/internals/">
+            
+            Internals
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/faq.html">
+            
+            FAQ
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.5.1</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Announcing Scala.js 0.5.1" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/news/2014/06/30/announcing-scalajs-0.5.1/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" /><meta property="article:published_time" content="2014-06-30T00:00:00+03:00" /><meta property="article:tag" content="releases" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Announcing Scala.js 0.5.1</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/2014/06/30/announcing-scalajs-0.5.1/"><h3 class="ctitle">Announcing Scala.js 0.5.1</h3></a>
+
+            <p>
+                <span class="small">Jun 30, 2014.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.5.1!</p>
+
+<p>This version features bug fixes and improvements while remaining binary compatible with Scala.js 0.5.0. Therefore,
+Scala.js libraries may, but need not be republished with Scala.js 0.5.1.
+<!--more--></p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="improvements-in-the-051-release">Improvements in the 0.5.1 release</h2>
+
+<p>For changes introduced in 0.5.0, how to upgrade, getting started etc. have a look at the <a href="/news/2014/06/13/announcing-scalajs-0.5.0/">0.5.0 announcement</a>.</p>
+
+<h4 id="additions-to-the-java-library">Additions to the Java library</h4>
+
+<p>The following two are now implemented according to spec:</p>
+
+<ul>
+  <li><code>java.util.Date</code></li>
+  <li><code>java.util.Random</code></li>
+</ul>
+
+<h4 id="wrappers-for-javascript-arrays-and-dictionaries">Wrappers for JavaScript Arrays and Dictionaries</h4>
+
+<p>Thanks to <code>js.WrappedArray</code> and <code>js.WrappedDictionary</code> (and some implicit conversions), <code>js.Array</code> and <code>js.Dictionary</code> can now be passed to Scala code that expects <code>mutable.Seq</code> and <code>mutable.Map</code> respectively:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">setHead</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">mutable.Seq</span><span class="o">[</span><span class="kt">Int</span><span class="o">])</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="n">x</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span> <span class="k">=</span> <span class="mi">42</span>
+<span class="k">val</span> <span class="n">array</span> <span class="k">=</span> <span class="n">js</span><span class="o">.</span><span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">)</span>
+<span class="n">setHead</span><span class="o">(</span><span class="n">array</span><span class="o">)</span>
+<span class="n">println</span><span class="o">(</span><span class="n">array</span><span class="o">)</span> <span class="o">//</span> <span class="o">-&gt;</span> <span class="mi">42</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">3</span></code></pre></figure>
+
+<p>Further, this allows to call methods defined on <code>Map</code> on <code>js.Dictionary</code> (<code>foreach</code>, <code>map</code>, <code>filter</code>, etc.)</p>
+
+<h4 id="filter-jsdependencies-when-executing-javascript-code">Filter <code>jsDependencies</code> when executing JavaScript code</h4>
+
+<p>The new sbt setting <code>jsDependencyFilter</code> can be used to modify the dependencies used when running/testing:</p>
+
+<pre><code>jsDependencyFilter := (_.filter(_.resourceName != "jquery.js"))
+</code></pre>
+
+<p>The above would prevent “jquery.js” from being included by the sbt runners. See <a href="http://www.scala-js.org/api/scalajs-tools/0.5.1/#scala.scalajs.tools.jsdep.FlatJSDependency">FlatJSDependency</a> for fields that you can use.</p>
+
+<h4 id="ordered-testing-output">Ordered testing output</h4>
+
+<p>When testing in the <code>fastOptStage</code> or the <code>fullOptStage</code>, test output sometimes appeared interleaved. This has been fixed this release.</p>
+
+<h2 id="contributors">Contributors</h2>
+
+<p>Thanks to all the code contributors:</p>
+
+<ul>
+  <li><a href="https://github.com/sjrd/">Sébastien Doeraene</a></li>
+  <li><a href="https://github.com/gzm0/">Tobias Schlatter</a></li>
+  <li><a href="https://github.com/alexander-myltsev">Alexander Myltsev</a></li>
+  <li><a href="https://github.com/mseddon">Matt Seddon</a></li>
+</ul>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/2014/06/13/announcing-scalajs-0.5.0/"
+                                            title="Announcing Scala.js 0.5.0">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/2014/07/09/announcing-scalajs-0.5.2/"
+                                        title="Announcing Scala.js 0.5.2">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

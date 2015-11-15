@@ -10,7 +10,7 @@
 
     <title>Scala.js - Semantics of Scala.js</title>
 
-    <meta property="og:type" content="article" /><meta property="og:title" content="Semantics of Scala.js" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/semantics.html" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-128.png" />
+    <meta property="og:type" content="article" /><meta property="og:title" content="Semantics of Scala.js" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/semantics" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -81,7 +81,7 @@ implementation.</p>
 <p>If exact single precision operations are important to your application, you can
 enable strict-floats semantics in Scala.js, with the following sbt setting:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withStrictFloats</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withStrictFloats</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></figure>
 
 <p>Note that this can have a major impact on performance of your application on
 JS interpreters that do not support
@@ -92,9 +92,9 @@ JS interpreters that do not support
 <p><code>x.toString()</code> returns slightly different results for floating point numbers
 and <code>()</code> (<code>Unit</code>).</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="o">().</span><span class="n">toString</span>   <span class="c1">// &quot;undefined&quot;, instead of &quot;()&quot;</span>
-<span class="mf">1.0</span><span class="o">.</span><span class="n">toString</span>  <span class="c1">// &quot;1&quot;, instead of &quot;1.0&quot;</span>
-<span class="mf">1.4f</span><span class="o">.</span><span class="n">toString</span> <span class="c1">// &quot;1.399999976158142&quot; instead of &quot;1.4&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="o">().</span><span class="n">toString</span>   <span class="c1">// "undefined", instead of "()"
+</span><span class="mf">1.0</span><span class="o">.</span><span class="n">toString</span>  <span class="c1">// "1", instead of "1.0"
+</span><span class="mf">1.4f</span><span class="o">.</span><span class="n">toString</span> <span class="o">//</span> <span class="s">"1.399999976158142"</span> <span class="n">instead</span> <span class="n">of</span> <span class="s">"1.4"</span></code></pre></figure>
 
 <p>In general, a trailing <code>.0</code> is omitted.
 Floats print in a weird way because they are printed as if they were Doubles,
@@ -168,7 +168,7 @@ are configurable, but the list will probably expand in future versions.</p>
   <li><code>Compliant</code>: behaves as specified on a JVM</li>
   <li><code>Unchecked</code>: completely unchecked and undefined</li>
   <li><code>Fatal</code>: checked, but throws
-<a href="http://www.scala-js.org/api/scalajs-library//#scala.scalajs.runtime.UndefinedBehaviorError"><code>UndefinedBehaviorError</code>s</a>
+<a href="http://www.scala-js.org/api/scalajs-library/0.6.5/#scala.scalajs.runtime.UndefinedBehaviorError"><code>UndefinedBehaviorError</code>s</a>
 instead of the specified exception.</li>
 </ul>
 
@@ -191,8 +191,8 @@ stage than in <code>fastOpt</code>.</p>
 JVM semantics, you can do so with an sbt setting.
 For example, this setting enables compliant <code>asInstanceOf</code>s:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withAsInstanceOfs</span><span class="o">(</span>
-  <span class="n">org</span><span class="o">.</span><span class="n">scalajs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">sem</span><span class="o">.</span><span class="nc">CheckedBehavior</span><span class="o">.</span><span class="nc">Compliant</span><span class="o">)</span> <span class="o">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withAsInstanceOfs</span><span class="o">(</span>
+  <span class="n">org</span><span class="o">.</span><span class="n">scalajs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">sem</span><span class="o">.</span><span class="nc">CheckedBehavior</span><span class="o">.</span><span class="nc">Compliant</span><span class="o">)</span> <span class="o">}</span></code></pre></figure>
 
 <p>Note that this will have (potentially major) performance impacts.</p>
 
@@ -243,20 +243,20 @@ limited support for these two methods:</p>
 <li>Calls to either of these two methods of the forms:
 
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span>
-<span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(&lt;</span><span class="n">num</span><span class="o">&gt;)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span>
+<span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(&lt;</span><span class="n">num</span><span class="o">&gt;)</span></code></pre></figure>
 
 
 are statically rewritten to (a slightly more complicated version of):
 
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(</span><span class="s">&quot;&lt;ident&gt;&quot;</span><span class="o">)</span>
-<span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(&lt;</span><span class="n">num</span><span class="o">&gt;,</span> <span class="s">&quot;&lt;ident&gt;&quot;</span><span class="o">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(</span><span class="s">"&lt;ident&gt;"</span><span class="o">)</span>
+<span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(&lt;</span><span class="n">num</span><span class="o">&gt;,</span> <span class="s">"&lt;ident&gt;"</span><span class="o">)</span></code></pre></figure>
 
 
 Note that this also includes calls like
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">C</span><span class="o">,</span> <span class="n">D</span> <span class="k">=</span> <span class="nc">Value</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">A</span><span class="o">,</span> <span class="n">B</span><span class="o">,</span> <span class="n">C</span><span class="o">,</span> <span class="n">D</span> <span class="k">=</span> <span class="nc">Value</span></code></pre></figure>
 
 since they are desugared into separate <code>val</code> definitions.
 </li>
@@ -268,12 +268,12 @@ explicit name as parameter, will issue a warning.</li>
 <p>Note that the name rewriting honors the <code>nextName</code>
 iterator. Therefore, the full rewrite is:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="o">&lt;</span><span class="n">ident</span><span class="o">&gt;</span> <span class="k">=</span> <span class="nc">Value</span><span class="o">(</span>
   <span class="k">if</span> <span class="o">(</span><span class="n">nextName</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">nextName</span><span class="o">.</span><span class="n">hasNext</span><span class="o">)</span>
     <span class="n">nextName</span><span class="o">.</span><span class="n">next</span><span class="o">()</span>
   <span class="k">else</span>
-    <span class="s">&quot;&lt;ident&gt;&quot;</span>
-<span class="o">)</span></code></pre></div>
+    <span class="s">"&lt;ident&gt;"</span>
+<span class="o">)</span></code></pre></figure>
 
 <p>We believe that this covers most use cases of
 <code>scala.Enumeration</code>. Please let us know if another (generalized)
@@ -296,16 +296,7 @@ rewrite would make your life easier.</p>
     
     
     <li>
-        <a href="/sjs2/doc/why-scalajs.html">
-            
-            Why Scala.js?
-            
-        </a>
-    </li>
-    
-    
-    <li>
-        <a href="/sjs2/doc/sjs_for_js/">
+        <a href="/sjs2/doc/sjs-for-js/">
             
             Scala.js for JavaScript developers
             
@@ -343,7 +334,7 @@ rewrite would make your life easier.</p>
     <li>
         <a href="/sjs2/doc/semantics.html">
             
-            <b>Semantics of Scala.js</b>
+            Semantics of Scala.js
             
         </a>
     </li>
@@ -406,15 +397,21 @@ rewrite would make your life easier.</p>
 <script src="/sjs2/assets/js/bootstrap.min.js"></script>
 <script src="/sjs2/assets/js/highlight.pack.js"></script>
 <script src="/sjs2/assets/js/custom.js"></script>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-42008737-1', 'scala-js.org');
-ga('send', 'pageview');
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
 </script>
+
+
 
 </body>
 </html>

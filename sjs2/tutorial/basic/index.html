@@ -10,7 +10,7 @@
 
     <title>Scala.js - Basic tutorial</title>
 
-    <meta property="og:type" content="article" /><meta property="og:title" content="Basic tutorial" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/tutorial/basic/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-128.png" />
+    <meta property="og:type" content="article" /><meta property="og:title" content="Basic tutorial" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/tutorial/basic/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -82,19 +82,19 @@
 
 <p>Adding the Scala.js sbt plugin is a one-liner in <code>project/plugins.sbt</code> (all file names we write in this tutorial are relative to the project root):</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.scala-js&quot;</span> <span class="o">%</span> <span class="s">&quot;sbt-scalajs&quot;</span> <span class="o">%</span> <span class="s">&quot;&quot;</span><span class="o">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">"org.scala-js"</span> <span class="o">%</span> <span class="s">"sbt-scalajs"</span> <span class="o">%</span> <span class="s">"0.6.5"</span><span class="o">)</span></code></pre></figure>
 
 <p>We also setup basic project settings and enable this plugin in the sbt build file (<code>build.sbt</code>, in the project root directory):</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">enablePlugins</span><span class="o">(</span><span class="nc">ScalaJSPlugin</span><span class="o">)</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">enablePlugins</span><span class="o">(</span><span class="nc">ScalaJSPlugin</span><span class="o">)</span>
 
-<span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;Scala.js Tutorial&quot;</span>
+<span class="n">name</span> <span class="o">:=</span> <span class="s">"Scala.js Tutorial"</span>
 
-<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">&quot;2.11.5&quot;</span> <span class="c1">// or any other Scala version &gt;= 2.10.2</span></code></pre></div>
+<span class="n">scalaVersion</span> <span class="o">:=</span> <span class="s">"2.11.5"</span> <span class="o">//</span> <span class="n">or</span> <span class="n">any</span> <span class="n">other</span> <span class="nc">Scala</span> <span class="n">version</span> <span class="o">&gt;=</span> <span class="mf">2.10</span><span class="o">.</span><span class="mi">2</span></code></pre></figure>
 
 <p>Last, we need a <code>project/build.properties</code> to specify the sbt version (&gt;= 0.13.7):</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">sbt</span><span class="o">.</span><span class="n">version</span><span class="k">=</span><span class="mf">0.13</span><span class="o">.</span><span class="mi">7</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">sbt</span><span class="o">.</span><span class="n">version</span><span class="k">=</span><span class="mf">0.13</span><span class="o">.</span><span class="mi">7</span></code></pre></figure>
 
 <p>That is all we need to configure the build.</p>
 
@@ -104,15 +104,15 @@
 
 <p>For starters, we add a very simple <code>TutorialApp</code> in the <code>tutorial.webapp</code> package. Create the file <code>src/main/scala/tutorial/webapp/TutorialApp.scala</code>:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">tutorial.webapp</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">tutorial.webapp</span>
 
 <span class="k">import</span> <span class="nn">scala.scalajs.js.JSApp</span>
 
 <span class="k">object</span> <span class="nc">TutorialApp</span> <span class="k">extends</span> <span class="nc">JSApp</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">main</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
-    <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello world!&quot;</span><span class="o">)</span>
+    <span class="n">println</span><span class="o">(</span><span class="s">"Hello world!"</span><span class="o">)</span>
   <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>As you expect, this will simply print “HelloWorld” when run. To run this, simply launch <code>sbt</code> and invoke the <code>run</code> task:</p>
 
@@ -207,28 +207,28 @@ in order not to disturb your teammates, in a separate <code>.sbt</code> file (sa
 
 <p>To load and launch the created JavaScript, you will need an HTML file. Create the file <code>scalajs-tutorial-fastopt.html</code> (or whatever name you prefer, for example <code>index-dev.html</code>) in the project root with the following content. We will go in the details right after.</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
   <span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;title&gt;</span>The Scala.js Tutorial<span class="nt">&lt;/title&gt;</span>
   <span class="nt">&lt;/head&gt;</span>
   <span class="nt">&lt;body&gt;</span>
     <span class="c">&lt;!-- Include Scala.js compiled code --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./target/scala-2.11/scala-js-tutorial-fastopt.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./target/scala-2.11/scala-js-tutorial-fastopt.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="c">&lt;!-- Run tutorial.webapp.TutorialApp --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;</span>
       <span class="nx">tutorial</span><span class="p">.</span><span class="nx">webapp</span><span class="p">.</span><span class="nx">TutorialApp</span><span class="p">().</span><span class="nx">main</span><span class="p">();</span>
     <span class="nt">&lt;/script&gt;</span>
   <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></div>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
 
 <p>The first script tag simply includes the generated code (attention, you might need to adapt the Scala version from <code>2.11</code> to <code>2.10</code> here if you are using Scala 2.10.x instead of 2.11.x).</p>
 
 <p>In the second script tag, we first get the <code>TutorialApp</code> object. Note the <code>()</code>: <code>TutorialApp</code> is a function in JavaScript, since potential object initialization code needs to be run upon the first access to the object. We then simply call the <code>main</code> method on the <code>TutorialApp</code> object.</p>
 
 <p>Since <code>TutorialApp</code> extends <code>JSApp</code>, the object itself and its <code>main</code> method are automatically made available to
-JavaScript. This is not true in general. Continue reading this tutorial or have a look at the <a href="../../doc/interoperability/export_to_js.html">Export Scala.js API to
+JavaScript. This is not true in general. Continue reading this tutorial or have a look at the <a href="../../doc/interoperability/export-to-javascript.html">Export Scala.js API to
 JavaScript</a> guide for details.</p>
 
 <p>If you now open the newly created HTML page in your favorite browser, you will see … nothing. The <code>println</code> in the <code>main</code> method goes right to the JavaScript console, which is not shown by default in a browser. However, if you open the JavaScript console (e.g. in Chrome: right click -&gt; Inspect Element -&gt; Console) you can see the HelloWorld message.</p>
@@ -242,7 +242,7 @@ That’s what the DOM API is for.</p>
 
 <p>To use the DOM, it is best to use the statically typed Scala.js DOM library. To add it to your sbt project, add the following line to your <code>build.sbt</code>:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-js&quot;</span> <span class="o">%%%</span> <span class="s">&quot;scalajs-dom&quot;</span> <span class="o">%</span> <span class="s">&quot;0.8.0&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scala-js"</span> <span class="o">%%%</span> <span class="s">"scalajs-dom"</span> <span class="o">%</span> <span class="s">"0.8.0"</span></code></pre></figure>
 
 <p>sbt-savvy folks will notice the <code>%%%</code> instead of the usual <code>%%</code>. It means we are using a Scala.js library and not a
 normal Scala library. Have a look at the <a href="../../doc/project/dependencies.html">Dependencies</a> guide for details. Don’t forget
@@ -262,26 +262,26 @@ to reload the build file if sbt is still running:</p>
 
 <p>First of all, we import a couple of things:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.dom</span>
-<span class="k">import</span> <span class="nn">dom.document</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.dom</span>
+<span class="k">import</span> <span class="nn">dom.document</span></code></pre></figure>
 
 <p><code>dom</code> is the root of the JavaScript DOM and corresponds to the global scope of Script (aka the <code>window</code> object).
 We additionally import <code>document</code> (which corresponds to <code>document</code> in JavaScript) for convenience.</p>
 
 <p>We now create a method that allows us to append a <code>&lt;p&gt;</code> tag with a given text to a given node:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">appendPar</span><span class="o">(</span><span class="n">targetNode</span><span class="k">:</span> <span class="kt">dom.Node</span><span class="o">,</span> <span class="n">text</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
-  <span class="k">val</span> <span class="n">parNode</span> <span class="k">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="o">(</span><span class="s">&quot;p&quot;</span><span class="o">)</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">appendPar</span><span class="o">(</span><span class="n">targetNode</span><span class="k">:</span> <span class="kt">dom.Node</span><span class="o">,</span> <span class="n">text</span><span class="k">:</span> <span class="kt">String</span><span class="o">)</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="k">val</span> <span class="n">parNode</span> <span class="k">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createElement</span><span class="o">(</span><span class="s">"p"</span><span class="o">)</span>
   <span class="k">val</span> <span class="n">textNode</span> <span class="k">=</span> <span class="n">document</span><span class="o">.</span><span class="n">createTextNode</span><span class="o">(</span><span class="n">text</span><span class="o">)</span>
   <span class="n">parNode</span><span class="o">.</span><span class="n">appendChild</span><span class="o">(</span><span class="n">textNode</span><span class="o">)</span>
   <span class="n">targetNode</span><span class="o">.</span><span class="n">appendChild</span><span class="o">(</span><span class="n">parNode</span><span class="o">)</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>Replace the call to <code>println</code> with a call to <code>appendPar</code> in the <code>main</code> method:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">main</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
-  <span class="n">appendPar</span><span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">,</span> <span class="s">&quot;Hello World&quot;</span><span class="o">)</span>
-<span class="o">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">main</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">appendPar</span><span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">,</span> <span class="s">"Hello World"</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
 
 <h3 id="rebuild-the-javascript">Rebuild the JavaScript</h3>
 
@@ -312,22 +312,22 @@ We additionally import <code>document</code> (which corresponds to <code>documen
 
 <p>We start by adding a method to <code>TutorialApp</code> which will be called when the button is clicked:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSExport</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nd">@JSExport</span>
 <span class="k">def</span> <span class="n">addClickedMessage</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
-  <span class="n">appendPar</span><span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">,</span> <span class="s">&quot;You clicked the button!&quot;</span><span class="o">)</span>
-<span class="o">}</span></code></pre></div>
+  <span class="n">appendPar</span><span class="o">(</span><span class="n">document</span><span class="o">.</span><span class="n">body</span><span class="o">,</span> <span class="s">"You clicked the button!"</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
 
 <p>You will notice the <code>@JSExport</code> annotation. It tells the Scala.js compiler to make that method callable from JavaScript. We must also import this annotation:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js.annotation.JSExport</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">scala.scalajs.js.annotation.JSExport</span></code></pre></figure>
 
-<p>To find out more about how to call Scala.js methods from JavaScript, have a look at the <a href="../../doc/interoperability/export_to_js.html">Export Scala.js API to
+<p>To find out more about how to call Scala.js methods from JavaScript, have a look at the <a href="../../doc/interoperability/export-to-javascript.html">Export Scala.js API to
 JavaScript</a> guide.</p>
 
 <p>Since we now have a method that is callable from JavaScript, all we have to do is add a button to our HTML and set its
 <code>onclick</code> attribute (make sure to add the button <em>before</em> the <code>&lt;script&gt;</code> tags):</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">&quot;click-me-button&quot;</span> <span class="na">type=</span><span class="s">&quot;button&quot;</span> <span class="na">onclick=</span><span class="s">&quot;tutorial.webapp.TutorialApp().addClickedMessage()&quot;</span><span class="nt">&gt;</span>Click me!<span class="nt">&lt;/button&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"click-me-button"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">onclick=</span><span class="s">"tutorial.webapp.TutorialApp().addClickedMessage()"</span><span class="nt">&gt;</span>Click me!<span class="nt">&lt;/button&gt;</span></code></pre></figure>
 
 <p>Reload your HTML page (remember, sbt compiles your code automatically) and try to click the button. It should add a new
 paragraph saying “You clicked the button!” each time you click it.</p>
@@ -343,7 +343,7 @@ usages of the DOM API with jQuery.</p>
 <p>Just like for the DOM, there is a typed library for jQuery available in Scala.js. Replace the 
 <code>libraryDependencies += ..</code> line in your <code>build.sbt</code> by:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;be.doeraene&quot;</span> <span class="o">%%%</span> <span class="s">&quot;scalajs-jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;0.8.0&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"be.doeraene"</span> <span class="o">%%%</span> <span class="s">"scalajs-jquery"</span> <span class="o">%</span> <span class="s">"0.8.0"</span></code></pre></figure>
 
 <p>Since we won’t be using the DOM directly, we don’t need the old library anymore. Note that the jQuery library internally
 depends on the DOM, but we don’t have to care about this. sbt takes care of it automatically.</p>
@@ -362,13 +362,13 @@ depends on the DOM, but we don’t have to care about this. sbt takes care of it
 
 <p>In <code>TutorialApp.scala</code>, remove the imports for the DOM, and add the import for jQuery:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.jquery.jQuery</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">org.scalajs.jquery.jQuery</span></code></pre></figure>
 
 <p>This allows you to easily access the <code>jQuery</code> object (usually referred to as <code>$</code> in JavaScript) in your code.</p>
 
 <p>We can now remove <code>appendPar</code> and replace all calls to it by the simple:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;body&quot;</span><span class="o">).</span><span class="n">append</span><span class="o">(</span><span class="s">&quot;&lt;p&gt;[message]&lt;/p&gt;&quot;</span><span class="o">)</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jQuery</span><span class="o">(</span><span class="s">"body"</span><span class="o">).</span><span class="n">append</span><span class="o">(</span><span class="s">"&lt;p&gt;[message]&lt;/p&gt;"</span><span class="o">)</span></code></pre></figure>
 
 <p>Where <code>[message]</code> is the string originally passed to <code>appendPar</code>.</p>
 
@@ -379,7 +379,7 @@ problem is that we haven’t included the jQuery library itself, which is a plai
 
 <p>An option is to include <code>jquery.js</code> from an external source, such as <a href="http://www.jsdelivr.com/">jsDelivr</a>.</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>This can easily become very cumbersome, if you depend on multiple libraries. The Scala.js sbt plugin provides a
 mechanism for libraries to declare the plain JavaScript libraries they depend on and bundle them in a single file. All
@@ -387,14 +387,14 @@ you have to do is activate this and then include the file.</p>
 
 <p>In your <code>build.sbt</code>, set:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">skip</span> <span class="n">in</span> <span class="n">packageJSDependencies</span> <span class="o">:=</span> <span class="kc">false</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">skip</span> <span class="n">in</span> <span class="n">packageJSDependencies</span> <span class="o">:=</span> <span class="kc">false</span></code></pre></figure>
 
 <p>After reloading and rerunning <code>fastOptJS</code>, this will create <code>scala-js-tutorial-jsdeps.js</code> containing all JavaScript
 libraries next to the main JavaScript file. We can then simply include this file and don’t need to worry about
 JavaScript libraries anymore:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- Include JavaScript dependencies --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./target/scala-2.11/scala-js-tutorial-jsdeps.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- Include JavaScript dependencies --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./target/scala-2.11/scala-js-tutorial-jsdeps.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <h3 id="setup-ui-in-scalajs">Setup UI in Scala.js</h3>
 
@@ -402,19 +402,19 @@ JavaScript libraries anymore:</p>
 <code>setupUI</code> method, in which we use jQuery to add an event handler to the button. We also move the “Hello World” message
 into this function.</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">setupUI</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
-  <span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;#click-me-button&quot;</span><span class="o">).</span><span class="n">click</span><span class="o">(</span><span class="n">addClickedMessage</span> <span class="k">_</span><span class="o">)</span>
-  <span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;body&quot;</span><span class="o">).</span><span class="n">append</span><span class="o">(</span><span class="s">&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;</span><span class="o">)</span>
-<span class="o">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">setupUI</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">jQuery</span><span class="o">(</span><span class="s">"#click-me-button"</span><span class="o">).</span><span class="n">click</span><span class="o">(</span><span class="n">addClickedMessage</span> <span class="k">_</span><span class="o">)</span>
+  <span class="n">jQuery</span><span class="o">(</span><span class="s">"body"</span><span class="o">).</span><span class="n">append</span><span class="o">(</span><span class="s">"&lt;p&gt;Hello World&lt;/p&gt;"</span><span class="o">)</span>
+<span class="o">}</span></code></pre></figure>
 
 <p>Since we do not call <code>addClickedMessage</code> from plain JavaScript anymore, we can remove the <code>@JSExport</code> annotation (and
 the corresponding import).</p>
 
 <p>Finally, we add a last call to <code>jQuery</code> in the main method, in order to execute <code>setupUI</code>, once the DOM is loaded:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">main</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">def</span> <span class="n">main</span><span class="o">()</span><span class="k">:</span> <span class="kt">Unit</span> <span class="o">=</span> <span class="o">{</span>
   <span class="n">jQuery</span><span class="o">(</span><span class="n">setupUI</span> <span class="k">_</span><span class="o">)</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>Again, since we are not calling <code>setupUI</code> directly from plain JavaScript, we do not need to export it (even though
 jQuery will call it).</p>
@@ -426,7 +426,7 @@ this application.</p>
 
 <p>In this section we will show how such an application can be tested using <a href="http://github.com/lihaoyi/utest">uTest</a>, a
 tiny testing framework which compiles to both Scala.js and Scala JVM. As a note aside, this framework is also a good
-choice to test libraries that cross compile. See our <a href="../../doc/project/cross_build.html">cross compilation guide</a> for
+choice to test libraries that cross compile. See our <a href="../../doc/project/cross-build.html">cross compilation guide</a> for
 details.</p>
 
 <h3 id="supporting-the-dom">Supporting the DOM</h3>
@@ -447,7 +447,7 @@ org.mozilla.javascript.EcmaError: ReferenceError: "window" is not defined. (/hom
 the DOM, which doesn’t exist by default in the Rhino and Node.js runners. To make the DOM available, add the following
 to your <code>build.sbt</code>:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="nc">RuntimeDOM</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="nc">RuntimeDOM</span></code></pre></figure>
 
 <p>If you use the fastOpt stage, this will switch to running your code with <a href="http://phantomjs.org/">PhantomJS</a> instead of
 Node.js, which you need to install. Otherwise, in Rhino, a fake DOM is automatically made available.</p>
@@ -468,13 +468,13 @@ DOM, then you depend on the DOM as well.</p>
 It typically boils down to two sbt settings in the <code>build.sbt</code> file.
 For uTest, these are:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;com.lihaoyi&quot;</span> <span class="o">%%%</span> <span class="s">&quot;utest&quot;</span> <span class="o">%</span> <span class="s">&quot;0.3.0&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"com.lihaoyi"</span> <span class="o">%%%</span> <span class="s">"utest"</span> <span class="o">%</span> <span class="s">"0.3.0"</span> <span class="o">%</span> <span class="s">"test"</span>
 
-<span class="n">testFrameworks</span> <span class="o">+=</span> <span class="k">new</span> <span class="nc">TestFramework</span><span class="o">(</span><span class="s">&quot;utest.runner.Framework&quot;</span><span class="o">)</span></code></pre></div>
+<span class="n">testFrameworks</span> <span class="o">+=</span> <span class="k">new</span> <span class="nc">TestFramework</span><span class="o">(</span><span class="s">"utest.runner.Framework"</span><span class="o">)</span></code></pre></figure>
 
 <p>We are now ready to add a first simple test suite (<code>src/test/scala/tutorial/webapp/TutorialTest.scala</code>):</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">tutorial.webapp</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">tutorial.webapp</span>
 
 <span class="k">import</span> <span class="nn">utest._</span>
 
@@ -482,15 +482,15 @@ For uTest, these are:</p>
 
 <span class="k">object</span> <span class="nc">TutorialTest</span> <span class="k">extends</span> <span class="nc">TestSuite</span> <span class="o">{</span>
 
-  <span class="c1">// Initialize App</span>
-  <span class="nc">TutorialApp</span><span class="o">.</span><span class="n">setupUI</span><span class="o">()</span>
+  <span class="c1">// Initialize App
+</span>  <span class="nc">TutorialApp</span><span class="o">.</span><span class="n">setupUI</span><span class="o">()</span>
 
   <span class="k">def</span> <span class="n">tests</span> <span class="k">=</span> <span class="nc">TestSuite</span> <span class="o">{</span>
-    <span class="-Symbol">&#39;HelloWorld</span> <span class="o">{</span>
-      <span class="n">assert</span><span class="o">(</span><span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;p:contains(&#39;Hello World&#39;)&quot;</span><span class="o">).</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="ss">'HelloWorld </span><span class="o">{</span>
+      <span class="n">assert</span><span class="o">(</span><span class="n">jQuery</span><span class="o">(</span><span class="s">"p:contains('Hello World')"</span><span class="o">).</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
     <span class="o">}</span>
   <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>This test uses jQuery to verify that our page contains exactly one <code>&lt;p&gt;</code> element which contains the text “Hello World”
 after the UI has been set up.</p>
@@ -521,20 +521,20 @@ Just like <code>run</code>, the <code>test</code> task uses Rhino by default, or
 exist when testing, since the tests start with an empty DOM tree. To solve this, we create the button in the <code>setupUI</code>
 method and remove it from the HTML:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;&quot;&quot;&lt;button type=&quot;button&quot;&gt;Click me!&lt;/button&gt;&quot;&quot;&quot;</span><span class="o">)</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jQuery</span><span class="o">(</span><span class="s">"""&lt;button type="button"&gt;Click me!&lt;/button&gt;"""</span><span class="o">)</span>
   <span class="o">.</span><span class="n">click</span><span class="o">(</span><span class="n">addClickedMessage</span> <span class="k">_</span><span class="o">)</span>
-  <span class="o">.</span><span class="n">appendTo</span><span class="o">(</span><span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;body&quot;</span><span class="o">))</span></code></pre></div>
+  <span class="o">.</span><span class="n">appendTo</span><span class="o">(</span><span class="n">jQuery</span><span class="o">(</span><span class="s">"body"</span><span class="o">))</span></code></pre></figure>
 
 <p>This brings another unexpected advantage: We don’t need to give it an ID anymore but can directly use the jQuery object
 to install the on-click handler.</p>
 
 <p>We now define the <code>ButtonClick</code> test just below the <code>HelloWorld</code> test:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="-Symbol">&#39;ButtonClick</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="ss">'ButtonClick </span><span class="o">{</span>
   <span class="k">def</span> <span class="n">messageCount</span> <span class="k">=</span>
-    <span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;p:contains(&#39;You clicked the button!&#39;)&quot;</span><span class="o">).</span><span class="n">length</span>
+    <span class="n">jQuery</span><span class="o">(</span><span class="s">"p:contains('You clicked the button!')"</span><span class="o">).</span><span class="n">length</span>
 
-  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="n">jQuery</span><span class="o">(</span><span class="s">&quot;button:contains(&#39;Click me!&#39;)&quot;</span><span class="o">)</span>
+  <span class="k">val</span> <span class="n">button</span> <span class="k">=</span> <span class="n">jQuery</span><span class="o">(</span><span class="s">"button:contains('Click me!')"</span><span class="o">)</span>
   <span class="n">assert</span><span class="o">(</span><span class="n">button</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
   <span class="n">assert</span><span class="o">(</span><span class="n">messageCount</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
 
@@ -542,7 +542,7 @@ to install the on-click handler.</p>
     <span class="n">button</span><span class="o">.</span><span class="n">click</span><span class="o">()</span>
     <span class="n">assert</span><span class="o">(</span><span class="n">messageCount</span> <span class="o">==</span> <span class="n">c</span><span class="o">)</span>
   <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>After defining a helper method that counts the number of messages, we retrieve the button from the DOM and verify we
 have exactly one button and no messages. In the loop, we simulate a click on the button and then verify that the number
@@ -596,15 +596,15 @@ feature of the sbt plugin. Since the sbt plugin is able to detect the <code>JSAp
 need to repeat this in the HTML file. If you add the following setting to your <code>build.sbt</code>, sbt will create a
 <code>scala-js-tutorial-launcher.js</code> file which calls the main method:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">persistLauncher</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="kc">true</span>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">persistLauncher</span> <span class="n">in</span> <span class="nc">Compile</span> <span class="o">:=</span> <span class="kc">true</span>
 
-<span class="n">persistLauncher</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span></code></pre></div>
+<span class="n">persistLauncher</span> <span class="n">in</span> <span class="nc">Test</span> <span class="o">:=</span> <span class="kc">false</span></code></pre></figure>
 
 <p>We set <code>persistLauncher</code> to false for testing, since we do not have an application to run. In our HTML page, we can now
 include this file instead of the manual launcher:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- Run JSApp --&gt;</span>
-<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./target/scala-2.11/scala-js-tutorial-launcher.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="c">&lt;!-- Run JSApp --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./target/scala-2.11/scala-js-tutorial-launcher.js"</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>If we rename our <code>JSApp</code> object, we need not change our HTML at all anymore. Note that the launcher generation only
 works if you have a single <code>JSApp</code> object. If you happen to have multiple <code>JSApp</code> objects but still would like to
@@ -615,21 +615,21 @@ Optimizing</a> guide for more details.</p>
 
 <p>We can now create our final production HTML file <code>scalajs-tutorial.html</code> which includes the fully optimized code:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
   <span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;title&gt;</span>The Scala.js Tutorial<span class="nt">&lt;/title&gt;</span>
   <span class="nt">&lt;/head&gt;</span>
   <span class="nt">&lt;body&gt;</span>
     <span class="c">&lt;!-- Include JavaScript dependencies --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./target/scala-2.11/scala-js-tutorial-jsdeps.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./target/scala-2.11/scala-js-tutorial-jsdeps.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="c">&lt;!-- Include Scala.js compiled code --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./target/scala-2.11/scala-js-tutorial-opt.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./target/scala-2.11/scala-js-tutorial-opt.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
     <span class="c">&lt;!-- Run main object --&gt;</span>
-    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;./target/scala-2.11/scala-js-tutorial-launcher.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"./target/scala-2.11/scala-js-tutorial-launcher.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
   <span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span></code></pre></div>
+<span class="nt">&lt;/html&gt;</span></code></pre></figure>
 
 <p>This completes the Scala.js tutorial. Refer to our <a href="../../doc/index.html">documentation page</a> for deeper insights into various
 aspects of Scala.js.</p>
@@ -699,15 +699,21 @@ aspects of Scala.js.</p>
 <script src="/sjs2/assets/js/bootstrap.min.js"></script>
 <script src="/sjs2/assets/js/highlight.pack.js"></script>
 <script src="/sjs2/assets/js/custom.js"></script>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-42008737-1', 'scala-js.org');
-ga('send', 'pageview');
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
 </script>
+
+
 
 </body>
 </html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.5.6</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Announcing Scala.js 0.5.6" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/news/2014/11/19/announcing-scalajs-0.5.6/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" /><meta property="article:published_time" content="2014-11-19T00:00:00+02:00" /><meta property="article:tag" content="releases" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Announcing Scala.js 0.5.6</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/2014/11/19/announcing-scalajs-0.5.6/"><h3 class="ctitle">Announcing Scala.js 0.5.6</h3></a>
+
+            <p>
+                <span class="small">Nov 19, 2014.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.5.6!</p>
+
+<p>This is a backport release from the upcoming 0.6.x branch and contains various minor bug fixes and enhancements.
+<!--more--></p>
+
+<p>To upgrade, change the version number in <code>project/plugins.sbt</code>, as usual. Further, you will need to upgrade to sbt &gt;= 0.13.6 since this release of Scala.js is published against sbt 0.13.6.</p>
+
+<p>Scala.js 0.5.6 is binary compatible with Scala.js 0.5.5 and hence backward binary compatible with older releases of the 0.5.x branch.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="changes-in-the-056-release">Changes in the 0.5.6 release</h2>
+
+<p>For changes introduced in 0.5.0, how to upgrade, getting started etc. have a look at the <a href="/news/2014/06/13/announcing-scalajs-0.5.0/">0.5.0 announcement</a> (see also the announcements for <a href="/news/2014/06/30/announcing-scalajs-0.5.1/">0.5.1</a>, <a href="/news/2014/07/09/announcing-scalajs-0.5.2/">0.5.2</a>, <a href="/news/2014/07/30/announcing-scalajs-0.5.3/">0.5.3</a>, <a href="/news/2014/08/29/announcing-scalajs-0.5.4/">0.5.4</a> and <a href="/news/2014/09/18/announcing-scalajs-0.5.5/">0.5.5</a>).</p>
+
+<h3 id="export-facilities">Export Facilities</h3>
+
+<h4 id="jsexport-transition">@JSExport transition</h4>
+
+<p>In Scala.js 0.6.x, putting <code>@JSExport</code> on a class or an object will export it to its fully qualified name, rather than its simple name. To ease the transition to 0.6.x, Scala.js 0.5.6 will warn if an <code>@JSExport</code> annotation without explicit name is put on a top level object or class. Otherwise, such code would silently break when migrating to 0.6.x.</p>
+
+<p>To silence the warning, simply specify the desired name explicilty.</p>
+
+<h4 id="jsexportdescendentclasses">@JSExportDescendentClasses</h4>
+
+<p>Analogous to <code>@JSExportDescendentObjects</code>, this annotation causes all constructors of extending classes to be exported under the fully qualified name of the class.</p>
+
+<h3 id="java-library">Java Library</h3>
+
+<p>The following features of the Java library have been added:</p>
+
+<h4 id="charset-conversions">Charset Conversions</h4>
+
+<p>Scala.js now supports the <a href="https://docs.oracle.com/javase/7/docs/api/index.html?java/nio/charset/StandardCharsets.html">standard charset conversions</a> that every JRE supports. You can now pass instances of <code>Charset</code> to methods that convert bytes to characters and vice versa.</p>
+
+<p>Note that you should avoid using <code>Charset.forName</code> (and methods that take charsets as strings in general), since they will make all <code>Charset</code> implementations reachable and hence explode your code size. If you compile on JDK6 (which does not have <code>StandardCharsets</code>), you may use <a href="http://www.scala-js.org/api/scalajs-library/0.5.6/#scala.scalajs.niocharset.StandardCharsets"><code>scala.scalajs.niocharset.StandardCharsets</code></a> to retrieve an instance of the desired <code>Charset</code>.</p>
+
+<p>This also allowed to implement <code>String.getBytes</code> (<a href="https://github.com/scala-js/scala-js/issues/1087">#1087</a>).</p>
+
+<h4 id="others">Others</h4>
+
+<ul>
+  <li><code>java.io.PrintWriter</code></li>
+  <li><code>java.util.UUID</code></li>
+</ul>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<p>Amongst others, the following bugs have been fixed since 0.5.5:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1140">#1140</a> fullOptJs and fastOptJs hang when running on JDK 8</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1148">#1148</a> Compiler crash with Scoverage</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1171">#1171</a> String.split / regex discrepancy</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1191">#1191</a> Assign multiple variables from a case class with <code>@JSExportAll</code> causes compilation error</li>
+</ul>
+
+<p>See the <a href="https://github.com/scala-js/scala-js/issues?page=1&amp;q=is%3Aissue+is%3Aclosed+milestone%3Av0.5.6">full list</a> on GitHub.</p>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/2014/09/18/announcing-scalajs-0.5.5/"
+                                            title="Announcing Scala.js 0.5.5">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/2014/12/01/announcing-scalajs-0.6.0-M1/"
+                                        title="Announcing Scala.js 0.6.0-M1">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

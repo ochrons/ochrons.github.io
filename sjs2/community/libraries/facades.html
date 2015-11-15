@@ -10,7 +10,7 @@
 
     <title>Scala.js - JavaScript library facades</title>
 
-    <meta property="og:type" content="article" /><meta property="og:title" content="JavaScript library facades" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/community/libraries/facades.html" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-128.png" />
+    <meta property="og:type" content="article" /><meta property="og:title" content="JavaScript library facades" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/community/libraries/facades" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -366,8 +366,8 @@ relevant SBT dependency definition.</p>
 <script>new Clipboard('.btn-clipboard');</script>
 
 <p>If you didn’t find a facade for the library you’d like to use, it’s quite easy to do one yourself. Check out the
-<a href="../../doc/interoperability/calling_js.html">facade documentation</a> and the
-<a href="https://github.com/sjrd/scala-js-ts-importer">TypeScript conversion tool</a>. You can also skip whole facade-business and just <a href="../../doc/interoperability/calling_js.html#calling-javascript-from-scalajs-with-dynamic-types">call Javascript APIs dynamically</a>, without type-checking, the same way you do it when programming in Javascript itself.</p>
+<a href="../../doc/interoperability/calling-javascript.html">facade documentation</a> and the
+<a href="https://github.com/sjrd/scala-js-ts-importer">TypeScript conversion tool</a>. You can also skip whole facade-business and just <a href="../../doc/interoperability/calling-javascript.html#calling-javascript-from-scalajs-with-dynamic-types">call JavaScript APIs dynamically</a>, without type-checking, the same way you do it when programming in JavaScript itself.</p>
 
 <hr />
 
@@ -392,15 +392,6 @@ Dependency</small></p>
     
     
     <li>
-        <a href="/sjs2/community/gethelp.html">
-            
-            Get help!
-            
-        </a>
-    </li>
-    
-    
-    <li>
         <a href="/sjs2/community/libraries/">
             
             Libraries and skeletons
@@ -414,7 +405,7 @@ Dependency</small></p>
     <li>
         <a href="/sjs2/community/libraries/facades.html">
             
-            <b>JavaScript libraries</b>
+            JavaScript libraries
             
         </a>
     </li>
@@ -499,15 +490,21 @@ Dependency</small></p>
 <script src="/sjs2/assets/js/bootstrap.min.js"></script>
 <script src="/sjs2/assets/js/highlight.pack.js"></script>
 <script src="/sjs2/assets/js/custom.js"></script>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-42008737-1', 'scala-js.org');
-ga('send', 'pageview');
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
 </script>
+
+
 
 </body>
 </html>

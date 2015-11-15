@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.6.0-RC1</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Announcing Scala.js 0.6.0-RC1" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/news/2015/01/12/announcing-scalajs-0.6.0-RC1/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" /><meta property="article:published_time" content="2015-01-12T00:00:00+02:00" /><meta property="article:tag" content="releases" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Announcing Scala.js 0.6.0-RC1</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/2015/01/12/announcing-scalajs-0.6.0-RC1/"><h3 class="ctitle">Announcing Scala.js 0.6.0-RC1</h3></a>
+
+            <p>
+                <span class="small">Jan 12, 2015.</span>
+            </p>
+            <p>We are excited to announce the first release candidate of Scala.js 0.6.0, aka 0.6.0-RC1!
+Unless there are blocking issues with this RC, or issues requiring binary incompatible changes, this version will become 0.6.0 final.</p>
+
+<p>Scala.js 0.6.0-RC1 is not forward nor backward binary compatible with M1/M2/M3.
+<!--more--></p>
+
+<p>To upgrade from 0.6.0-Mx, simply change the version number.
+If you’re upgrading from M1/M2, you might need to address some compilation errors regarding the <code>js</code> package, but it should be straightforward.
+Should you encounter any trouble, do not hesitate to ask.</p>
+
+<p>The rest of this announcement is cumulative with the changes introduced in the milestones, and is therefore written wrt. 0.5.6.</p>
+
+<hr />
+
+<p>As the change in “major” version number witnesses, this release is <em>not</em> binary compatible with 0.5.x.
+Libraries need to be recompiled and republished using 0.6.0-RC1 to be compatible.
+More importantly, this release is not source compatible with 0.5.x either.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<p>The following libraries and testing frameworks have already been upgraded and published for 0.6.0-RC1:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js-dom">DOM types</a>: <code>"org.scala-js" %%% "scalajs-dom" % "0.7.0"</code></li>
+  <li><a href="https://github.com/scala-js/scala-js-jquery">jQuery types</a>: <code>"be.doeraene" %%% "scalajs-jquery" % "0.7.0"</code></li>
+  <li><a href="https://github.com/lihaoyi/scala.rx">Scala.rx</a>: <code>"com.lihaoyi" %%% "scalarx" % "0.2.7-RC1"</code></li>
+  <li><a href="https://github.com/lihaoyi/scalatags">ScalaTags</a>: <code>"com.lihaoyi" %%% "scalatags" % "0.4.3-RC1"</code></li>
+  <li><a href="https://github.com/lihaoyi/autowire">Autowire</a>: <code>"com.lihaoyi" %%% "autowire" % "0.2.4-RC1"</code></li>
+  <li><a href="https://github.com/lihaoyi/upickle">µPickle</a>: <code>"com.lihaoyi" %%% "upickle" % "0.2.6-RC1"</code></li>
+  <li><a href="https://github.com/lihaoyi/utest">µTest</a>: <code>"com.lihaoyi" %%% "utest" % "0.2.5-RC1" % "test"</code></li>
+  <li><a href="https://github.com/monifu/minitest">MiniTest</a>: <code>"org.monifu" %%% "minitest" % "0.10" % "test"</code></li>
+</ul>
+
+<h2 id="preparations-before-upgrading-from-05x">Preparations before upgrading from 0.5.x</h2>
+
+<h3 id="upgrade-to-056-if-not-already-done">Upgrade to 0.5.6 if not already done</h3>
+
+<p>Before upgrading to 0.6.0-RC1, <strong>we strongly recommend that you upgrade to Scala.js 0.5.6</strong>, and address all deprecation warnings.
+Scala.js 0.5.6 contains warnings for the most vicious breaking changes of 0.6.x.</p>
+
+<h3 id="migrate-away-from-the-jasmine-test-framework">Migrate away from the Jasmine test framework</h3>
+
+<p>If you use the Jasmine test framework, migrate away from it to one of the other testing frameworks for Scala.js.
+The Jasmine test framework is <em>not</em> a good testing framework for Scala.js code, and is being <em>removed</em> in 0.6.x.</p>
+
+<p>Possible replacements:</p>
+
+<ul>
+  <li><a href="https://github.com/lihaoyi/utest">uTest</a></li>
+  <li><a href="https://github.com/eecolor/little-spec">Little Spec</a></li>
+  <li><a href="https://github.com/cgta/otest">otest</a></li>
+  <li><a href="https://github.com/monifu/minitest">MiniTest</a></li>
+</ul>
+
+<p>Note that these testing frameworks also need to upgrade to 0.6.0-RC1 before you can use them.</p>
+
+<h2 id="upgrade-to-060-rc1-from-056">Upgrade to 0.6.0-RC1 from 0.5.6</h2>
+
+<p>Basically, you need to apply the same kind of changes to your build files as in <a href="https://github.com/sjrd/scala-js-example-app/commit/77d5f970267247c714a164f3dd72e51605f3ef66">this commit</a>, which mostly consists in:</p>
+
+<ul>
+  <li>Upgrade to sbt &gt;= 0.13.6 (the current version is 0.13.7).</li>
+  <li>Adaptations to new groupId and artifact names for Scala.js packages.</li>
+  <li>Adaptation to the new <code>AutoPlugin</code> infrastructure of the sbt plugin.</li>
+  <li>Drop the prefix <code>ScalaJSKeys.</code> for Scala.js-specific sbt keys, as they are not needed anymore.</li>
+  <li>Upgrade to 0.6.0-RC1-enabled versions of your dependencies.</li>
+</ul>
+
+<p>On the sbt command line, not much changes, except the way you use the <code>fastOpt</code> and <code>fullOpt</code> mode.
+In Scala 0.5.x, you could run in <code>fastOpt</code> mode with:</p>
+
+<pre><code>&gt; fastOptStage::run
+</code></pre>
+
+<p>In 0.6.x, the mode is regulated by the setting <code>scalaJSStage</code>, which is one of:</p>
+
+<ul>
+  <li><code>PreLinkStage</code> (default): uses Rhino</li>
+  <li><code>FastOptStage</code>: <code>fastOpt</code> mode, uses Node.js or PhantomJS</li>
+  <li><code>FullOptStage</code>: <code>fullOpt</code> mode, uses Node.js or PhantomJS</li>
+</ul>
+
+<p>You can change it from the command line with</p>
+
+<pre><code>&gt; set scalaJSStage := FastOptStage
+&gt; run # runs in fastOpt mode
+</code></pre>
+
+<p>In a multi-project build, you’ll want to change it for all projects, which can be done with <code>in Global</code>:</p>
+
+<pre><code>&gt; set scalaJSStage in Global := FastOptStage
+</code></pre>
+
+<h2 id="major-changes">Major changes</h2>
+
+<p>This section discusses major changes affecting source compatibility, which may or may not apply to your project.</p>
+
+<h3 id="classcastexception-becomes-an-undefined-behavior"><code>ClassCastException</code> becomes an undefined behavior</h3>
+
+<p>The JVM, in its incommensurable magnanimity, throws nicely specified exceptions when you do something bad with your code.
+For example, it will nicely throw a <code>ClassCastException</code> if you perform an invalid <code>.asInstanceOf</code>, or an <code>ArithmeticException</code> if you divide an integer by 0.</p>
+
+<p>Since the beginning of time, Scala.js has handled most of these things as <em>undefined behavior</em>, i.e., <em>anything can happen</em> if these cases happen.
+Until 0.5.x, <code>ClassCastException</code>s were properly reported, though.
+We have found, however, that checking these buggy cases costs up to 100% overhead to the overall execution time of a Scala.js program.</p>
+
+<p>In Scala.js 0.6.x, therefore, invalid casts become an undefined behavior as well.
+However, the compiler will <em>still</em> be nice with you <em>in fastOpt mode</em>, by throwing an <code>UndefinedBehaviorError</code> if you perform an invalid cast (instead of a <code>ClassCastException</code>).
+<code>UndefinedBehaviorError</code> is a <em>fatal</em> error, meaning it won’t be caught by <code>case NonFatal(e)</code> handlers.
+In fullOpt mode, the checks are removed for maximum efficiency.</p>
+
+<p>You <em>must not catch</em> <code>UndefinedBehaviorError</code>, since that would cause your program to behave differently in fastOpt mode than in fullOpt.
+The idea of <code>UndefinedBehaviorError</code> is that you can enjoy strict checks and stack traces while developing.</p>
+
+<p>If you really want <code>ClassCastException</code>s to be thrown reliably (both in fastOpt and fullOpt modes), you can enable them in your application, at the expense of runtime performance, with the following sbt setting:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withAsInstanceOfs</span><span class="o">(</span><span class="n">org</span><span class="o">.</span><span class="n">scalajs</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">sem</span><span class="o">.</span><span class="nc">CheckedBehavior</span><span class="o">.</span><span class="nc">Compliant</span><span class="o">)</span> <span class="o">}</span></code></pre></figure>
+
+<p>This applies to the entire application, including dependencies.
+There is no way to select parts of the application where this applies, because there is no way to make that sensical.</p>
+
+<h3 id="the-scalascalajsjs-package-has-been-simplified">The <code>scala.scalajs.js</code> package has been simplified</h3>
+
+<p>We have removed a lot of historical warts from the <code>scala.scalajs.js</code> package, mostly types and APIs with equivalents among normal Scala types and libraries:</p>
+
+<ul>
+  <li><code>js.String</code>, <code>js.Boolean</code>, <code>js.Number</code> and <code>js.Undefined</code> have been removed, as well as their <code>js.prim.*</code> equivalent.
+<code>String</code>, <code>Boolean</code>, <code>Double</code> and <code>Unit</code> should be used instead.</li>
+  <li><code>js.parseInt(s)</code> and <code>js.parseFloat(s)</code> should be replaced by <code>s.toInt</code> and <code>s.toDouble</code>.</li>
+  <li><code>js.NaN</code>, <code>js.Infinity</code> should be replaced by <code>Double.NaN</code> and <code>Double.PositiveInfinity</code>.</li>
+  <li><code>js.isNaN(x)</code> should be replaced by <code>x.isNaN</code>.</li>
+  <li><code>js.isFinite(x)</code> should be replaced by <code>!x.isNaN &amp;&amp; !x.isInfinite</code>.</li>
+</ul>
+
+<p>Methods provided by ECMAScript 5.1 on primitive strings and numbers can be enabled by importing the following implicit conversions:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">import</span> <span class="nn">js.JSStringOps._</span>
+<span class="k">import</span> <span class="nn">js.JSNumberOps._</span></code></pre></figure>
+
+<h3 id="jsnative-in-facade-types"><code>js.native</code> in facade types</h3>
+
+<p>When writing facade types, it was previously recommended to use <code>???</code> as a fake body for fields and methods.
+You should now use <code>js.native</code> instead, as in:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">trait</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="n">js</span><span class="o">.</span><span class="nc">Object</span> <span class="o">{</span>
+  <span class="k">var</span> <span class="n">bar</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+  <span class="k">def</span> <span class="n">foobar</span><span class="o">(</span><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span><span class="k">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="n">js</span><span class="o">.</span><span class="n">native</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>The compiler will emit a warning if you use any other body.
+The warning will become an error in 1.0.0.</p>
+
+<h3 id="jsexport-exports-to-fully-qualified-names-by-default"><code>@JSExport</code> exports to fully qualified names by default</h3>
+
+<p>As announced by deprecation warnings in the 0.5.6 compiler, putting <code>@JSExport</code> without an explicit name on an <code>object</code> or <code>class</code> changes meaning between 0.5.x and 0.6.x.
+Consider this code:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">package</span> <span class="nn">babar</span>
+
+<span class="nd">@JSExport</span>
+<span class="k">class</span> <span class="nc">Foo</span></code></pre></figure>
+
+<p>In 0.5.x, <code>Foo</code> is exported as <code>Foo</code>.
+In 0.6.x, it is exported as <code>babar.Foo</code> instead.</p>
+
+<h3 id="testing-frameworks-adaptations">Testing frameworks adaptations</h3>
+
+<p>If you are not a testing framework implementor, this section does not apply to you.
+Please follow the migration guidelines of any testing framework you may use.</p>
+
+<p>Until 0.5.x, Scala.js had a custom, ad-hoc substitute for the sbt testing interface, which allows testing frameworks to integrate with sbt.
+Although quite good in its own right, it suffered from several limitations, including the inability for one project to use more than one testing framework at the same time.
+Scala.js 0.6.x now supports its JS version of the original sbt testing interface, with all its power, API, and usability features.
+We also offer tools to make your testing framework fully source-compatible with the JVM and JS variants of the testing interface, without a single line of platform-specific source code.</p>
+
+<p>An existing barebone cross-compiling testing framework can be found <a href="https://github.com/scala-js/scala-js/tree/v0.6.0-RC1/sbt-plugin-test">in our tests</a>.
+Some highlights:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/blob/v0.6.0-RC1/sbt-plugin-test/build.sbt#L49-L64">Build definition for the cross-compiling framework</a></li>
+  <li><a href="https://github.com/scala-js/scala-js/tree/v0.6.0-RC1/sbt-plugin-test/testFramework/src/main/scala/sbttest/framework">(Cross-compiling) source code of the testing framework</a></li>
+  <li><a href="https://github.com/scala-js/scala-js/blob/v0.6.0-RC1/sbt-plugin-test/build.sbt#L66-L86">Build definition for a cross-compiling project using the framework</a></li>
+  <li><a href="https://github.com/scala-js/scala-js/tree/v0.6.0-RC1/sbt-plugin-test/multiTest">Source code of the project using the framework</a></li>
+</ul>
+
+<p>Adapting your testing framework to follow this structure is likely to be the easiest path of migration.
+You may also want to take a look at <a href="https://github.com/lihaoyi/utest/pull/45">the PR we made to uTest</a> to migrate to Scala.js 0.6.x.</p>
+
+<p>Should you run into trouble, don’t hesitate to ask on the mailing list!</p>
+
+<h2 id="enhancements">Enhancements</h2>
+
+<h3 id="a-namecross-projecta-defining-cross-compiling-projects-with-crossproject"><a name="cross-project"></a> Defining cross-compiling projects with <code>crossProject</code></h3>
+
+<p>When writing cross-compiling code, we need to have two separate projects in sbt for the JVM target and the JS target.
+The new <code>CrossProject</code> type, and its <code>crossProject</code> builder, helps in defining these pairs of projects in a DRY way.</p>
+
+<p>See the <a href="http://www.scala-js.org/api/sbt-scalajs/0.6.0-RC1/#org.scalajs.sbtplugin.cross.CrossProject">documentation of <code>CrossProject</code></a> for more information and examples.</p>
+
+<h3 id="faster">Faster!</h3>
+
+<p>Scala.js 0.6.x benefits from many performance improvements, most notably:</p>
+
+<ul>
+  <li><code>asInstanceOf</code>s are unchecked (see above), giving <code>fullOpt</code> code up to twice as fast as before</li>
+  <li><code>Range.foreach</code>, aka the <code>for (i &lt;- 0 until n)</code> kind of loops, is inlined away, giving the same performance as an explicit <code>while</code> loop.</li>
+  <li>Higher-order operations on <code>js.Array</code>s and <code>js.Dictionary</code>s (such as <code>foreach</code>, <code>map</code>, etc.) are inlined away as <code>while</code> loops.</li>
+  <li>Various improvements to the optimizer.</li>
+</ul>
+
+<h3 id="scala-collection-api-for-jsarraya-and-jsdictionarya">Scala collection API for <code>js.Array[A]</code> and <code>js.Dictionary[A]</code></h3>
+
+<p>The title says it all: <code>js.Array[A]</code> and <code>js.Dictionary[A]</code> receive the entire Scala collection API, respectively of <code>mutable.Buffer[A]</code> and <code>mutable.Map[String, A]</code>.</p>
+
+<p><code>js.Array</code> becomes the default implementation of <code>mutable.Buffer</code>, i.e., <code>mutable.Buffer.empty</code> returns a <code>js.Array</code> wrapped in a <code>js.WrappedArray</code>.</p>
+
+<h3 id="implicits-to-make-writing-javascript-easier">Implicits to make “writing JavaScript” easier</h3>
+
+<p>Sometimes, for example when porting existing JavaScript code, we want to just “write JavaScript” inside our Scala.js code.
+A new object <code>js.DynamicImplicits</code> (<a href="http://www.scala-js.org/api/scalajs-library/0.6.0-RC1/#scala.scalajs.js.DynamicImplicits$">API</a> provides implicit conversions that allow to write dynamically typed JavaScriptish code directly in Scala.js with a mimimal amount of boilerplate.
+Needless to say, these implicits should be handled with care, but they can come in handy.</p>
+
+<h3 id="on-demand-strict-floats">On-demand strict floats</h3>
+
+<p>Scala.js under-specifies <code>Float</code> operations by default, saying that they can sometimes behave as if they were <code>Double</code>s.
+In 0.6.x, you can configure your application to use <em>strict-float semantics</em>, guaranteeing that all <code>Float</code> operations behave as on the JVM, with the appropriate truncation of precision (with the notable exception of <code>.toString()</code>).
+The following sbt setting enables this:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">{</span> <span class="k">_</span><span class="o">.</span><span class="n">withStrictFloats</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">}</span></code></pre></figure>
+
+<p>Beware that this can have a major impact on performance on VMs that do not support the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/fround"><code>Math.fround</code></a> function.</p>
+
+<h3 id="obfuscation-of-class-names">Obfuscation of class names</h3>
+
+<p>The <code>scalaJSSemantics</code> option also allows to obfuscate or otherwise rename the class names in the emitted .js file, as was requested in <a href="https://github.com/scala-js/scala-js/issues/1113">#1113</a>.
+For example, this sbt setting empties out all class names in the package <code>my.company</code>:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">scalaJSSemantics</span> <span class="o">~=</span> <span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">withRuntimeClassName</span> <span class="o">{</span> <span class="n">linkedClass</span> <span class="k">=&gt;</span>
+  <span class="k">val</span> <span class="n">fullName</span> <span class="k">=</span> <span class="n">linkedClass</span><span class="o">.</span><span class="n">fullName</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">fullName</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">"my.company."</span><span class="o">))</span> <span class="s">""</span>
+  <span class="k">else</span> <span class="n">fullName</span>
+<span class="o">})</span></code></pre></figure>
+
+<p>This changes the value returned by <code>x.getClass.getName</code> or <code>classOf[C].getName</code>.</p>
+
+<h3 id="we-publish-to-maven-central">We publish to Maven Central</h3>
+
+<p>This should probably not affect sbt users, but it now becomes possible to imagine a Maven plugin for Scala.js.
+To this effect, the sbt plugin codebase has also been refactored, and all parts that are not strictly bound to sbt as a build tool have been extracted in Mavenized artifacts.
+An enthusiast Maven user could therefore build a Maven plugin with relatively few lines of code.
+As a measurable figure, the code specific to sbt contains only 1,686 lines of code.</p>
+
+<h2 id="bugfixes">Bugfixes</h2>
+
+<p>Amongst others, the following bugs have been fixed since 0.5.6:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1430">#1430</a> <code>ClassTag.unapply</code> method (for deconstruction) fails for raw JS classes</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1423">#1423</a> String.getBytes returns trailing zeroes</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1324">#1324</a> Date.parse should return a Double, not an Int</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1349">#1349</a> Auto-completion in runMain task does not work</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1192">#1192</a> hashCode for floating points has a very bad distribution</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1402">#1402</a> <code>Traversers</code> does not handle the case of <code>Debugger</code></li>
+</ul>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/2014/12/22/announcing-scalajs-0.6.0-M3/"
+                                            title="Announcing Scala.js 0.6.0-M3">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/2015/01/23/announcing-scalajs-0.6.0-RC2/"
+                                        title="Announcing Scala.js 0.6.0-RC2">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

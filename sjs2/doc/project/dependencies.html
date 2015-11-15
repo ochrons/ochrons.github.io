@@ -10,7 +10,7 @@
 
     <title>Scala.js - Dependencies</title>
 
-    <meta property="og:type" content="article" /><meta property="og:title" content="Dependencies" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/project/dependencies.html" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-128.png" />
+    <meta property="og:type" content="article" /><meta property="og:title" content="Dependencies" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/project/dependencies" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -65,7 +65,7 @@
 
 <p>To be able to use a Scala library in Scala.js, it has to be separately compiled for Scala.js. You then can add it to your library dependencies as follows:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.scala-js&quot;</span> <span class="o">%%%</span> <span class="s">&quot;scalajs-dom&quot;</span> <span class="o">%</span> <span class="s">&quot;0.8.2&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scala-js"</span> <span class="o">%%%</span> <span class="s">"scalajs-dom"</span> <span class="o">%</span> <span class="s">"0.8.2"</span></code></pre></figure>
 
 <p>Note the <code>%%%</code> (instead of the usual <code>%%</code>) which will add the current Scala.js version to the artifact name. This allows to</p>
 
@@ -82,17 +82,17 @@
 
 <p>Thanks to <a href="http://www.webjars.org/">WebJars</a>, you can easily fetch a JavaScript library like so:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.webjars&quot;</span> <span class="o">%</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;1.10.2&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.webjars"</span> <span class="o">%</span> <span class="s">"jquery"</span> <span class="o">%</span> <span class="s">"1.10.2"</span></code></pre></figure>
 
 <p>This will fetch the required JAR containing jQuery. However, it will not include it once you run your JavaScript code, since there is no class-loading process for JavaScript.</p>
 
 <p>The Scala.js sbt plugin has <code>jsDependencies</code> for this purpose. You can write:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.webjars&quot;</span> <span class="o">%</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;1.10.2&quot;</span> <span class="o">/</span> <span class="s">&quot;jquery.js&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">"org.webjars"</span> <span class="o">%</span> <span class="s">"jquery"</span> <span class="o">%</span> <span class="s">"1.10.2"</span> <span class="o">/</span> <span class="s">"jquery.js"</span></code></pre></figure>
 
 <p>This will make your project depend on the respective WebJar and include a file named <code>jquery.js</code> in the said WebJar when your project is run or tested. We are trying to make the semantics of “include” to be as close as possible to writing:</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;...&quot;</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/javascript"</span> <span class="na">src=</span><span class="s">"..."</span><span class="nt">&gt;&lt;/script&gt;</span></code></pre></figure>
 
 <p>All <code>jsDependencies</code> and associated metadata (e.g. for ordering) are persisted in a file (called <code>JS_DEPENDENCIES</code>) and shipped with the artifact your project publishes. For example, if you depend on the <code>scalajs-jquery</code> package for Scala.js, you do not need to explicitly depend or include <code>jquery.js</code>; this mechanism does it for you.</p>
 
@@ -102,7 +102,7 @@
 
 <p>You may scope <code>jsDependencies</code> on a given configuration, just like for normal <code>libraryDependencies</code>:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.webjars&quot;</span> <span class="o">%</span> <span class="s">&quot;jquery&quot;</span> <span class="o">%</span> <span class="s">&quot;1.10.2&quot;</span> <span class="o">/</span> <span class="s">&quot;jquery.js&quot;</span> <span class="o">%</span> <span class="s">&quot;test&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">"org.webjars"</span> <span class="o">%</span> <span class="s">"jquery"</span> <span class="o">%</span> <span class="s">"1.10.2"</span> <span class="o">/</span> <span class="s">"jquery.js"</span> <span class="o">%</span> <span class="s">"test"</span></code></pre></figure>
 
 <h3 id="commonjs-name">CommonJS name</h3>
 
@@ -110,13 +110,13 @@
 When they do so, you have to specify explicitly the name under which they are exported in a CommonJS environment (such as Node.js), otherwise they won’t work when executed in Node.js.
 This is the purpose of the <code>commonJSName</code> directive, to be used like this:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.webjars&quot;</span> <span class="o">%</span> <span class="s">&quot;mustachejs&quot;</span> <span class="o">%</span> <span class="s">&quot;0.8.2&quot;</span> <span class="o">/</span> <span class="s">&quot;mustache.js&quot;</span> <span class="n">commonJSName</span> <span class="s">&quot;Mustache&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">"org.webjars"</span> <span class="o">%</span> <span class="s">"mustachejs"</span> <span class="o">%</span> <span class="s">"0.8.2"</span> <span class="o">/</span> <span class="s">"mustache.js"</span> <span class="n">commonJSName</span> <span class="s">"Mustache"</span></code></pre></figure>
 
 <h3 id="dependency-ordering">Dependency Ordering</h3>
 
 <p>Since JavaScript does not have a class loading mechanism, the order in which libraries are loaded may matter. If this is the case, you can specify a library’s dependencies like so:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">&quot;org.webjars&quot;</span> <span class="o">%</span> <span class="s">&quot;jasmine&quot;</span> <span class="o">%</span> <span class="s">&quot;1.3.1&quot;</span> <span class="o">/</span> <span class="s">&quot;jasmine-html.js&quot;</span> <span class="n">dependsOn</span> <span class="s">&quot;jasmine.js&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">"org.webjars"</span> <span class="o">%</span> <span class="s">"jasmine"</span> <span class="o">%</span> <span class="s">"1.3.1"</span> <span class="o">/</span> <span class="s">"jasmine-html.js"</span> <span class="n">dependsOn</span> <span class="s">"jasmine.js"</span></code></pre></figure>
 
 <p>Note that the dependee must be declared as explicit dependency elsewhere, but not necessarily in this project (for example in a project the current project depends on).</p>
 
@@ -124,7 +124,7 @@ This is the purpose of the <code>commonJSName</code> directive, to be used like 
 
 <p>If you need to include JavaScript files which are provided in the resources of your project, use:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="nc">ProvidedJS</span> <span class="o">/</span> <span class="s">&quot;myJSLibrary.js&quot;</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="nc">ProvidedJS</span> <span class="o">/</span> <span class="s">"myJSLibrary.js"</span></code></pre></figure>
 
 <p>This will look for <code>myJSLibrary.js</code> in the resources and include it. It is an error if it doesn’t exist. You may use ordering and scoping if you need.</p>
 
@@ -132,7 +132,7 @@ This is the purpose of the <code>commonJSName</code> directive, to be used like 
 
 <p>If you want all JavaScript dependencies to be concatenated to a single file (for easy inclusion into a HTML file for example), you can set:</p>
 
-<div class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">skip</span> <span class="n">in</span> <span class="n">packageJSDependencies</span> <span class="o">:=</span> <span class="kc">false</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">skip</span> <span class="n">in</span> <span class="n">packageJSDependencies</span> <span class="o">:=</span> <span class="kc">false</span></code></pre></figure>
 
 <p>in your project settings. The resulting file in the target folder will have the suffix <code>-jsdeps.js</code>.</p>
 
@@ -153,16 +153,7 @@ This is the purpose of the <code>commonJSName</code> directive, to be used like 
     
     
     <li>
-        <a href="/sjs2/doc/why-scalajs.html">
-            
-            Why Scala.js?
-            
-        </a>
-    </li>
-    
-    
-    <li>
-        <a href="/sjs2/doc/sjs_for_js/">
+        <a href="/sjs2/doc/sjs-for-js/">
             
             Scala.js for JavaScript developers
             
@@ -193,14 +184,14 @@ This is the purpose of the <code>commonJSName</code> directive, to be used like 
     <li>
         <a href="/sjs2/doc/project/dependencies.html">
             
-            <b>Dependencies</b>
+            Dependencies
             
         </a>
     </li>
     
     
     <li>
-        <a href="/sjs2/doc/project/js_environments.html">
+        <a href="/sjs2/doc/project/js-environments.html">
             
             JavaScript Environments
             
@@ -209,7 +200,7 @@ This is the purpose of the <code>commonJSName</code> directive, to be used like 
     
     
     <li>
-        <a href="/sjs2/doc/project/cross_build.html">
+        <a href="/sjs2/doc/project/cross-build.html">
             
             Cross-building
             
@@ -305,15 +296,21 @@ This is the purpose of the <code>commonJSName</code> directive, to be used like 
 <script src="/sjs2/assets/js/bootstrap.min.js"></script>
 <script src="/sjs2/assets/js/highlight.pack.js"></script>
 <script src="/sjs2/assets/js/custom.js"></script>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-42008737-1', 'scala-js.org');
-ga('send', 'pageview');
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
 </script>
+
+
 
 </body>
 </html>

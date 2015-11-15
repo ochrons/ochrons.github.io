@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.5.3</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Announcing Scala.js 0.5.3" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/news/2014/07/30/announcing-scalajs-0.5.3/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" /><meta property="article:published_time" content="2014-07-30T00:00:00+03:00" /><meta property="article:tag" content="releases" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Announcing Scala.js 0.5.3</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/2014/07/30/announcing-scalajs-0.5.3/"><h3 class="ctitle">Announcing Scala.js 0.5.3</h3></a>
+
+            <p>
+                <span class="small">Jul 30, 2014.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.5.3!</p>
+
+<p>This release was focused mostly on <em>performance</em>, bringing speedups from 1.3x to 3.3x to your applications.
+In some cases, Scala.js becomes slightly <em>faster than JavaScript</em>!
+<!--more--></p>
+
+<p>Scala.js 0.5.3 is backward binary compatible with older versions of the 0.5.x branch. However, it is <em>not</em> forward binary compatible. This means:</p>
+
+<ul>
+  <li>You don’t need to re-publish libraries</li>
+  <li>You must upgrade to Scala.js 0.5.3 if any library you depend on uses Scala.js 0.5.3</li>
+</ul>
+
+<p>If you choose to re-publish a library, make sure to bump its version.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="improvements-in-the-053-release">Improvements in the 0.5.3 release</h2>
+
+<p>For changes introduced in 0.5.0, how to upgrade, getting started etc. have a look at the <a href="/news/2014/06/13/announcing-scalajs-0.5.0/">0.5.0 announcement</a> (see also the announcements for <a href="/news/2014/06/30/announcing-scalajs-0.5.1/">0.5.1</a> and <a href="/news/2014/07/09/announcing-scalajs-0.5.2/">0.5.2</a>).</p>
+
+<h4 id="performance-improvements">Performance improvements</h4>
+
+<p>Scala.js 0.5.3 is the first release to include an actual <em>optimizer</em> specific to Scala.js.
+This optimizer runs as part of the <code>fastOptJS</code> task, and consistently brings speedups to all applications from 1.3x to 3.3x (<a href="https://docs.google.com/document/d/17b18-oLJEIADixkSPR2mYof13ny1nGTtEVfsdiM7AGE/edit">Rough benchmarks</a>), along with code size reduction (15 % for the fastOpt version and 6 % for the fullOpt on our demo application) and less memory usage.
+Because it runs at link time, the optimizer also applies to libraries you depend on that have been compiled with Scala.js 0.5.0 to 0.5.2 (although a few optimizations won’t be as effective).</p>
+
+<p>The optimizer is <em>incremental</em> in the same sense as the incremental compilation of sbt: on each run, it will reoptimize only the parts of your application that need reoptimizing.
+This means that it will run much faster starting from the second run within an sbt session (within 200 ms in typical scenarios).</p>
+
+<p>Should you experience any issue (e.g., your code broke), please report them <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.
+You can also disable the optimizer with the sbt setting</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">ScalaJSKeys</span><span class="o">.</span><span class="n">inliningMode</span> <span class="o">:=</span> <span class="n">scala</span><span class="o">.</span><span class="n">scalajs</span><span class="o">.</span><span class="n">sbtplugin</span><span class="o">.</span><span class="nc">InliningMode</span><span class="o">.</span><span class="nc">Off</span></code></pre></figure>
+
+<p>Alternatively, you can force it to run in batch mode (non incremental) on every run with the following setting:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">ScalaJSKeys</span><span class="o">.</span><span class="n">inliningMode</span> <span class="o">:=</span> <span class="n">scala</span><span class="o">.</span><span class="n">scalajs</span><span class="o">.</span><span class="n">sbtplugin</span><span class="o">.</span><span class="nc">InliningMode</span><span class="o">.</span><span class="nc">Batch</span></code></pre></figure>
+
+<h4 id="new-parts-of-the-java-standard-library">New parts of the Java standard library</h4>
+
+<p>The following classes from the Java standard library are now available:</p>
+
+<ul>
+  <li><code>java.net.URI</code></li>
+  <li><code>InputStream</code>, <code>FilterInputStream</code>, <code>DataInput</code>, <code>ByteArrayInputStream</code></li>
+  <li><code>scala.scalajs.js.typearray.ArrayBufferInputStream</code>, an implementation of <code>InputStream</code> reading a JavaScript <code>TypedArray</code></li>
+</ul>
+
+<p>These classes are automatically available in all your Scala.js projects.</p>
+
+<p>Other, additional Java classes are also available in the <code>javalib-ex</code> package.
+These classes require some features of ECMAScript 6 to be implemented by the JavaScript engine, and must therefore be enabled explicitly with this dependency:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s">"org.scala-lang.modules.scalajs"</span> <span class="o">%%</span> <span class="s">"scalajs-javalib-ex"</span> <span class="o">%</span> <span class="n">scalaJSVersion</span></code></pre></figure>
+
+<p>Currently, the only additional class is <code>java.io.DataInputStream</code>.</p>
+
+<h4 id="javascript-libraries-in-nodejs">JavaScript libraries in Node.js</h4>
+
+<p>Until 0.5.2, the Node.js runner had trouble running JavaScript libraries that were “too” smart about being run as a Node.js module (bug <a href="https://github.com/scala-js/scala-js/issues/706">#706</a>).
+To fix this issue, the <code>jsDependencies</code> mechanism has been augmented with an optional <code>commonJSName</code> directive, to be used as:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">jsDependencies</span> <span class="o">+=</span> <span class="s">"org.webjars"</span> <span class="o">%</span> <span class="s">"mustachejs"</span> <span class="o">%</span> <span class="s">"0.8.2"</span> <span class="o">/</span> <span class="s">"mustache.js"</span> <span class="n">commonJSName</span> <span class="s">"Mustache"</span></code></pre></figure>
+
+<p>The <code>commonJSName</code> directive should be set to the name used by the library to export itself when run in a CommonJS environment (such as Node.js).
+You can typically figure that out from the library’s documentation.</p>
+
+<h4 id="bugfixes">Bugfixes</h4>
+
+<p>The following bugs have been fixed in 0.5.3:</p>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/820">#820</a> Generated html for phantomjs on windows fails to load scripts</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/843">#843</a> <code>js.Array.toList</code> (and others) fails with a <code>ClassCastException</code></li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/865">#865</a> PhantomJS doesn’t use existing shell environment</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/872">#872</a> <code>string.split('\n')</code> does not work</li>
+</ul>
+
+<h4 id="changes-to-the-ir">Changes to the IR</h4>
+
+<p>Some (more) minor changes have been made to the IR to better accommodate the optimizer.
+This is the reason for the lack of forward binary compatibility in this release.</p>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/2014/07/09/announcing-scalajs-0.5.2/"
+                                            title="Announcing Scala.js 0.5.2">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/2014/08/29/announcing-scalajs-0.5.4/"
+                                        title="Announcing Scala.js 0.5.4">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

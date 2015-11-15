@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Announcing Scala.js 0.6.1</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Announcing Scala.js 0.6.1" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/news/2015/03/03/announcing-scalajs-0.6.1/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" /><meta property="article:published_time" content="2015-03-03T00:00:00+02:00" /><meta property="article:tag" content="releases" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li ><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li class="active"><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Announcing Scala.js 0.6.1</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <! -- SINGLE POST -->
+        <div class="col-md-12">
+            <! -- Blog Post -->
+            <a href="/sjs2/news/2015/03/03/announcing-scalajs-0.6.1/"><h3 class="ctitle">Announcing Scala.js 0.6.1</h3></a>
+
+            <p>
+                <span class="small">Mar 3, 2015.</span>
+            </p>
+            <p>We are excited to announce the release of Scala.js 0.6.1!</p>
+
+<p>This release mostly contains bug fixes, including inefficiencies in the incremental <code>fastOptJS</code>.
+It also brings the entire <code>java.nio.Buffer</code>s API, with interoperability with the JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a> API.
+<!--more--></p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>If you are new to Scala.js, head over to
+<a href="/doc/tutorial.html">the tutorial</a>.</p>
+
+<h2 id="release-notes">Release notes</h2>
+
+<p>For changes in the 0.6.x series compared to 0.5.x, read <a href="/news/2015/02/05/announcing-scalajs-0.6.0/">the announcement of 0.6.0</a>.</p>
+
+<p>As a minor release, 0.6.1 is backward source and binary compatible with 0.6.0.
+Libraries compiled with 0.6.0 can be used with 0.6.1 without change.
+However, they will suffer from <a href="https://github.com/scala-js/scala-js/issues/1506">bug #1506</a>, which will cause your <code>fastOptJS</code> to perform more work than necessary.
+It is therefore recommended for library authors to upgrade to 0.6.1 and publish new versions of their libraries.
+Scala.js 0.6.0 can read binaries compiled with 0.6.1, so you need not be afraid to force an upgrade of all the users of your libraries.</p>
+
+<p>Please report any issues <a href="https://github.com/scala-js/scala-js/issues">on GitHub</a>.</p>
+
+<h2 id="javaniobuffer-and-typed-arrays">java.nio.Buffer and Typed Arrays</h2>
+
+<p>Scala.js 0.6.1 brings a complete implementation of the <code>java.nio.Buffer</code> API, with the exception of <code>MappedByteBuffer</code>.
+The non-<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html#direct">direct</a> buffers work on any JS engine supported by Scala.js, i.e., supporting ECMAScript 5.1.</p>
+
+<p>Direct buffers are implemented with JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">Typed Arrays</a>, and therefore require the JS VM to support them.
+Two additional APIs of the Scala.js standard library provide interoperability with Typed Arrays:</p>
+
+<ul>
+  <li><a href="http://www.scala-js.org/api/scalajs-library/0.6.1/#scala.scalajs.js.typedarray.TypedArrayBufferOps">TypedArrayBufferOps</a> allows to retrieve the underlying <code>ArrayBuffer</code>, <code>DataView</code>, and optionally <code>TypedArray</code> of a direct buffer (if it is not read-only)</li>
+  <li><a href="http://www.scala-js.org/api/scalajs-library/0.6.1/#scala.scalajs.js.typedarray.TypedArrayBuffer$">TypedArrayBuffer</a> allows to construct direct buffers wrapping existing Typed Arrays.</li>
+</ul>
+
+<h2 id="improvements">Improvements</h2>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/pull/1488">Better dce</a> reduces the size of the generated .js files by a few percents.</li>
+  <li><a href="https://github.com/scala-js/scala-js/pull/1508">java.util.Random</a> and <a href="https://github.com/scala-js/scala-js/pull/1511">j.l.Math.random()</a> have been optimized. The latter is now an (inlined) direct forwarder to <code>js.Math.random()</code>.</li>
+  <li>Running tests should be faster thanks to <a href="https://github.com/scala-js/scala-js/issues/1299">launching JS VMs in advance</a>.</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1496">#1496</a> Partial relative paths can now be used in <code>jsDependencies</code>.</li>
+</ul>
+
+<h2 id="bug-fixes">Bug fixes</h2>
+
+<ul>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1478">#1478</a> Wrong optimization of Float/Double * -1</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1491">#1491</a> <code>~fastOptJS</code> runs non-stop (also reported as <a href="https://github.com/scala-js/scala-js/issues/1513">#1513</a>)</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1506">#1506</a>/<a href="https://github.com/scala-js/scala-js/issues/1514">#1514</a> <code>fastOptJS</code> performs unnecessary work (requires libraries to be recompiled with 0.6.1)</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1497">#1497</a> A better error message when trying to <code>@JSExport</code> an abstract class</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1499">#1499</a> <code>fullOptJS</code> doesn’t generate the <code>-launcher.js</code> script</li>
+  <li><a href="https://github.com/scala-js/scala-js/issues/1515">#1515</a> Hidden crasher bug of the optimizer in obscure cases</li>
+</ul>
+
+            <div class="spacing"></div>
+            <nav>
+                <ul class="pager">
+                    
+                    <li class="previous"><a href="/sjs2/news/2015/02/05/announcing-scalajs-0.6.0/"
+                                            title="Announcing Scala.js 0.6.0">&larr; Previous</a></li>
+                    
+                    
+                    <li class="next"><a href="/sjs2/news/2015/03/16/announcing-scalajs-0.6.2/"
+                                        title="Announcing Scala.js 0.6.2">Next &rarr;</a></li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

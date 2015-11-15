@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - Scala.js for JavaScript developers</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="Scala.js for JavaScript developers" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/sjs-for-js/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li ><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>Scala.js for JavaScript developers</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <div class="col-md-9">
+            <p>Below you can see the same functionality implemented in JavaScript ES6 and Scala.js. See any differences?</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span>
+  <span class="s2">"https://api.twitter.com/1.1/search/"</span> <span class="o">+</span>
+  <span class="s2">"tweets.json?q=%23scalajs"</span>
+<span class="p">);</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#tweets"</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">parseTweets</span><span class="p">(</span><span class="nx">r</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+</div>
+
+<div class="col-md-6"><h6 class="code-block-header">Scala.js</h6><figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">xhr</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">()</span>
+
+<span class="n">xhr</span><span class="o">.</span><span class="n">open</span><span class="o">(</span><span class="s">"GET"</span><span class="o">,</span>
+  <span class="s">"https://api.twitter.com/1.1/search/"</span> <span class="o">+</span>
+  <span class="s">"tweets.json?q=%23scalajs"</span>
+<span class="o">)</span>
+<span class="n">xhr</span><span class="o">.</span><span class="n">onload</span> <span class="k">=</span> <span class="o">{</span> <span class="o">(</span><span class="n">e</span><span class="k">:</span> <span class="kt">Event</span><span class="o">)</span> <span class="k">=&gt;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">JSON</span><span class="o">.</span><span class="n">parse</span><span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">responseText</span><span class="o">)</span>
+    <span class="n">$</span><span class="o">(</span><span class="s">"#tweets"</span><span class="o">).</span><span class="n">html</span><span class="o">(</span><span class="n">parseTweets</span><span class="o">(</span><span class="n">r</span><span class="o">))</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+</div>
+</div>
+
+<p>Even though Scala language comes from a very different background than JavaScript, typical Scala code is quite understandable
+for JavaScript developers. This section will walk you through the differences and show you how to write basic Scala code. If you
+have fallen in love with the new features in ES6 like <em>arrow functions</em> or <em>destructuring</em>, you can find them all in Scala as well!</p>
+
+<p>The walk-through has been split into three parts:</p>
+
+<ul>
+  <li><a href="es6-to-scala-part1.html">basics</a></li>
+  <li><a href="es6-to-scala-part2.html">collections</a></li>
+  <li><a href="es6-to-scala-part3.html">advanced</a></li>
+</ul>
+
+<p>Each part has a lot of code examples comparing ES6 code to corresponding Scala code.</p>
+
+<p>You may also find some of the <a href="../../community/presentations.html">presentation videos</a> a nice way to familiarize yourself with Scala.</p>
+
+            <div class="spacing"></div>
+        </div>
+        <div class="col-md-3">
+            <nav class="toc" role="navigation">
+                
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/">
+            
+            Introduction
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/sjs-for-js/">
+            
+            <b>Scala.js for JavaScript developers</b>
+            
+        </a>
+    </li>
+    
+      
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/sjs-for-js/es6-to-scala-part1.html">
+            
+            From ES6 to Scala: Basics
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/sjs-for-js/es6-to-scala-part2.html">
+            
+            From ES6 to Scala: Collections
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/sjs-for-js/es6-to-scala-part3.html">
+            
+            From ES6 to Scala: Advanced
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/">
+            
+            Project setup
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/">
+            
+            JavaScript interoperability
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/api.html">
+            
+            Scala.js API
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/semantics.html">
+            
+            Semantics of Scala.js
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/internals/">
+            
+            Internals
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/faq.html">
+            
+            FAQ
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

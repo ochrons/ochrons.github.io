@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/sjs2/assets/img/scala-js-logo-32.png">
+
+    <title>Scala.js - JavaScript Environments</title>
+
+    <meta property="og:type" content="article" /><meta property="og:title" content="JavaScript Environments" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/project/js-environments" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
+
+    <!-- Bootstrap core CSS -->
+    <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/highlight.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+    <!-- Custom styles for this template -->
+    <link href="/sjs2/assets/css/style.css" rel="stylesheet">
+    <link href="/sjs2/assets/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<!-- Fixed navbar -->
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/sjs2/">Scala.js</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/sjs2/doc">DOCUMENTATION</a></li>
+        <li ><a href="/sjs2/tutorial">TUTORIALS</a></li>
+        <li ><a href="/sjs2/community">COMMUNITY</a></li>
+        <li ><a href="/sjs2/news">NEWS</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+<div id="wrap">
+<div id="main">
+<div id="blue">
+    <div class="container">
+        <div class="row">
+            <h3>JavaScript Environments</h3>
+        </div><!-- /row -->
+    </div> <!-- /container -->
+</div><!-- /blue -->
+
+<div class="container mtb">
+    <div class="row">
+        <div class="col-md-9">
+            <p>In order to decide how to run JavaScript code, the Scala.js sbt plugin uses the following two setting keys:</p>
+
+<ul>
+  <li><code>preLinkJSEnv</code>: the JavaScript Environment (i.e. virtual machine) used to run unlinked <code>.sjsir</code> files (defaults to Rhino)</li>
+  <li><code>postLinkJSEnv</code>: the JavaScript Environment used to run linked JavaScript (defaults to Node.js if DOM is not required, otherwise PhantomJS)</li>
+</ul>
+
+<p>You may change these environments at your discretion. However, note that running Rhino on linked JavaScript and Node.js or PhantomJS on unlinked JavaScript is unlikely to work or at least slow.</p>
+
+<p>For example, to switch to PhantomJS, you can set:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">PhantomJSEnv</span><span class="o">().</span><span class="n">value</span></code></pre></figure>
+
+<p>We’d like to stress here again, that you need to separately install Node.js and PhantomJS if you would like to use these environments.</p>
+
+<h2 id="a-namephantomjs-no-auto-terminatea-disabling-auto-termination-of-phantomjs"><a name="phantomjs-no-auto-terminate"></a> Disabling auto-termination of PhantomJS</h2>
+
+<p>By default, the PhantomJS interpreter terminates itself as soon as the <code>main()</code> method returns.
+This may not be what you want, if for example you register time-outs or use WebSockets.
+You can disable this behavior with the following setting:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">PhantomJSEnv</span><span class="o">(</span><span class="n">autoExit</span> <span class="k">=</span> <span class="kc">false</span><span class="o">).</span><span class="n">value</span></code></pre></figure>
+
+<p>You can terminate the interpreter from your Scala code with</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="nc">System</span><span class="o">.</span><span class="n">exit</span><span class="o">(</span><span class="mi">0</span><span class="o">)</span></code></pre></figure>
+
+<h2 id="a-namephantomjs-argumentsa-passing-arguments-to-phantomjs"><a name="phantomjs-arguments"></a> Passing arguments to PhantomJS</h2>
+
+<p>You can pass command-line arguments to the PhantomJS interpreter like this:</p>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">PhantomJSEnv</span><span class="o">(</span><span class="n">args</span> <span class="k">=</span> <span class="nc">Seq</span><span class="o">(</span><span class="s">"arg1"</span><span class="o">,</span> <span class="s">"arg2"</span><span class="o">)).</span><span class="n">value</span></code></pre></figure>
+
+<p>For more options of the PhantomJS environment, see
+<a href="http://www.scala-js.org/api/sbt-scalajs/0.6.5/#org.scalajs.sbtplugin.ScalaJSPlugin$$AutoImport$">the ScalaDoc of <code>PhantomJSEnv</code></a>.</p>
+
+<h2 id="a-namenode-on-ubuntua-nodejs-on-ubuntu"><a name="node-on-ubuntu"></a> Node.js on Ubuntu</h2>
+
+<p>On Ubuntu, the Node.js command from the <a href="http://packages.ubuntu.com/utopic/nodejs">nodejs package</a> is called <code>nodejs</code> instead of <code>node</code> (when installed through the package manager). This will make the Node.js environment fail (since it simply calls <code>node</code>).</p>
+
+<p>You have two options to solve this:</p>
+
+<ol>
+  <li>Install <a href="http://packages.ubuntu.com/utopic/nodejs-legacy">nodejs-legacy</a> which will add an alias called <code>node</code></li>
+  <li>Explicitly tell the Node.js environment the name of the command:</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="n">postLinkJSEnv</span> <span class="o">:=</span> <span class="nc">NodeJSEnv</span><span class="o">(</span><span class="n">executable</span> <span class="k">=</span> <span class="s">"nodejs"</span><span class="o">).</span><span class="n">value</span></code></pre></figure>
+
+<p>For more options of the Node.js environment, see
+<a href="http://www.scala-js.org/api/sbt-scalajs/0.6.5/#org.scalajs.sbtplugin.ScalaJSPlugin$$AutoImport$">the ScalaDoc of <code>NodeJSEnv</code></a>.</p>
+
+            <div class="spacing"></div>
+        </div>
+        <div class="col-md-3">
+            <nav class="toc" role="navigation">
+                
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/">
+            
+            Introduction
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/sjs-for-js/">
+            
+            Scala.js for JavaScript developers
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/">
+            
+            Project setup
+            
+        </a>
+    </li>
+    
+      
+<ul>
+    
+    <li>
+        <a href="/sjs2/doc/project/building.html">
+            
+            Building the application
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/dependencies.html">
+            
+            Dependencies
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/js-environments.html">
+            
+            JavaScript Environments
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/project/cross-build.html">
+            
+            Cross-building
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+    
+    
+    <li>
+        <a href="/sjs2/doc/interoperability/">
+            
+            JavaScript interoperability
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/api.html">
+            
+            Scala.js API
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/semantics.html">
+            
+            Semantics of Scala.js
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/internals/">
+            
+            Internals
+            
+        </a>
+    </li>
+    
+    
+    <li>
+        <a href="/sjs2/doc/faq.html">
+            
+            FAQ
+            
+        </a>
+    </li>
+    
+    
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+<div id="footerwrap">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>LEARN</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc">Documentation</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/tutorial">Tutorial</a><br/>
+                <a class="grey-text text-lighten-3" href="/sjs2/doc/faq.html">FAQ</a>
+            </div>
+            <div class="col-md-4">
+                <h4>COMMUNITY</h4>
+
+                <div class="hline-w"></div>
+                <a class="grey-text text-lighten-3" href="https://gitter.im/scala-js/scala-js">Gitter chat</a><br/>
+                <a class="grey-text text-lighten-3" href="http://stackoverflow.com/questions/tagged/scala.js">Stackoverflow</a><br/>
+                <a class="grey-text text-lighten-3" href="https://groups.google.com/forum/?fromgroups#!forum/scala-js">Mailing list</a>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="/sjs2/assets/js/bootstrap.min.js"></script>
+<script src="/sjs2/assets/js/highlight.pack.js"></script>
+<script src="/sjs2/assets/js/custom.js"></script>
+
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
+</script>
+
+
+
+</body>
+</html>

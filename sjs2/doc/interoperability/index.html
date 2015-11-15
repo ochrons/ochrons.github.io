@@ -10,7 +10,7 @@
 
     <title>Scala.js - Interoperability</title>
 
-    <meta property="og:type" content="article" /><meta property="og:title" content="Interoperability" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/interoperability/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-128.png" />
+    <meta property="og:type" content="article" /><meta property="og:title" content="Interoperability" /><meta property="og:site_name" content="Scala.js" /><meta property="og:url" content="http://scala-js.org/doc/interoperability/" /><meta property="og:image" content="http://scala-js.org/assets/img/scala-js-logo-256.png" />
 
     <!-- Bootstrap core CSS -->
     <link href="/sjs2/assets/css/bootstrap.css" rel="stylesheet">
@@ -67,14 +67,47 @@ for languages that translate almost literally to JavaScript (e.g.,
 <a href="http://www.typescriptlang.org/">TypeScript</a> and
 <a href="http://coffeescript.org/">CoffeeScript</a>).</p>
 
-<p>Scala.js exhibits both means to call JavaScript APIs from Scala.js, and to be
-called from JavaScript code.</p>
+<p>See for yourself: on the right, Scala.js natively talks to the DOM API, and we
+can hardly notice the border between the two languages.</p>
+
+<div class="row">
+<div class="col-md-6"><h6 class="code-block-header">ES6</h6><figure class="highlight"><pre><code class="language-javascript" data-lang="javascript"><span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span>
+  <span class="s2">"https://api.twitter.com/1.1/search/"</span> <span class="o">+</span>
+  <span class="s2">"tweets.json?q=%23scalajs"</span>
+<span class="p">);</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">r</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s2">"#tweets"</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="nx">parseTweets</span><span class="p">(</span><span class="nx">r</span><span class="p">));</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+</div>
+
+<div class="col-md-6"><h6 class="code-block-header">Scala.js</h6><figure class="highlight"><pre><code class="language-scala" data-lang="scala"><span class="k">val</span> <span class="n">xhr</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">XMLHttpRequest</span><span class="o">()</span>
+
+<span class="n">xhr</span><span class="o">.</span><span class="n">open</span><span class="o">(</span><span class="s">"GET"</span><span class="o">,</span>
+  <span class="s">"https://api.twitter.com/1.1/search/"</span> <span class="o">+</span>
+  <span class="s">"tweets.json?q=%23scalajs"</span>
+<span class="o">)</span>
+<span class="n">xhr</span><span class="o">.</span><span class="n">onload</span> <span class="k">=</span> <span class="o">{</span> <span class="o">(</span><span class="n">e</span><span class="k">:</span> <span class="kt">Event</span><span class="o">)</span> <span class="k">=&gt;</span>
+  <span class="k">if</span> <span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="mi">200</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">val</span> <span class="n">r</span> <span class="k">=</span> <span class="nc">JSON</span><span class="o">.</span><span class="n">parse</span><span class="o">(</span><span class="n">xhr</span><span class="o">.</span><span class="n">responseText</span><span class="o">)</span>
+    <span class="n">$</span><span class="o">(</span><span class="s">"#tweets"</span><span class="o">).</span><span class="n">html</span><span class="o">(</span><span class="n">parseTweets</span><span class="o">(</span><span class="n">r</span><span class="o">))</span>
+  <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+</div>
+</div>
+
+<p>The following sections explain all the details:</p>
 
 <ul>
-  <li><a href="calling_js.html">Call JavaScript APIs from Scala.js</a></li>
-  <li><a href="export_to_js.html">Export Scala.js APIs to JavaScript</a></li>
+  <li><a href="types.html">JavaScript types as seen from Scala.js</a></li>
+  <li><a href="facade-types.html">Write facade types for JavaScript APIs</a></li>
+  <li><a href="export-to-javascript.html">Export Scala.js APIs to JavaScript</a></li>
+  <li><a href="sjs-defined-js-classes.html">Write JavaScript classes in Scala.js</a></li>
 </ul>
-
 
             <div class="spacing"></div>
         </div>
@@ -93,16 +126,7 @@ called from JavaScript code.</p>
     
     
     <li>
-        <a href="/sjs2/doc/why-scalajs.html">
-            
-            Why Scala.js?
-            
-        </a>
-    </li>
-    
-    
-    <li>
-        <a href="/sjs2/doc/sjs_for_js/">
+        <a href="/sjs2/doc/sjs-for-js/">
             
             Scala.js for JavaScript developers
             
@@ -140,7 +164,7 @@ called from JavaScript code.</p>
     
     
     <li>
-        <a href="/sjs2/doc/interoperability/calling_js.html">
+        <a href="/sjs2/doc/interoperability/calling-javascript.html">
             
             Call JavaScript APIs
             
@@ -149,7 +173,7 @@ called from JavaScript code.</p>
     
     
     <li>
-        <a href="/sjs2/doc/interoperability/export_to_js.html">
+        <a href="/sjs2/doc/interoperability/export-to-javascript.html">
             
             Export Scala.js APIs
             
@@ -158,7 +182,7 @@ called from JavaScript code.</p>
     
     
     <li>
-        <a href="/sjs2/doc/interoperability/sjs_defined_js_classes.html">
+        <a href="/sjs2/doc/interoperability/sjs-defined-js-classes.html">
             
             Write JavaScript classes in Scala.js
             
@@ -245,15 +269,21 @@ called from JavaScript code.</p>
 <script src="/sjs2/assets/js/bootstrap.min.js"></script>
 <script src="/sjs2/assets/js/highlight.pack.js"></script>
 <script src="/sjs2/assets/js/custom.js"></script>
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-ga('create', 'UA-42008737-1', 'scala-js.org');
-ga('send', 'pageview');
+<script type="text/javascript">
+console.log("booh");
+$(".show-snippet-link").click(function(e) {
+  console.log("clicked");
+  e.preventDefault();
+  var language = $(this).data("language");
+  $(".snippet").hide();
+  $(".snippet-" + language).show();
+  $(".show-snippet-tab").removeClass("active");
+  $(this.parentNode).addClass("active");
+});
 </script>
+
+
 
 </body>
 </html>
