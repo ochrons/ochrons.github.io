@@ -130,8 +130,8 @@ a:focus {
 }
 
 .navbar {
-    min-height: 70px;
-    padding-top: 10px;
+    min-height: 50px;
+    padding-top: 0px;
     margin-bottom: 0px;
 }
 
@@ -253,7 +253,7 @@ a:focus {
     background-color: #0077bd ;
     min-height: 0px;
     padding-top: 100px;
-    padding-bottom: 50px;
+    padding-bottom: 25px;
     text-align: center;
 }
 
@@ -428,7 +428,7 @@ a:focus {
 
 #blue {
     background: #0077bd ;
-    margin-top: 60px;
+    margin-top: 50px;
     margin-bottom: 30px;
     padding-top: 15px;
     padding-bottom: 15px;
@@ -672,7 +672,7 @@ a code {
 a[name]:before {
     display: block;
     content: " ";
-    margin-top: -75px;
-    height: 75px;
+    margin-top: -65px;
+    height: 65px;
     visibility: hidden;
 }
