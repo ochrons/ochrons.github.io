@@ -310,7 +310,7 @@ class_.
 String.prototype.toDate = function() {
   return convertToDate(this);
 }
-"2015-10-09".toDate; // = {year:2015,month:10,day:9}
+"2015-10-09".toDate(); // = {year:2015,month:10,day:9}
 {% endhighlight %}
 {% endcolumn %}
         
